@@ -104,6 +104,7 @@
       sliderLeft: 0,
       sliderWidth: 180,
       screenWidth: 360,
+      user:{},
       page: 1,
       title: '专题',
       noMore: false,
@@ -129,6 +130,7 @@
     onShow() {
       this.page = 1
       this.getLibraries()
+      this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
@@ -143,7 +145,21 @@
       this.sliderLeft = 0
       this.sliderOffset = _this.screenWidth / this.tabs.length * this.activeIndex
     }
-
+    initPageData() {
+      this.$get({url: service.user}, {
+        success: ({code, data}) => {
+          this.user = data
+          console.log(user)
+          if (this.user.new_notice_count) {
+            wx.showTabBarRedDot({
+              index: 3
+            })
+          }
+          wx.setStorageSync('type', data.type)
+          this.$apply()
+        }
+      })
+    }
     onPullDownRefresh() {
       this.page = 1
       this.getLibraries()
@@ -182,20 +198,6 @@
           index: 4
         })
       }
-    }
-
-    // 初始化页面数据
-    initPageData() {
-      var self = this
-      self.loading = false
-      // this.$get({url: service.my_libraries}, {
-      //   success: ({code, data}) => {
-      //     this.mylibs = data
-      //     self.config.navigationBarTitleText = data.name
-      //   },
-      //   fail: ({code, data}) => {},
-      //   complete: () => { this.loaded = false }
-      // })
     }
 
     getLibraries(keyword) {

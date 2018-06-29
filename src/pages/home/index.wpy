@@ -145,6 +145,7 @@
       longitude: 0,
       latitude: 0,
       myLong: '',
+      user: {},
       myLat: '',
       distance1: '',
       libraries: '',
@@ -188,6 +189,7 @@
     onShow() {
       this.mapCtx = wx.createMapContext('map')
       this.getCenterLocation()
+      this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
       this.updataMap()
     }
@@ -205,7 +207,21 @@
         }
       })
     }
-
+    initPageData() {
+      this.$get({url: service.user}, {
+        success: ({code, data}) => {
+          this.user = data
+          console.log(user)
+          if (this.user.new_notice_count) {
+            wx.showTabBarRedDot({
+              index: 3
+            })
+          }
+          wx.setStorageSync('type', data.type)
+          this.$apply()
+        }
+      })
+    }
     updataMap() {
 //      let token = wx.getStorageSync('token')
       let that = this
