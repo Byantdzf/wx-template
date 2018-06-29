@@ -5,10 +5,10 @@
     </view>
     <view >
       <view class="font_32 loveTitle">普通VIP</view>
-      <view class="paylist"  wx:for="{{paylist}}" wx:key="*this" @tap="conversion({{item}})">
+      <view class="paylist"  wx:for="{{paylist}}" wx:key="*this" @tap="showmodel({{item}})">
         <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
           {{item.name}} <span class="red">{{item.price}}元</span>
-          <span class="red flo_r" @tap="conversion({{item}})">升级</span>
+          <span class="red flo_r" >升级</span>
         </view>
         <view class='font_26 orange flo_r' style="width: 90%;text-align: left;">{{item.content}}</view>
         <view class="clearfix"></view>
@@ -16,10 +16,10 @@
     </view>
     <view >
       <view class="font_32 loveTitle">高级VIP</view>
-      <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this" @tap="conversion({{item}})">
+      <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this" @tap="showmodel({{item}})">
         <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
           {{item.name}} <span class="red">{{item.price}}元</span>
-          <span class="red flo_r" @tap="conversion({{item}})">升级</span>
+          <span class="red flo_r" >升级</span>
         </view>
         <view class='font_26 orange flo_r' style="width: 90%;text-align: left;">{{item.content}}</view>
         <view class="clearfix"></view>
@@ -27,33 +27,46 @@
     </view>
     <view >
       <view class="font_32 loveTitle">海外VIP</view>
-      <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this" @tap="conversion({{item}})">
+      <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this" @tap="showmodel({{item}})">
         <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
           {{item.name}} <span class="red">{{item.price}}元</span>
-          <span class="red flo_r" @tap="conversion({{item}})">升级</span>
+          <span class="red flo_r">升级</span>
         </view>
         <view class='font_26 orange flo_r' style="width: 90%;text-align: left;">{{item.content}}</view>
         <view class="clearfix"></view>
       </view>
     </view>
   </view>
-  <modal class="modal" hidden="{{hide}}" title="付款详情"  confirm-text="确认支付" @confirm="modalChange2">
-    <view class="text-center font_28" style="border-bottom: 1rpx solid #d3d3d3">
-      <view>升级VIP：升级到{{message.name}}</view>
-      <view>{{message.money}} X 1次</view>
-    </view>
-    <view style="padding: 12rpx;border-bottom: 1rpx solid #d3d3d3;">
+  <modal class="modal" hidden="{{hide}}" title="支付详情"  confirm-text="确认支付" bindcancel="listenerCancel1" @confirm="conversion({{ranks}})">
+    <!--<view class="text-center font_28" style="border-bottom: 1rpx solid #d3d3d3">-->
+    <!--<view>升级VIP：升级到{{message.name}}</view>-->
+    <!--<view>{{message.money}} X 1次</view>-->
+    <!--</view>-->
+    <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
       <span class="bold">订单详情：</span>
-      <span class="flo_r">{{message.name}}</span>
+      <span class="flo_r">支付 <span class="orange bold">{{ranks.name}}</span> 升级费用</span>
     </view>
-    <view style="padding: 12rpx;border-bottom: 1rpx solid #d3d3d3;">
-      <span class="bold">福分支付：</span>
-      <span class="flo_r">{{message.money}}</span>
+    <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
+      <span class="bold">订单支付：</span>
+      <span class="flo_r">{{price}}</span>
     </view>
-    <view style="padding: 12rpx;border-bottom: 1rpx solid #d3d3d3;">
-      <span class="bold">现金支付：</span>
-      <span class="flo_r">{{message.money}}</span>
+    <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
+      <span class="bold">我的福分：</span>
+      <span class="flo_r">{{score}}</span>
     </view>
+    <block wx:if="{{show}}">
+      <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;" >
+        <span class="bold">剩余福分：</span>
+        <span class="flo_r orange">{{score - price}}</span>
+      </view>
+    </block>
+    <block wx:else>
+      <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;" >
+        <span class="bold">现金支付：</span>
+        <span class="flo_r orange">{{monay}}元</span>
+      </view>
+    </block>
+
   </modal>
 </template>
 
@@ -79,7 +92,12 @@
       paylist: [],
       paylist1: [],
       paylist2: [],
+      ranks: {},
+      price: 0,
+      monay: 0,
+      show: true,
       hide: true,
+      score: 0,
       message: {}
     }
     computed = {
@@ -115,7 +133,7 @@
       that.paylist2 = []
       this.$get({url: service.ranks}, {
         success: ({code, data}) => {
-          data.forEach((item, index, arr) => {
+          data.ranks.forEach((item, index, arr) => {
             if (arr[index].type == '普通会员') {
               that.paylist.push(arr[index])
               that.$apply()
@@ -127,6 +145,10 @@
               that.$apply()
             }
           })
+          if (data.score != 0) {
+            let num = data.score.split('.')
+            that.score = num[0]
+          }
 //          that.paylist = data
 //          that.paylist.length = 3
           console.log(that.paylist)
@@ -142,6 +164,24 @@
     }
 
     methods = {
+      showmodel(item) {
+        this.ranks = item
+        this.hide = false
+        this.price = item.price.split('.')[0]
+        let monay = this.score - this.price
+        if (monay < 0) {
+          this.show = false
+          this.monay =  Math.abs(monay)
+        }else {
+          this.show = true
+        }
+        console.log(this.ranks)
+        this.$apply()
+      },
+      listenerCancel1() {
+        this.hide = true
+        this.$apply()
+      },
       modalChange2() {
         this.hide = true
         this.message = {}
@@ -166,6 +206,7 @@
           }
         this.$post({url: service.charge, data}, {
           success: ({code, data}) => {
+            that.hide = true
             that.trade_no = data.order_pay.trade_no
             that.$apply()
             if (data.order_pay.wx_pay.length == 0) {
