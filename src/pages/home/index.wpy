@@ -165,6 +165,7 @@
       animationData: {},
       showMap: true,
       southwest: {},
+      new_notice_count: '',
       northeast: {},
       animationImage: {}
     }
@@ -208,12 +209,15 @@
       })
     }
     initPageData() {
-      this.$get({url: service.user}, {
+      this.$get({url: service.newnotices}, {
         success: ({code, data}) => {
-          this.user = data
-          console.log(user)
-          if (this.user.new_notice_count != 0) {
+          this.new_notice_count = data.new_notice_count
+          if (this.new_notice_count != 0) {
             wx.showTabBarRedDot({
+              index: 3
+            })
+          }else {
+            wx.hideTabBarRedDot({
               index: 3
             })
           }

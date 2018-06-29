@@ -83,7 +83,8 @@
   export default class search extends wepy.page {
     mixins = [base, http, user, ShareMessage]
     config = {
-      navigationBarTitleText: '阅读列表'
+      navigationBarTitleText: '阅读列表',
+      onReachBottomDistance: 380
     }
     data = {
       // 后置显示按钮
@@ -104,12 +105,13 @@
       sliderLeft: 0,
       sliderWidth: 180,
       screenWidth: 360,
-      user:{},
+      user: {},
       page: 1,
       title: '专题',
       noMore: false,
       loading: false,
       inputShowed: false,
+      new_notice_count: '',
       inputVal: ''
     }
 
@@ -146,12 +148,15 @@
       this.sliderOffset = _this.screenWidth / this.tabs.length * this.activeIndex
     }
     initPageData() {
-      this.$get({url: service.user}, {
+      this.$get({url: service.newnotices}, {
         success: ({code, data}) => {
-          this.user = data
-          console.log(user)
-          if (this.user.new_notice_count != 0) {
+          this.new_notice_count = data.new_notice_count
+          if (this.new_notice_count != 0) {
             wx.showTabBarRedDot({
+              index: 3
+            })
+          }else {
+            wx.hideTabBarRedDot({
               index: 3
             })
           }
@@ -216,14 +221,15 @@
       }, {
         success: ({code, data}) => {
           _this.noMore = false
-          _this.loading = false
           if (data.data.length == 0 && data.data.last_page == 1) {
             _this.noMore = true
+            _this.loading = false
             _this.list = []
             return
           }
           if (data.current_page > data.last_page) {
             _this.noMore = true
+            _this.loading = false
             return
           }
           data = data.data
@@ -234,9 +240,13 @@
           }
           if (_this.list.length === 0 || _this.page === 1) {
             _this.list = data
+            _this.loading = false
           } else {
             data.map(function (item, index) {
               _this.list.push(item)
+              setTimeout(() => {
+                _this.loading = false
+              }, 500)
             })
           }
           _this.noMore = true

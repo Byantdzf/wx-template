@@ -16,7 +16,7 @@
           <view class="clearfix"></view>
         </view>
       <view class="text-center pay">
-        <view class="btn_red font_32" style="margin-left: 200rpx" @tap="binding">绑定</view>
+        <view class="btn_red font_32" style="margin-left: 200rpx" @tap="binding">接受邀请</view>
       </view>
     </view>
   </view>
@@ -121,13 +121,29 @@
         }, 800)
         this.$post({url: service.inviteBind + '/' + self.sharePay_id, data}, {
           success: ({code, data}) => {
-            wx.showToast({
-              title: '绑定成功！',
-              duration: 1500
-            })
-            setTimeout(() => {
-              wx.switchTab({url: '/pages/home/index'})
-            }, 1000)
+            if (data.is_ok) {
+              wx.showToast({
+                title: '加入成功！',
+                duration: 1500
+              })
+              setTimeout(() => {
+                wx.switchTab({url: '/pages/home/index'})
+              }, 1000)
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: '你的等级高于' + self.inviteData.rank.name,
+                confirmText: '返回首页',
+                success: function (res) {
+                  if (res.confirm) {
+                    wx.switchTab({url: '/pages/home/index'})
+                  } else if (res.cancel) {
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+            }
+
             self.$apply()
           },
           fail: ({code, data}) => {},

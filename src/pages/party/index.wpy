@@ -73,6 +73,7 @@
       loading: false,
       inputShowed: false,
       inputVal: '',
+      new_notice_count: '',
       formId: ''
     }
 
@@ -110,12 +111,15 @@
 //      }, 200)
     }
     initPageData() {
-      this.$get({url: service.user}, {
+      this.$get({url: service.newnotices}, {
         success: ({code, data}) => {
-          this.user = data
-          console.log(user)
-          if (this.user.new_notice_count != 0) {
+          this.new_notice_count = data.new_notice_count
+          if (this.new_notice_count != 0) {
             wx.showTabBarRedDot({
+              index: 3
+            })
+          }else {
+            wx.hideTabBarRedDot({
               index: 3
             })
           }
@@ -201,19 +205,6 @@
       })
     }
 
-    // 初始化页面数据
-    initPageData() {
-      var self = this
-      self.loading = false
-      // this.$get({url: service.my_libraries}, {
-      //   success: ({code, data}) => {
-      //     this.mylibs = data
-      //     self.config.navigationBarTitleText = data.name
-      //   },
-      //   fail: ({code, data}) => {},
-      //   complete: () => { this.loaded = false }
-      // })
-    }
 
     getLibraries(keyword) {
       let _this = this

@@ -5,7 +5,7 @@
     </view>
     <view >
       <view class="font_32 loveTitle">普通VIP</view>
-      <view class="paylist"  wx:for="{{paylist}}" wx:key="*this">
+      <view class="paylist"  wx:for="{{paylist}}" wx:key="*this" @tap="conversion({{item}})">
         <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
           {{item.name}} <span class="red">{{item.price}}元</span>
           <span class="red flo_r" @tap="conversion({{item}})">升级</span>
@@ -16,7 +16,7 @@
     </view>
     <view >
       <view class="font_32 loveTitle">高级VIP</view>
-      <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this">
+      <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this" @tap="conversion({{item}})">
         <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
           {{item.name}} <span class="red">{{item.price}}元</span>
           <span class="red flo_r" @tap="conversion({{item}})">升级</span>
@@ -27,7 +27,7 @@
     </view>
     <view >
       <view class="font_32 loveTitle">海外VIP</view>
-      <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this">
+      <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this" @tap="conversion({{item}})">
         <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
           {{item.name}} <span class="red">{{item.price}}元</span>
           <span class="red flo_r" @tap="conversion({{item}})">升级</span>
@@ -110,6 +110,9 @@
     initPageData() {
       // console.log("刷新成功")
       let that = this
+      that.paylist = []
+      that.paylist1 = []
+      that.paylist2 = []
       this.$get({url: service.ranks}, {
         success: ({code, data}) => {
           data.forEach((item, index, arr) => {

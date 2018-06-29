@@ -21,19 +21,24 @@
                 </block>
                 <block wx:else>
                   <block wx:if="{{user.rank_id == 0}}">
-                    <view class="orange font_26 text-center flo_r menber" @tap="goto('/pages/users/upgradeVIP')">
-                      <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                             class="flo_l"></image>
-                      <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">非会员</view>
-                    </view>
+                    <span @tap="goto('/pages/users/upgradeVIP')">
+                      <span class="flo_r font_26" style="margin: 8rpx 12rpx">升级</span>
+                      <view class="orange font_26 text-center flo_r menber" style="width: 116rpx" >
+                        <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
+                               class="flo_l"></image>
+                        <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">普通会员</view>
+                      </view>
+                    </span>
                   </block>
                   <block wx:else>
-                    <view class="orange font_26 text-center flo_r menber" style="width: 76rpx"
-                          @tap="goto('/pages/users/upgradeVIP')">
-                      <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                             class="flo_l"></image>
-                      <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">会员</view>
-                    </view>
+                    <span @tap="goto('/pages/users/upgradeVIP')">
+                      <span class="flo_r font_26" style="margin: 8rpx 12rpx">升级</span>
+                      <view class="orange font_26 text-center flo_r menber" style="width: 76rpx">
+                        <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
+                               class="flo_l"></image>
+                        <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">{{user.rank_name}}</view>
+                      </view>
+                    </span>
                   </block>
                 </block>
               </view>
@@ -180,9 +185,12 @@
       this.$get({url: service.user}, {
         success: ({code, data}) => {
           this.user = data
-          console.log(user)
           if (this.user.new_notice_count != 0) {
             wx.showTabBarRedDot({
+              index: 3
+            })
+          }else {
+            wx.hideTabBarRedDot({
               index: 3
             })
           }

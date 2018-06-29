@@ -23,17 +23,17 @@
                 <view style="font-size: 26rpx;line-height: 32rpx;" class="flo_r black_6 ">{{mylibs.age}}</view>
               </view>
               <block wx:if="{{mylibs.rank_id == '0'}}">
-                <view class="orange font_26 text-center flo_r menber">
+                <view class="orange font_26 text-center flo_r menber" style="width: 116rpx">
                   <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
                          class="flo_l"></image>
-                  <view style="font-size: 20rpx;margin-top: 4rpx" class="flo_r">非会员</view>
+                  <view style="font-size: 20rpx;margin-top: 4rpx" class="flo_r">普通会员</view>
                 </view>
               </block>
               <block wx:else>
                 <view class="orange font_26 text-center flo_r menber" style="width: 76rpx">
                   <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
                          class="flo_l"></image>
-                  <view style="font-size: 20rpx;margin-top: 0rpx" class="flo_r">会员</view>
+                  <view style="font-size: 20rpx;margin-top: 0rpx" class="flo_r">{{mylibs.rank.name}}</view>
                 </view>
               </block>
             </view>
@@ -79,7 +79,7 @@
       <span class="flo_r">{{profile_courtship.degree}}</span>
     </view>
     <view style="margin: 0 44rpx;" class="wx_Title">
-      <span>现所在城市</span>
+      <span>常居地</span>
       <span class="flo_r">{{profile_courtship.city}}</span>
     </view>
     <view style="margin: 0 44rpx;" class="wx_Title">
