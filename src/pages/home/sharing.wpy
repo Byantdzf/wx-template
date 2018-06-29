@@ -121,7 +121,7 @@
         }, 800)
         this.$post({url: service.inviteBind + '/' + self.sharePay_id, data}, {
           success: ({code, data}) => {
-            if (data.is_ok) {
+            if (data.is_ok || data.length == 0) {
               wx.showToast({
                 title: '加入成功！',
                 duration: 1500
