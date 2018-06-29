@@ -5,7 +5,7 @@
 // 域名
 var host = 'https://love.ufutx.com/api',
 // var host = 'http://love.hankin.com/api',
-    book = 'http://christ.data.ufutx.com/api',
+    book = 'https://christ.data.ufutx.com/api',
     party= 'https://party.ufutx.com/api'
 export const service = {
     // 登录接口
