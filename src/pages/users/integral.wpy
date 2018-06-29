@@ -11,7 +11,7 @@
   <view class="page-user">
     <view class="bold orange integral_title">充值:</view>
     <view class="text-center">
-      <input type="number" class="input_price flo_l font_28"  placeholder="请输入充值金额" @input="bindKeyInput"/>
+      <input  class="input_price flo_l font_28"  placeholder="请输入充值金额" type="digit" @input="bindKeyInput"/>
       <view class="btn_red font_26 flo_r" style="width: 200rpx;height: 100rpx;line-height: 115rpx;margin: auto;margin-top: -36rpx;margin-right: -42rpx;" @tap="recharge">充值</view>
     </view>
     <view class="clearfloat"></view>
@@ -55,6 +55,7 @@
       nickName: '加载中...',
       price: 0,
       trade_no: '',
+      loaded: false,
       list: []
 
     }
@@ -99,7 +100,7 @@
         fail: ({code, data}) => {
         },
         complete: () => {
-          self.loaded = false
+//          self.loaded = false
         }
       })
     }
@@ -139,7 +140,7 @@
                   fail: ({code, data}) => {
                   },
                   complete: () => {
-                    this.loaded = false
+//                    this.loaded = false
                   }
                 })
               },
@@ -155,7 +156,7 @@
           fail: ({code, data}) => {
           },
           complete: () => {
-            this.loaded = false
+//            this.loaded = false
           }
         })
       },

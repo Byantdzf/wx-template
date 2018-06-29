@@ -63,8 +63,8 @@
       return this.$parent.onShareAppMessage(this.config.navigationBarTitleText)
     }
 
-    onLoad() {
-      this.sharePay_id = wx.getStorageSync('sharePay_id')
+    onLoad(e) {
+      this.sharePay_id = e.id
       this.$apply()
     }
 

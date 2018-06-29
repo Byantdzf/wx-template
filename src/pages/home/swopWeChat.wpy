@@ -8,7 +8,7 @@
         向{{other_user.name}}请求加微信
       </view>
       <view class="white font_32 text-center" wx:if="{{user.wechat_qrcode}}" style="position: absolute;left: 3%;top: 31%;">
-        <image src="{{user.wechat_qrcode}}"  mode="aspectFit" style="width: 600rpx;height: 600rpx"  ></image>
+        <image src="{{user.wechat_qrcode}}" @tap="previewImage({{user.wechat_qrcode}})"   mode="aspectFit" style="width: 600rpx;height: 600rpx"  ></image>
       </view>
       <view wx:else style="position: absolute;left: 19%;top: 41%;" @tap="chooseimage">
         <view class="upload text-center" >
@@ -191,6 +191,14 @@
     }
 
     methods = {
+      previewImage(image) {
+        let array = []
+        array.push(image)
+        wepy.previewImage({
+          current: image, // 当前显示图片的http链接
+          urls: array // 需要预览的图片http链接列表
+        })
+      },
       chooseimage() {
         var that = this
         wx.chooseImage({

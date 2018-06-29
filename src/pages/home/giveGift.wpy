@@ -2,7 +2,7 @@
   <view class="page__bd "  wx:for="{{list1}}" wx:key="*this" >
     <view class="flo_l borrowlist" @tap="goto('/pages/library/library?id={{item.id}}')">
       <view class="flo_r weui-cell__hd" >
-        <image src="{{other_user.wechat.avatar}}" mode="aspectFit"   style="width: 120rpx;height: 120rpx;border-radius: 50%; margin-right: 12rpx" class="flo_r"></image>
+        <image src="{{other_user.wechat.avatar}}" mode="aspectFit"  style="width: 120rpx;height: 120rpx;border-radius: 50%; margin-right: 12rpx" class="flo_r"></image>
       </view>
       <view class="flo_l" style="width: 78%;">
         <view  class="font_28 flo_l orange bold" style="margin-left: 12rpx;width: 86%">
@@ -21,7 +21,7 @@
       <view class="btn_red font_26" style="width: 150rpx;height: 80rpx;line-height: 84rpx;margin: auto" @tap="conversion({{item}})">赠送</view>
     </view>
   </view>
-  <modal class="modal" hidden="{{hide}}" title="付款详情" no-cancel confirm-text="确认支付" @confirm="modalChange2">
+  <modal class="modal" hidden="{{hide}}" title="付款详情"  confirm-text="确认支付" @confirm="modalChange2" @cancel="hidePay">
     <view class="text-center font_28" style="border-bottom: 1rpx solid #d3d3d3">
       <view>购买礼物：{{message.name}}</view>
       <view>{{message.price}}元 X 一{{message.unit}}</view>
@@ -148,6 +148,10 @@
       })
     }
     methods = {
+      hidePay() {
+        this.hide = true
+        this.$apply()
+      },
       modalChange2() {
         let that = this
         that.hide = true
