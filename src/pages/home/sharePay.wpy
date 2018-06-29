@@ -17,9 +17,40 @@
         </view>
       </radio-group>
       <view class="text-center pay">
-        <view class="btn_red font_32" style="margin-left: 200rpx" @tap="pay">确认支付</view>
+        <view class="btn_red font_32" style="margin-left: 200rpx" @tap="showmodel">确认支付</view>
       </view>
     </view>
+    <modal class="modal" hidden="{{hide}}" title="支付详情"  confirm-text="确认支付" bindcancel="listenerCancel1" @confirm="pay">
+      <!--<view class="text-center font_28" style="border-bottom: 1rpx solid #d3d3d3">-->
+        <!--<view>升级VIP：升级到{{message.name}}</view>-->
+        <!--<view>{{message.money}} X 1次</view>-->
+      <!--</view>-->
+      <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
+        <span class="bold">订单详情：</span>
+        <span class="flo_r">替他人支付{{infor.name}}</span>
+      </view>
+      <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
+        <span class="bold">福分支付：</span>
+        <span class="flo_r">{{price}}</span>
+      </view>
+      <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
+        <span class="bold">我的抵用：</span>
+        <span class="flo_r">{{score}}</span>
+      </view>
+      <block wx:if="{{show}}">
+        <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;" >
+          <span class="bold">剩余福分：</span>
+          <span class="flo_r orange">{{score - price}}</span>
+        </view>
+      </block>
+      <block wx:else>
+        <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;" >
+          <span class="bold">现金支付：</span>
+          <span class="flo_r orange">{{monay}}元</span>
+        </view>
+      </block>
+
+    </modal>
     <modal  hidden="{{showOpenSet}}"
             no-confirm
             title="提示"
@@ -81,6 +112,12 @@
       paylist: [],
       shareImage: true,
       pic: '',
+      infor: {},
+      price: 0,
+      monay: 0,
+      score: 0,
+      show: true,
+      hide: true,
       showOpenSet: true
     }
     computed = {
@@ -111,7 +148,9 @@
       let that = this
       this.$get({url: service.ranks}, {
         success: ({code, data}) => {
-          that.paylist = data
+          that.paylist = data.ranks
+          let num = data.score.split('.')
+          that.score = num[0]
           that.paylist.length = 3
           that.$apply()
           console.log(that.paylist)
@@ -127,6 +166,10 @@
     methods = {
       listenerCancel() {
         this.shareImage = true
+        this.$apply()
+      },
+      listenerCancel1() {
+        this.hide = true
         this.$apply()
       },
       // 关闭设置提示（image）
@@ -166,18 +209,34 @@
           })
         }
       },
+      showmodel() {
+        if (!this.pay_id) {
+          return this.$showToast('请先选择会员类型')
+        }
+        this.hide = false
+        this.$apply()
+      },
       goto(url) {
         wx.navigateTo({url: url})
       },
       radioChange: function(e) {
         console.log('radio发生change事件，携带value值为：', e.detail.value)
         this.pay_id = e.detail.value
-//        this.paylist.forEach((item, index, arr) => {
-//          if (this.pay_id == arr[index].id) {
-//            this.type = arr[index].type
-//          }
-//        })
+        this.paylist.forEach((item, index, arr) => {
+          if (this.pay_id == arr[index].id) {
+            this.infor = arr[index]
+            this.price = arr[index].price.split('.')[0]
+          }
+        })
+        let monay = this.score - this.price
+        if (monay < 0) {
+          this.show = false
+          this.monay =  Math.abs(monay)
+        }else {
+          this.show = true
+        }
         this.$apply()
+        console.log(this.infor)
       },
       pay() {
         let that = this,
@@ -185,11 +244,9 @@
             type: 'other_rank',
             rank_id: that.pay_id
           }
-        if (!that.pay_id) {
-          return that.$showToast('请先选择会员类型')
-        }
         this.$post({url: service.charge, data}, {
           success: ({code, data}) => {
+            that.hide = true
             that.trade_no = data.invite_order.trade_no
             that.invite_order_id = data.invite_order.id
             wx.setStorageSync('sharePay_id', data.invite_order.id)
@@ -213,6 +270,7 @@
                           title: '支付成功',
                           duration: 2000
                         })
+                        that.initPageData()
                         that.$get({url: service.invitee + '/' + that.invite_order_id + '/share/pic'}, {
                           success: ({code, data}) => {
                             that.shareImage = false
@@ -259,6 +317,7 @@
                             title: '支付成功',
                             duration: 2000
                           })
+                          that.initPageData()
                         },
                         fail: ({code, data}) => {
                         },
