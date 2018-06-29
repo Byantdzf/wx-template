@@ -149,8 +149,10 @@
       this.$get({url: service.ranks}, {
         success: ({code, data}) => {
           that.paylist = data.ranks
-          let num = data.score.split('.')
-          that.score = num[0]
+          if (data.score != 0) {
+            let num = data.score.split('.')
+            that.score = num[0]
+          }
           that.paylist.length = 3
           that.$apply()
           console.log(that.paylist)
