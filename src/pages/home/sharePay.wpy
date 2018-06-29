@@ -34,7 +34,7 @@
         <span class="flo_r">{{price}}</span>
       </view>
       <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
-        <span class="bold">我的抵用：</span>
+        <span class="bold">福分抵用：</span>
         <span class="flo_r">{{score}}</span>
       </view>
       <block wx:if="{{show}}">
