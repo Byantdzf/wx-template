@@ -15,7 +15,7 @@
     </view>
   </view>
   <view class="gift text-center">
-        <image class="gift-avatar" src="{{gift.icon}}" background-size="cover"/>
+        <image class="gift-avatar" src="{{gift.icon}}" mode="aspectFit" background-size="cover"/>
         <view class="font_28  bold orange" style="width: 56%;margin-bottom: 12rpx;">一共收到：</view>
         <view class="font_28  bold text-center orange" style="width: 100%">{{user_gift.num}}{{gift.unit}}{{gift.name}}</view>
   </view>
@@ -24,7 +24,7 @@
     <block wx:if="{{list.length}}">
       <view wx:for="{{list}}" class="book" wx:key="*this" @tap="goto('/pages/home/information?id={{item.send_user.id}}')">
         <view class="flo_l">
-          <image class="book-avatar" src="{{item.send_user.avatar}}" background-size="cover"/>
+          <image class="book-avatar" mode="aspectFit" src="{{item.send_user.avatar}}" background-size="cover"/>
         </view>
         <view class="font_28" style="margin-top: 22rpx">
           <view class="flo_l">{{item.send_user.name}}</view>

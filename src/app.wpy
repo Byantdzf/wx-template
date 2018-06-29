@@ -100,6 +100,10 @@
     }
 
     onLaunch(options) {
+
+    }
+
+    onShow(options) {
       console.log(options)
       if (options.scene == 1037 || options.scene == 1038) {
         let uid = options.referrerInfo.extraData.uid
@@ -187,9 +191,6 @@
           }
         })
       }
-    }
-
-    onShow(options) {
     }
 
     onShareAppMessage(title = '友福聚会') {

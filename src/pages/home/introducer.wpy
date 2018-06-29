@@ -23,20 +23,20 @@
                        class="flo_l"></image>
                 <view style="font-size: 26rpx;line-height: 32rpx;" class="flo_r black_6 ">{{mylibs.age}}</view>
               </view>
-              <block wx:if="{{mylibs.rank_id == 0}}">
+              <!--<block wx:if="{{mylibs.rank_id == 0}}">-->
                 <view class="orange font_26 text-center flo_r menber">
                   <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
                          class="flo_l"></image>
-                  <view style="font-size: 20rpx;margin-top: 4rpx" class="flo_r">非会员</view>
+                  <view style="font-size: 20rpx;margin-top: 4rpx" class="flo_r">介绍人</view>
                 </view>
-              </block>
-              <block wx:else>
-                <view class="orange font_26 text-center flo_r menber" style="width: 76rpx">
-                  <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                         class="flo_l"></image>
-                  <view style="font-size: 20rpx;margin-top: 0rpx" class="flo_r">会员</view>
-                </view>
-              </block>
+              <!--</block>-->
+              <!--<block wx:else>-->
+                <!--<view class="orange font_26 text-center flo_r menber" style="width: 76rpx">-->
+                  <!--<image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"-->
+                         <!--class="flo_l"></image>-->
+                  <!--<view style="font-size: 20rpx;margin-top: 0rpx" class="flo_r">会员</view>-->
+                <!--</view>-->
+              <!--</block>-->
             </view>
             <view class="font_24 white text-left flo_l" style="width: 60%;padding: 12rpx;">
               {{item.distance}}
@@ -91,10 +91,10 @@
   </view>
   <block wx:if="{{mylibs.self != 1}}">
     <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;">
-      <view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')">加好友
-      </view>
-      <view class="btn_white flo_l" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')">交换微信</view>
-      <view class="btn_red flo_l" style="margin-top: -8rpx" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物
+      <!--<view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')">加好友-->
+      <!--</view>-->
+      <!--<view class="btn_white flo_l" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')">交换微信</view>-->
+      <view class="btn_red" style="margin-top: -8rpx;margin: auto;" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物
       </view>
       <view class="clearfloat"></view>
     </view>
@@ -131,7 +131,7 @@
       loaded: false,
       mylibs: [],
       array: ['举报', '取消好友'],
-      background_image: 'http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/15/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.CaShiFjcO2Q7dd44e9547b343f1c8c4f6ae9424ab900.png',
+      background_image: 'http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/29/wxc41491431733671e.o6zAJs2lf_SH4K2plnWTlsSfhR70.KZ3aXpxu5YN11d73a5863c7b195115c7e3ebb698e4d4.png',
       user: [],
       list: [],
       activeIndex: 0,
@@ -170,7 +170,7 @@
     }
 
     onPullDownRefresh() {
-      this.getLibraries()
+      this.getMessage()
     }
 
     onReachBottom() {
@@ -198,6 +198,9 @@
             self.paramet_v = false
             self.text = '关注'
             self.$apply()
+          }
+          if (data.is_friend == 0) {
+            self.array = ['举报']
           }
           self.profile_marriage = data.profile_marriage
           if (data.login_time) {

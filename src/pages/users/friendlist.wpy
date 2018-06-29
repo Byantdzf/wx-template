@@ -21,7 +21,7 @@
             </view>
             <view class="weui-cells__title"></view>
             <view class="page__bd "  wx:for="{{list}}" wx:key="*this" >
-              <view class="flo_l borrowlist" @tap="goto('/pages/home/information?id={{item.id}}')">
+              <view class="flo_l borrowlist" @tap="gotoFriendPage({{item}})">
                 <view class="flo_l weui-cell__hd" >
                   <image src="{{item.wechat.avatar}}" mode="aspectFit"   style="width: 120rpx;height: 120rpx;border-radius: 50%" class="flo_l"></image>
                 </view>
@@ -210,6 +210,15 @@
     }
 
     methods = {
+      gotoFriendPage(item) {
+        let url = ''
+        if (item.type == 'single') {
+          url = '/pages/home/information?id=' + item.id
+        } else {
+          url = '/pages/home/introducer?id=' + item.id
+        }
+        wx.navigateTo({url: url})
+      },
       showInput() {
         this.inputShowed = true
       },

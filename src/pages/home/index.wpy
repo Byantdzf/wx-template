@@ -779,7 +779,7 @@
         console.log(e)
         console.log(e.markerId)
         let that = this,
-          id = e.markerId,
+//          id = e.markerId,
           data = {
 //            id: e.markerId,
             location_latitude: that.myLat,

@@ -103,114 +103,129 @@
       <span class="flo_r">{{profile_courtship.resident_province}}</span>
     </view>
   </view>
-  <view class="font_32 wx_Title orange">VIP资料</view>
-  <view class="booklist  font_28">
-    <view style="margin: 0 44rpx;" class="wx_Title">
-      <span>薪水级别</span>
-      <span class="flo_r">{{profile_courtship.salary.text}}</span>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
-      <span>是否有车</span>
-      <span class="flo_r">{{profile_courtship.h_car == 1 ? '是' : '否'}}</span>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
-      <span>是否有房</span>
-      <span class="flo_r">{{profile_courtship.h_housing == 1 ? '是' : '否'}}</span>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title orange">
-      <span>生活照</span>
-      <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.photos.length}}张</view>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.photos.length}} != 0">
-      <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.photos}} )" mode="aspectFit"
-             style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.photos}}"
-             wx:key="*this"></image>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title orange">
-      <span>身份证</span>
-      <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.identification_photos.length}}张
+  <block wx:if="{{userType == 'single'}}">
+    <view class="font_32 wx_Title orange">VIP资料</view>
+    <view class="booklist  font_28">
+      <view style="margin: 0 44rpx;" class="wx_Title">
+        <span>薪水级别</span>
+        <span class="flo_r">{{profile_courtship.salary.text}}</span>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title">
+        <span>是否有车</span>
+        <span class="flo_r">{{profile_courtship.h_car == 1 ? '是' : '否'}}</span>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title">
+        <span>是否有房</span>
+        <span class="flo_r">{{profile_courtship.h_housing == 1 ? '是' : '否'}}</span>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title orange">
+        <span>生活照</span>
+        <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.photos.length}}张</view>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.photos.length}} != 0">
+        <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.photos}} )" mode="aspectFit"
+               style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.photos}}"
+               wx:key="*this"></image>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title orange">
+        <span>身份证</span>
+        <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.identification_photos.length}}张
+        </view>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.identification_photos.length}} != 0">
+        <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.identification_photos}} )" mode="aspectFit"
+               style="width: 120rpx;height: 120rpx;margin-right: 12rpx"
+               wx:for="{{profile_courtship.identification_photos}}" wx:key="*this"></image>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title orange">
+        <span>毕业证</span>
+        <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.graduate_photos.length}}张</view>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.graduate_photos.length}} != 0">
+        <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.graduate_photos}} )" mode="aspectFit"
+               style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.graduate_photos}}"
+               wx:key="*this"></image>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title orange">
+        <span>其他证件</span>
+        <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.other_photos.length}}张</view>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.other_photos.length}} != 0">
+        <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.other_photos}} )" mode="aspectFit"
+               style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.other_photos}}"
+               wx:key="*this"></image>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title orange">
+        <span>微信二维码</span>
+        <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.wechat_qrcode.length}}张</view>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.wechat_qrcode.length}} != 0">
+        <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.wechat_qrcode}} )" mode="aspectFit"
+               style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.wechat_qrcode}}"
+               wx:key="*this"></image>
       </view>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.identification_photos.length}} != 0">
-      <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.identification_photos}} )" mode="aspectFit"
-             style="width: 120rpx;height: 120rpx;margin-right: 12rpx"
-             wx:for="{{profile_courtship.identification_photos}}" wx:key="*this"></image>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title orange">
-      <span>毕业证</span>
-      <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.graduate_photos.length}}张</view>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.graduate_photos.length}} != 0">
-      <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.graduate_photos}} )" mode="aspectFit"
-             style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.graduate_photos}}"
-             wx:key="*this"></image>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title orange">
-      <span>其他证件</span>
-      <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.other_photos.length}}张</view>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.other_photos.length}} != 0">
-      <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.other_photos}} )" mode="aspectFit"
-             style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.other_photos}}"
-             wx:key="*this"></image>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title orange">
-      <span>微信二维码</span>
-      <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.wechat_qrcode.length}}张</view>
-    </view>
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.wechat_qrcode.length}} != 0">
-      <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.wechat_qrcode}} )" mode="aspectFit"
-             style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.wechat_qrcode}}"
-             wx:key="*this"></image>
-    </view>
-  </view>
-  <view class='list_box' wx:for='{{list}}' wx:key='this' wx:for-item='parentItem' wx:for-index='parentIndex'>
-    <view class='list'>
-      <view class='list_name_box' @tap='listTap' data-parentindex='{{parentIndex}}'>
-        <text class='list_item_name orange'>{{parentItem.listName}}</text>
-        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-      </view>
-      <view class='list_item_box' wx:if='{{parentItem.show}}'>
-        <view class='list_item' wx:for='{{parentItem.item}}' wx:key='this' catchtap='listItemTap' data-index='{{index}}'
-              data-parentindex='{{parentIndex}}'>
-          <view class='list_item_name_box' @tap="showModalV({{item.title}}, {{item.content}})">
-            <text class='list_item_name'>{{item.title}}</text>
-            <view class="weui-cell__ft weui-cell__ft_in-access">{{item.num}}</view>
+    <view class='list_box' wx:for='{{list}}' wx:key='this' wx:for-item='parentItem' wx:for-index='parentIndex'>
+      <view class='list'>
+        <view class='list_name_box' @tap='listTap({{parentIndex}})'  data-parentindex='{{parentIndex}}'>
+          <text class='list_item_name orange'>{{parentItem.listName}}</text>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </view>
+        <view class='list_item_box' wx:if='{{parentItem.show}}'>
+          <view class='list_item' wx:for='{{parentItem.item}}' wx:key='this' catchtap='listItemTap' data-index='{{index}}'
+                data-parentindex='{{parentIndex}}'>
+            <view class='list_item_name_box' @tap="showModalV({{item.title}}, {{item.content}})">
+              <text class='list_item_name'>{{item.title}}</text>
+              <view class="weui-cell__ft weui-cell__ft_in-access">{{item.num}}</view>
+            </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
-  <view class="font_32 wx_Title orange">Ta的优势</view>
-  <view class="booklist  font_28">
-    <view style="margin: 0 44rpx;" class="wx_Title text-center orange" wx:if="{{showAdvantages}}" @tap="showAdvantagesV">
-      <view class="weui-loading"></view>
-      <span>点击查看</span>
+    <view class="font_32 wx_Title orange">Ta的优势</view>
+    <view class="booklist  font_28">
+      <view style="margin: 0 44rpx;" class="wx_Title text-center orange" wx:if="{{showAdvantages}}" @tap="showAdvantagesV">
+        <view class="weui-loading"></view>
+        <span>点击查看</span>
+      </view>
+      <view wx:else>
+        <view style="margin: 0 44rpx;" class="wx_Title font_32" >
+          <span>TA—>属于： <span class=" orange">"{{character.type}}"</span></span>
+        </view>
+        <view style="margin: 0 44rpx;" class="wx_Title">
+          <span class="font_32">TA—>性格： </span>
+          <span class="orange">"{{character.character}}"</span>
+        </view>
+        <view style="margin: 0 44rpx;" class="wx_Title">
+          <span class="font_32">TA—>适合职业： </span>
+          <view class=" orange" wx:for="{{character.profession}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
     </view>
-    <view wx:else>
-      <view style="margin: 0 44rpx;" class="wx_Title font_32" >
-        <span>TA—>属于： <span class=" orange">"{{character.type}}"</span></span>
-      </view>
-      <view style="margin: 0 44rpx;" class="wx_Title">
-        <span class="font_32">TA—>性格： </span>
-        <span class="orange">"{{character.character}}"</span>
-      </view>
-      <view style="margin: 0 44rpx;" class="wx_Title">
-        <span class="font_32">TA—>适合职业： </span>
-        <view class=" orange" wx:for="{{character.profession}}" wx:key="*this">{{item}}</view>
-      </view>
-    </view>
-  </view>
+    <view style="height: 40rpx;width: 100%"></view>
+  </block>
   <block wx:if="{{mylibs.self != 1}}">
-    <view style="height: 140rpx;width: 100%"></view>
-    <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;padding: 0 10%">
-      <view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')" wx:if="{{mylibs.is_friend == 1}}">交换微信</view>
-      <view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')" wx:else>加好友
+    <block wx:if="{{userType == 'marriage'}}">
+      <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;">
+        <!--<view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')">加好友-->
+        <!--</view>-->
+        <!--<view class="btn_white flo_l" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')">交换微信</view>-->
+        <view class="btn_red" style="margin-top: -8rpx;margin: auto;" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物
+        </view>
+        <view class="clearfloat"></view>
       </view>
-      <view class="btn_red flo_l" style="margin-top: -8rpx;margin-left: 72rpx" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物
+    </block>
+    <block wx:else>
+      <view style="height: 100rpx;width: 100%"></view>
+      <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;padding: 0 10%">
+        <view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')" wx:if="{{mylibs.is_friend == 1}}">交换微信</view>
+        <view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')" wx:else>加好友
+        </view>
+        <view class="btn_red flo_l" style="margin-top: -8rpx;margin-left: 72rpx" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物
+        </view>
+        <view class="clearfloat"></view>
       </view>
-      <view class="clearfloat"></view>
-    </view>
+    </block>
   </block>
   <block wx:if="{{loading}}">
     <view class="weui-loadmore">
@@ -287,6 +302,7 @@
       profile_courtship: [],
       paramet_v: false,
       showAdvantages: true,
+      userType: '',
       character: {},
       login_time: 0
     }
@@ -301,6 +317,8 @@
       let _this = this
       console.log(e.id)
       _this.id = e.id
+      _this.userType = wx.getStorageSync('type')
+      _this.$apply()
     }
 
     onShow() {
@@ -339,8 +357,9 @@
             self.$apply()
           }
           console.log(self.list[0])
-          self.list[0].item = data.love_languages
-          self.list[1].item = data.love_characters
+          let test = [{title: '该会员还没有测试哦！', id: '0', value: ''}]
+          self.list[0].item = data.love_languages.length ? data.love_languages : test
+          self.list[1].item = data.love_characters.length ? data.love_characters : test
           console.log(data.city_test_arr)
           self.profile_courtship = data.profile_courtship
           self.character = data.character
@@ -542,11 +561,12 @@
           content: content
         })
       },
-      listTap(e) {
+      listTap(index, e) {
+        console.log(index)
         console.log('触发了最外层')
         let num = this.mylibs.my_rank_name.split('VIP')[1]
         console.log(num)
-        if (num < 2) {
+        if (num < 2 && index == 1) {
           wx.showModal({
             title: '提示',
             content: '需要先成为VIP2会员！',
