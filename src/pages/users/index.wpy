@@ -181,7 +181,7 @@
         success: ({code, data}) => {
           this.user = data
           console.log(user)
-          if (this.user.new_notice_count) {
+          if (this.user.new_notice_count != 0) {
             wx.showTabBarRedDot({
               index: 3
             })
