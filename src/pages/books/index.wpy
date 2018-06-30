@@ -306,8 +306,8 @@
         }
         this.$get({url: service.article, data}, {
           success: ({code, data}) => {
-            console.log(encodeURIComponent(item))
-            wx.navigateTo({url: '/pages/books/bookDetail?url=' + encodeURIComponent(item)})
+            console.log(encodeURIComponent(data))
+            wx.navigateTo({url: '/pages/books/bookDetail?url=' + encodeURIComponent(data)})
           },
           fail: ({code, data}) => {
           },

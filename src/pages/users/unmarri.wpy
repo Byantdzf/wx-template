@@ -51,8 +51,8 @@
     <view  class="list ">
       <picker  mode = 'region' value="{{region}}"  bindchange="cityChange" >
         <view class="picker">
-          城市
-          <text class="text">{{region[0]}},{{region[1]}},{{region[2]}}</text>
+          常居地
+          <text class="text">{{region[0]}}、{{region[1]}}、{{region[2]}}</text>
         </view>
       </picker>
     </view>
@@ -190,7 +190,7 @@
           carIndex: 0,
           housing: ['无', '有'],
           housingIndex: 0,
-          region: ['广东省', '广州市'],
+          region: ['省', '市', '区'],
           region_id: [],
           birthday: '1990-01-01',
           user: {

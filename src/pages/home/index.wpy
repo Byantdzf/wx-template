@@ -1,7 +1,7 @@
 <template>
   <view class="map">
     <!--<Message :title.sync="title" ></Message>-->
-    <map id="map" longitude="{{myLong}}" latitude="{{myLat}}" scale="16" markers="{{markers}}" @markertap="markertap"
+    <map id="map" longitude="{{myLong}}" latitude="{{myLat}}" scale="12" markers="{{markers}}" @markertap="markertap"
          @regionchange="regionchange" show-location  wx:if="{{showMap}}" style="width: 100%; height: {{height}};"   polyline="{{polyline}}">
       <cover-view class='btn' @tap="showModal_v"
                   style="background: white;width: 580rpx;position: absolute;right: 8%;top: 22rpx;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3">
@@ -670,6 +670,7 @@
         }.bind(this), 200)
       },
       gotofriends(item) {
+        console.log(item)
         let url = ''
         if (item.type == 'single') {
           url = '/pages/home/information?id=' + item.id
