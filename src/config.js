@@ -78,6 +78,8 @@ export const service = {
     parties: `${party}/parties`,
     //vip等级列表
     ranks: `${host}/ranks`,
+    //首页shareimage
+    shareimage: `${host}/share/home/pic`,
     //vip充值user信息 3级
     rankUser: `${host}/rank/user`,
     //我的福分 兑换礼物列表
@@ -104,6 +106,8 @@ export const service = {
     register_infor: `${host}/register/infor`,
     //动态登录
     account: `${host}/account/uid`,
+    //message_num
+    newnotices: `${host}/new/notices`
     // 主域
 }
 

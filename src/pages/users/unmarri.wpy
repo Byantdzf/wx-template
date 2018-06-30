@@ -231,8 +231,6 @@
         }
 
         onLoad() {
-          this.getindustry()
-          this.getuser()
 //          network.GET('user', {
 //            success: function (res) {
 //              let result = res.data.data
@@ -292,7 +290,12 @@
 //            }
 //          })
         }
-
+        onShow() {
+          this.objectMultiArray = []
+          this.getindustry()
+          this.getuser()
+          this.$parent.getTracker(this.$root.$name, '个人信息（单身）修改')
+        }
         getindustry() {
           let that = this
           this.loading = true
@@ -374,10 +377,6 @@
             icon: 'none',
             duration: 1500
           })
-        }
-
-        onShow() {
-          this.$parent.getTracker(this.$root.$name, '个人信息（单身）修改')
         }
 
         methods = {

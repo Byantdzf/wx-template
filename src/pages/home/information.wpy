@@ -464,7 +464,7 @@
 
     methods = {
       showAdvantagesV() {
-        let num = this.mylibs.my_rank_name.split('VIP')[1]
+        let num = this.mylibs.my_rank_id
         if (num < 3) {
           return wx.showModal({
             title: '提示',
@@ -564,7 +564,7 @@
       listTap(index, e) {
         console.log(index)
         console.log('触发了最外层')
-        let num = this.mylibs.my_rank_name.split('VIP')[1]
+        let num = this.mylibs.my_rank_id
         console.log(num)
         if (num < 2 && index == 1) {
           wx.showModal({

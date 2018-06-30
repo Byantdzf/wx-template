@@ -186,7 +186,7 @@
         wx.navigateTo({url: url})
       },
       viptest(type, url) {
-        if (this.user.rank_name == 'VIP1' && type == 'vip2') {
+        if (this.user.rank_id == 1 && type == 'vip2') {
           return wx.showModal({
             title: '提示',
             content: '需要先成为VIP2会员！',
@@ -201,7 +201,7 @@
             }
           })
         }
-        if (this.user.rank_name == 'VIP1' && type == 'vip3') {
+        if (this.user.rank_id == 1 && type == 'vip3') {
           return wx.showModal({
             title: '提示',
             content: '需要先成为VIP3会员！',
@@ -216,7 +216,7 @@
             }
           })
         }
-        if (this.user.rank_name == 'VIP2' && type == 'vip3') {
+        if (this.user.rank_id == 2 && type == 'vip3') {
           return wx.showModal({
             title: '提示',
             content: '需要先成为VIP3会员！',

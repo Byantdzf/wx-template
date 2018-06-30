@@ -85,8 +85,8 @@
             cancel-text="取消"
             bindconfirm="saveImage('save')"
             bindcancel="listenerCancel">
-      <image style="position: relative;left: -3%;top:0%;box-shadow: 1rpx 1rpx 12rpx #d3d3d3;"
-                   src="http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/14/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.L2cteRZyEIJP66cb1b4030bf3cd564f3686c1c01fd39.png"
+      <image style="position: relative;left: -3%;top:0%;box-shadow: 1rpx 1rpx 12rpx #d3d3d3;" mode="aspectFit"
+             src="{{shareimage}}"
                    class="shaerImage"></image>
       <!--<view style="position: absolute;left: 40%;bottom: 0;background: #FAFAFC; z-index: 999999;">-->
         <!--<cover-view-->
@@ -167,6 +167,8 @@
       southwest: {},
       new_notice_count: '',
       northeast: {},
+      shareimage: '',
+      showLoad: true,
       animationImage: {}
     }
     components = {
@@ -216,7 +218,7 @@
             wx.showTabBarRedDot({
               index: 3
             })
-          }else {
+          } else {
             wx.hideTabBarRedDot({
               index: 3
             })
@@ -229,6 +231,10 @@
     updataMap() {
 //      let token = wx.getStorageSync('token')
       let that = this
+      if(that.showLoad){
+        that.$showLoading('急速加载中')
+        that.showLoad = false
+      }
       that.myLong = wx.getStorageSync('myLong')
       that.myLat = wx.getStorageSync('myLat')
       that.mapCtx.getRegion({
@@ -278,6 +284,7 @@
                   }
                 )
               })
+              wx.hideLoading()
               that.markers = markersNew
               that.$apply()
               that.noMoreList = false
@@ -528,9 +535,13 @@
     methods = {
       shareFriend() {
         this.$showLoading('加载中...')
-        setTimeout(() => {
-          wx.hideLoading()
-        }, 200)
+        this.$get({url: service.shareimage}, {
+          success: ({code, data}) => {
+            this.shareimage = data.pic
+            this.$apply()
+            wx.hideLoading()
+          }
+        })
         this.showMap = false
         this.showImage = false
         this.$apply()
@@ -567,14 +578,14 @@
       },
       saveImage(type) {
         var that = this
-        wx.getSetting({
-          success: (res) => {
-            console.log(res)
-          }
-        })
+//        wx.getSetting({
+//          success: (res) => {
+//            console.log(res)
+//          }
+//        })
 //        if (type) {
         wepy.downloadFile({
-          url: 'http://pic.qiantucdn.com/images/banner/5b2cabd9084e0.jpg',
+          url: that.shareimage,
           success: (res) => {
             console.log(res)
             wepy.saveImageToPhotosAlbum({
@@ -774,7 +785,7 @@
           that.showMap = true
           that.$apply()
           wepy.downloadFile({
-            url: 'http://pic.qiantucdn.com/images/banner/5b2cabd9084e0.jpg',
+            url: that.shareimage,
             success: (res) => {
               that.$showToast('保存中...')
               wepy.saveImageToPhotosAlbum({
@@ -806,6 +817,7 @@
             location_latitude: that.myLat,
             location_longitude: that.myLong
           }
+//        that.$showLoading('急速加载中')
         console.log(data)
         that.showfriend = true
 //        that.$get({url: service.friendNear + '/' + id, data}, {
@@ -835,6 +847,7 @@
             }]
             that.$apply()
             arr[index].iconPath = '../../images/icon/icon-position_red.png'
+//            wx.hideLoading()
           }
           if (arr[index].id !== e.markerId && arr[index].id !== 0) {
             arr[index].iconPath = '../../images/icon/icon-position.png'
