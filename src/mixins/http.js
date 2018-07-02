@@ -160,11 +160,15 @@ export default class httpMixin extends wepy.mixin {
 
           wx.setStorageSync('jump', url)
 
-          if(data.message == 'rank'){
-             wx.navigateTo({url: '/pages/users/upgradingVIP'})
+          if (data.message == 'rank') {
+            wx.navigateTo({url: '/pages/users/upgradingVIP'})
           }
-          if(data.message == 'profile') {
-             wx.navigateTo({url: '/pages/users/unmarri'})
+          if (data.message == 'profile') {
+            if (wx.getStorageSync('type') == 'marriage') {
+              wx.navigateTo({url: '/pages/users/intro'})
+            } else {
+              wx.navigateTo({url: '/pages/users/unmarri'})
+            }
           }
         } else {
           // 失败回调：其他情况
