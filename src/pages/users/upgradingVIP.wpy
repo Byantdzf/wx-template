@@ -261,8 +261,11 @@
                     success: ({code, data}) => {
                       wx.showToast({
                         title: '支付成功',
-                        duration: 2000
+                        duration: 1200
                       })
+                      setTimeout(() => {
+                        wx.navigateTo({url: 'pages/users/vipSetting'})
+                      }, 1200)
                     },
                     fail: ({code, data}) => {
                     },
@@ -290,7 +293,7 @@
       }
     }
 
-    components = {userTitle : userTitle}
+    components = {userTitle: userTitle}
   }
 </script>
 

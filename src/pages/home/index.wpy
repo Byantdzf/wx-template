@@ -180,12 +180,11 @@
       animationImage: {}
     }
     onLoad() {
-//      this.getSystem()
       var that = this;
       var myAmapFun = new amapFile.AMapWX({key:'3a87b76a38316973e09466aa9cf3b401'});
       myAmapFun.getPoiAround({
-        iconPathSelected: '../../images/icon/icon-position_red.png', //如：..­/..­/img/marker_checked.png
-        iconPath: '../../images/icon/icon-position.png', //如：..­/..­/img/marker.png
+        iconPathSelected: '../../images/icon/icon-position_red.png',
+        iconPath: '../../images/icon/icon-position.png',
         success: function(data){
           markersData = data.markers;
           that.setData({
@@ -302,7 +301,7 @@
                   }
                 )
               })
-              that.markersData = markersNew
+//              that.markersData = markersNew
               that.$apply()
               that.noMoreList = false
             },

@@ -248,8 +248,8 @@
             data: {
               location_latitude: that.myLat,
               location_longitude: that.myLong,
-              southwest: that.southwest,
-              northeast: that.northeast,
+//              southwest: that.southwest,
+//              northeast: that.northeast,
               nopage: 1
             }
           }, {

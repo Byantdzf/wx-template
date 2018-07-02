@@ -47,6 +47,21 @@
         'pages/users/integralAddress',
         'pages/users/upgradingVIP'
       ],
+//      'subPackages': [
+//        {
+//          'root': 'page/component/',
+//          'pages': [
+//            'pages/cat',
+//            'pages/dog'
+//          ]
+//        }, {
+//          'root': 'packageB',
+//          'pages': [
+//            'pages/apple',
+//            'pages/banana'
+//          ]
+//        }
+//      ],
       window: {
         navigationBarTitleText: '福恋',
         navigationBarTextStyle: 'black',
