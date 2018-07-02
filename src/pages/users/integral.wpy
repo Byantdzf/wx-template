@@ -1,9 +1,9 @@
 <template>
-  <view class="page-user">
-    <view class="bold orange integral_title">我的福分:</view>
+  <view class="page-user integral_box">
+    <view class="bold orange ">我的福分:</view>
     <view class="text-center">
       <view class="integral_num bold">{{score}}</view>
-      <image src="http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/13/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.1Wrkpu792OPp8264ecf980b4c04dd0f5705b15fe6602.png" style="width:140px; height: 140px;"></image>
+      <!--<image src="http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/13/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.1Wrkpu792OPp8264ecf980b4c04dd0f5705b15fe6602.png" style="width:140px; height: 140px;"></image>-->
     </view>
     <view class="orange integral_log flo_r font_26 btn_white" @tap="goto('/pages/users/integralRecord')">福分记录</view>
     <view class="clearfloat"></view>
@@ -92,7 +92,7 @@
         success: ({code, data}) => {
           self.loading = false
           let num = data.score.remain_amount.split('.')
-          self.score = num[0]
+          self.score = data.score.remain_amount
           self.list = data.goodses
           self.$apply()
 //          debugger
@@ -203,13 +203,20 @@ page{
     width: 68%;
     border-bottom: 1rpx solid #d3d3d3;
   }
+  .integral_box{
+    box-shadow: 1rpx 1rpx 12rpx #d3d3d3;
+    padding: 22rpx;
+    margin:22rpx 32rpx;
+    border-radius: 12rpx;
+  }
 .page-user{
-  .integral_title{
+
+  .{
     margin-bottom: 22rpx;
   }
   .integral_num{
-    font-size: 80rpx;
-    margin-bottom: -160rpx;
+    font-size: 68rpx;
+    /*margin-bottom: -160rpx;*/
     position: relative;
     color: #0DB5A5;
   }
@@ -217,7 +224,7 @@ page{
     width: 200rpx;
     height: 100rpx;
     line-height: 108rpx;
-    margin-right: -42rpx;
+    margin-right: -22rpx;
   }
 }
   .gift_list{

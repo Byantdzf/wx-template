@@ -158,11 +158,11 @@
           // debugger
           // 根据业务接口处理:业务登陆:异步
           let data = {code: res.code, from_openid: wx.getStorageSync('from_openid')}
-          this.$post({ url: service.login, data}, {
+          this.$post({url: service.login, data}, {
             success: ({code, data}) => {
               this.marriage = data.marriage
               this.$apply()
-              if(data.token){
+              if (data.token) {
                 wx.setStorageSync('token', data.token)
                 wx.setStorageSync('openid', data.openid)
               }
@@ -173,8 +173,6 @@
           console.log('wepy.login.fail:', res)
         }
       })
-
-
 //      this.$setCode()
 //      debugger
 //      wepy.getUserInfo({

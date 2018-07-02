@@ -31,7 +31,7 @@
         <input type="text" placeholder="" class="Inp" @blur="typing('company')" value="{{company}}" focus="{{WordFocus}}"/>
       </view>
       <view  class="list">
-        <picker mode="multiSelector" bindchange="bindMultiPickerChange2" bindcolumnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{objectMultiArray}}" >
+        <picker mode="multiSelector" @change="bindMultiPickerChange2" @columnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{objectMultiArray}}" >
           <view class="picker">
             行业
             <text class="text" wx:if="{{show}}">{{objectMultiArray[0][multiIndex2[0]]}}，{{objectMultiArray[1][multiIndex2[1]]}}</text>
@@ -75,7 +75,7 @@
   export default class Intro extends wepy.page {
     mixins = [base, http, user, ShareMessage]
     config = {
-      navigationBarTitleText: '单身资料填写',
+      navigationBarTitleText: '介绍人资料填写',
       enablePullDownRefresh: false
     }
     data = {
@@ -109,8 +109,6 @@
     }
 
     onLoad() {
-      this.getindustry()
-      this.getuser()
 //      let that = this
 //      this.user.nickName = wx.getStorageSync('name')
 //      this.user.mobile = wx.getStorageSync('mobile')
@@ -157,6 +155,9 @@
     }
 
     onShow() {
+      this.objectMultiArray = []
+      this.getindustry()
+      this.getuser()
       this.$parent.getTracker(this.$root.$name, '介绍人信息注册/修改')
     }
 
@@ -232,9 +233,8 @@
       bindMultiPickerChange2(e) {
         console.log(e)
         console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.setData({
-          multiIndex2: e.detail.value
-        })
+        this.multiIndex2 =  e.detail.value
+        this.$apply()
       },
       bindMultiPickerColumnChange2(e) {
         let that = this
@@ -242,26 +242,27 @@
           objectMultiArray: that.data.objectMultiArray,
           multiIndex2: that.data.multiIndex2
         }
+        console.log(data)
         that.show = true
-        that.$apply()
-        data.multiIndex2[e.detail.column] = e.detail.value
+        that.multiIndex2[e.detail.column] = e.detail.value
         console.log(e.detail.column)
         switch (e.detail.column) {
           case 0:
             for (let i = 0; i < that.Business.length; i++) {
-              if (data.multiIndex2[0] === i) {
-                data.objectMultiArray[1] = that.Business[i].items
+              if (that.multiIndex2[0] === i) {
+                that.objectMultiArray[1] = that.Business[i].items
               }
             }
-            data.multiIndex2[1] = 0
+            that.multiIndex2[1] = 0
             break
         }
-        this.setData(data)
+        that.$apply()
       },
       typing(type, e) {
-        if (this.isDefined(this[type])) {
-          this[type] = e.detail.value
-        }
+//        if (this.isDefined(this[type])) {
+        this[type] = e.detail.value
+        this.$apply()
+//        }
       },
 //      nameChange(e) {
 //        this.name = e.detail.value

@@ -1,49 +1,6 @@
 <template>
   <view class="page-user">
-    <view class="weui-panel">
-      <view class="weui-cells_after-title">
-        <view class="weui-cell user_back">
-          <!--<navigator url="/pages/user/registerV2" >-->
-          <view class="userinfo clearfix">
-            <!--<open-data type="userAvatarUrl"  mode="aspectFit" class="party_image flo_l" style="width: 120rpx;height: 120rpx;box-shadow: 1rpx 1rpx 12rpx #de7a71;border-radius: 50%;"></open-data>-->
-            <!--<image class="userinfo-avatar" src="{{ user.wechat.avatar }}" background-size="cover"/>-->
-            <image class="userinfo-avatar" src="{{ user.wechat.avatar }}" background-size="cover"
-                   @tap="gotofriends({{user}})"/>
-            <view class="userinfo-info">
-              <view class="userinfo-nickname font_32">
-                {{ user.name }}
-                <block wx:if="{{user.rank_id == 0}}">
-                  <view class="orange font_26 text-center flo_r menber" @tap="goto('/pages/users/upgradeVIP')">
-                    <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                           class="flo_l"></image>
-                    <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">非会员</view>
-                  </view>
-                </block>
-                <block wx:else>
-                  <view class="orange font_26 text-center flo_r menber" style="width: 76rpx"
-                        @tap="goto('/pages/users/upgradeVIP')">
-                    <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                           class="flo_l"></image>
-                    <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">会员</view>
-                  </view>
-                </block>
-              </view>
-            </view>
-            <view class="flo_r font_26 white" @tap="gotoUser({{user.type}})">
-              <image src="../../images/icon/edit_red.png" mode="aspectFill" class="flo_r"
-                     style="width: 48rpx;height: 48rpx;margin:0 -6rpx 0 12rpx; "></image>
-              <view style="margin-top: 5rpx" class="flo_r">完善个人资料，让更多的人认识你</view>
-            </view>
-            <view class="message" @tap="goto('/pages/users/myNews')">
-              <image src="../../images/icon/message.png" mode="aspectFill" class="flo_r"
-                     style="width: 48rpx;height: 48rpx;margin:0 -6rpx 0 12rpx; "></image>
-              <view class="message_red" wx:if="{{user.new_notice_count}}"></view>
-            </view>
-          </view>
-          <!--</navigator>-->
-        </view>
-      </view>
-    </view>
+    <userTitle :user.sync="user"></userTitle>
     <view class="weui-cells weui-cells_after-title">
       <view class="font_32 loveTitle">异性加好友时，要求TA回答下列问题：</view>
       <checkbox-group class="radio-group" bindchange="checkboxChange">
@@ -73,6 +30,7 @@
   import base from '../../mixins/base'
   import user from '../../mixins/user'
   import ShareMessage from '../../mixins/ShareMessage'
+  import userTitle from '../../components/userTitle'
   import { service } from '../../config.js'
 
   export default class addFriendSet extends wepy.page {
@@ -196,7 +154,7 @@
       }
     }
 
-    components = {}
+    components = {userTitle: userTitle}
   }
 </script>
 

@@ -1,45 +1,6 @@
 <template>
   <view class="page-user">
-    <view class="weui-panel">
-      <view class="weui-cells_after-title">
-        <view class="weui-cell user_back">
-          <view class="userinfo clearfix">
-            <image class="userinfo-avatar" src="{{ user.avatar }}" background-size="cover"
-                   @tap="gotofriends({{user}})"/>
-            <view class="userinfo-info">
-              <view class="userinfo-nickname font_32">
-                {{ user.name }}
-                <block wx:if="{{user.rank_id == 0}}">
-                  <view class="orange font_26 text-center flo_r menber" @tap="goto('/pages/users/upgradeVIP')">
-                    <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                           class="flo_l"></image>
-                    <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">非会员</view>
-                  </view>
-                </block>
-                <block wx:else>
-                  <view class="orange font_26 text-center flo_r menber" style="width: 76rpx"
-                        @tap="goto('/pages/users/upgradeVIP')">
-                    <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                           class="flo_l"></image>
-                    <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">会员</view>
-                  </view>
-                </block>
-              </view>
-            </view>
-            <view class="flo_r font_26 white" @tap="gotoUser({{user.type}})">
-              <image src="../../images/icon/edit_red.png" mode="aspectFill" class="flo_r"
-                     style="width: 48rpx;height: 48rpx;margin:0 -6rpx 0 12rpx; "></image>
-              <view style="margin-top: 5rpx" class="flo_r">完善个人资料，让更多的人认识你</view>
-            </view>
-            <view class="message" @tap="goto('/pages/users/myNews')">
-              <image src="../../images/icon/message.png" mode="aspectFill" class="flo_r"
-                     style="width: 48rpx;height: 48rpx;margin:0 -6rpx 0 12rpx; "></image>
-              <view class="message_red" wx:if="{{user.new_notice_count}}"></view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
+    <userTitle :user.sync="user"></userTitle>
     <view style="padding: 0 12rpx;">
       <radio-group class="radio-group" bindchange="radioChange">
         <view class="paylist"  wx:for="{{paylist}}" wx:key="*this">
@@ -74,25 +35,30 @@
     <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
       <span class="bold">订单详情：</span>
       <span class="flo_r">支付 <span class="orange bold">{{infor.name}}</span> 升级费用</span>
+      <view class="clearfloat"></view>
     </view>
     <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
       <span class="bold">订单支付：</span>
       <span class="flo_r">{{price}}</span>
+      <view class="clearfloat"></view>
     </view>
     <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
       <span class="bold">我的福分：</span>
       <span class="flo_r">{{score}}</span>
+      <view class="clearfloat"></view>
     </view>
     <block wx:if="{{show}}">
       <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;" >
         <span class="bold">剩余福分：</span>
         <span class="flo_r orange">{{score - price}}</span>
+        <view class="clearfloat"></view>
       </view>
     </block>
     <block wx:else>
       <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;" >
         <span class="bold">现金支付：</span>
         <span class="flo_r orange">{{monay}}元</span>
+        <view class="clearfloat"></view>
       </view>
     </block>
 
@@ -105,6 +71,7 @@
   import base from '../../mixins/base'
   import user from '../../mixins/user'
   import ShareMessage from '../../mixins/ShareMessage'
+  import userTitle from '../../components/userTitle'
   import { service } from '../../config.js'
 
   export default class upgradingVIP extends wepy.page {
@@ -173,8 +140,8 @@
           that.paylist = data.ranks
           that.paylist.length = 3
           if (data.score != 0) {
-            let num = data.score.split('.')
-            that.score = num[0]
+//            let num = data.score.split('.')
+            that.score = data.score
           }
           that.loading = false
           that.$apply()
@@ -206,14 +173,14 @@
         this.paylist.forEach((item, index, arr) => {
           if (this.pay_id == arr[index].id) {
             this.infor = arr[index]
-            this.price = arr[index].price.split('.')[0]
+            this.price = arr[index].price
           }
         })
         let monay = this.score - this.price
         if (monay < 0) {
           this.show = false
-          this.monay =  Math.abs(monay)
-        }else {
+          this.monay = Math.abs(monay)
+        } else {
           this.show = true
         }
         this.$apply()
@@ -323,7 +290,7 @@
       }
     }
 
-    components = {}
+    components = {userTitle : userTitle}
   }
 </script>
 

@@ -41,7 +41,7 @@
               {{item.distance}}
               <span>{{login_time}}前活跃</span>
             </view>
-            <view class="font_28 white text-left flo_l" style="width: 60%;margin-left: 24rpx" @tap="gotofriends({{mylibs.marriage}})">
+            <view class="font_28 white text-left flo_l" wx:if="{{mylibs.marriage.name}}" style="width: 60%;margin-left: 24rpx" @tap="gotofriends({{mylibs.marriage}})">
               由{{mylibs.marriage.name}}推荐加入福恋
             </view>
             <block wx:if="{{mylibs.self != 1}}">
@@ -62,43 +62,43 @@
   </view>
   <view class="font_32 wx_Title orange">基本资料</view>
   <view class="booklist  font_28">
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.stature != null}}">
       <span>身高</span>
       <span class="flo_r">{{profile_courtship.stature}}cm</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.birthday != null}}">
       <span>出生年月日</span>
       <span class="flo_r">{{profile_courtship.birthday}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.weight != null}}">
       <span>体重</span>
       <span class="flo_r">{{profile_courtship.weight}}kg</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.degree != null}}">
       <span>学历</span>
       <span class="flo_r">{{profile_courtship.degree}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.city != null}}">
       <span>常居地</span>
       <span class="flo_r">{{profile_courtship.city}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.graduate_school != null}}">
       <span>毕业学校</span>
       <span class="flo_r">{{profile_courtship.graduate_school}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.industry != null}}">
       <span>所在行业</span>
       <span class="flo_r">{{mylibs.industry}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.company != null}}">
       <span>公司名称</span>
       <span class="flo_r">{{profile_courtship.company}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.resident_type != null}}">
       <span>户口类型</span>
       <span class="flo_r">{{profile_courtship.resident_type}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.resident_province != null}}">
       <span>户口所在地</span>
       <span class="flo_r">{{profile_courtship.resident_province}}</span>
     </view>
@@ -189,17 +189,24 @@
         <span>点击查看</span>
       </view>
       <view wx:else>
-        <view style="margin: 0 44rpx;" class="wx_Title font_32" >
-          <span>TA—>属于： <span class=" orange">"{{character.type}}"</span></span>
-        </view>
-        <view style="margin: 0 44rpx;" class="wx_Title">
-          <span class="font_32">TA—>性格： </span>
-          <span class="orange">"{{character.character}}"</span>
-        </view>
-        <view style="margin: 0 44rpx;" class="wx_Title">
-          <span class="font_32">TA—>适合职业： </span>
-          <view class=" orange" wx:for="{{character.profession}}" wx:key="*this">{{item}}</view>
-        </view>
+        <block wx:if="{{character == null}}">
+          <view style="margin: 0 44rpx;" class="wx_Title font_32" >
+            <span class="black_6">该会员还未参加自身优点测试!</span>
+          </view>
+        </block>
+        <block wx:else>
+          <view style="margin: 0 44rpx;" class="wx_Title font_32" >
+            <span>TA—>属于： <span class=" orange">"{{character.type}}"</span></span>
+          </view>
+          <view style="margin: 0 44rpx;" class="wx_Title">
+            <span class="font_32">TA—>性格： </span>
+            <span class="orange">"{{character.character}}"</span>
+          </view>
+          <view style="margin: 0 44rpx;" class="wx_Title">
+            <span class="font_32">TA—>适合职业： </span>
+            <view class=" orange" wx:for="{{character.profession}}" wx:key="*this">{{item}}</view>
+          </view>
+        </block>
       </view>
     </view>
     <view style="height: 40rpx;width: 100%"></view>
@@ -373,6 +380,8 @@
               return self.login_time = data.login_time.hour + '小时'
             } else if (data.login_time.min) {
               return self.login_time = data.login_time.min + '分钟'
+            } else if (data.login_time.sec) {
+              return self.login_time = data.login_time.sec + '秒'
             }
           }
         },

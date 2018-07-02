@@ -11,6 +11,7 @@
     config = {
       pages: [
         'pages/home/index',
+        'pages/home/index_V',
         'pages/home/search',
         'pages/home/sharePay',
         'pages/home/sharing',

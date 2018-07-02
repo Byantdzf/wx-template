@@ -1,64 +1,7 @@
 <template>
   <view class="container">
     <view class="page-user">
-      <view class="weui-panel">
-        <view class="weui-cells_after-title">
-          <view class="weui-cell user_back">
-            <!--<navigator url="/pages/user/registerV2" >-->
-            <view class="userinfo clearfix">
-              <!--<open-data type="userAvatarUrl"  mode="aspectFit" class="party_image flo_l" style="width: 120rpx;height: 120rpx;box-shadow: 1rpx 1rpx 12rpx #de7a71;border-radius: 50%;"></open-data>-->
-              <!--<image class="userinfo-avatar" src="{{ user.wechat.avatar }}" background-size="cover"/>-->
-              <image class="userinfo-avatar" src="{{ user.avatar }}" background-size="cover"
-                     @tap="gotofriends({{user}})"/>
-              <view class="userinfo-info">
-                <view class="userinfo-nickname font_32">
-                  {{ user.name }}
-                  <block wx:if="{{user.type == 'marriage'}}">
-                    <view class="orange font_26 text-center flo_r menber">
-                      <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                             class="flo_l"></image>
-                      <view style="font-size: 20rpx;margin-top: 4rpx" class="flo_r">介绍人</view>
-                    </view>
-                  </block>
-                  <block wx:else>
-                    <block wx:if="{{user.rank_id == 0}}">
-                    <span @tap="goto('/pages/users/upgradeVIP')">
-                      <span class="flo_r font_26" style="margin: 8rpx 12rpx">升级</span>
-                      <view class="orange font_26 text-center flo_r menber" style="width: 116rpx" >
-                        <image src="../../images/icon/vip.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                               class="flo_l"></image>
-                        <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">普通会员</view>
-                      </view>
-                    </span>
-                    </block>
-                    <block wx:else>
-                    <span @tap="goto('/pages/users/upgradeVIP')">
-                      <span class="flo_r font_26" style="margin: 8rpx 12rpx">升级</span>
-                      <view class="orange font_26 text-center flo_r menber" style="width: 76rpx">
-                        <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 32rpx;height: 32rpx;"
-                               class="flo_l"></image>
-                        <view style="font-size: 20rpx;margin-top: 8rpx" class="flo_r">{{user.rank_name}}</view>
-                      </view>
-                    </span>
-                    </block>
-                  </block>
-                </view>
-              </view>
-              <view class="flo_r font_26 white" @tap="gotoUser({{user.type}})">
-                <image src="../../images/icon/edit_red.png" mode="aspectFill" class="flo_r"
-                       style="width: 48rpx;height: 48rpx;margin:0 -6rpx 0 12rpx; "></image>
-                <view style="margin-top: 5rpx" class="flo_r">完善个人资料，让更多的人认识你</view>
-              </view>
-              <view class="message" @tap="goto('/pages/users/myNews')">
-                <image src="../../images/icon/message.png" mode="aspectFill" class="flo_r"
-                       style="width: 48rpx;height: 48rpx;margin:0 -6rpx 0 12rpx; "></image>
-                <view class="message_red" wx:if="{{user.new_notice_count}}"></view>
-              </view>
-            </view>
-            <!--</navigator>-->
-          </view>
-        </view>
-      </view>
+      <userTitle :user.sync="user"></userTitle>
       <view class="orderdata">
         <view class="title">{{uploadTitle}}</view>
         <view class="Paths" style="margin:30rpx;" @tap="chooseimage">+</view>
@@ -87,6 +30,7 @@
   import http from '../../mixins/http'
   import base from '../../mixins/base'
   import user from '../../mixins/user'
+  import userTitle from '../../components/userTitle'
   import ShareMessage from '../../mixins/ShareMessage'
 //  import uploadimage from '../../mixins/upload_image'
 
@@ -105,7 +49,7 @@
       tempFilePaths: '',
       photosList: []
     }
-
+    components = {userTitle: userTitle}
     onLoad(e) {
       console.log(this)
       // let that = this

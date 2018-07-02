@@ -90,7 +90,7 @@
       // 后置显示按钮
       loaded: false,
       mylibs: [],
-      tabs: ['专题', '单身会', '预备婚恋', '个人成长'],
+      tabs: ['推荐', '单身会', '预备婚恋', '个人成长'],
       list: [
         {
           'name': 'Angelababy',
@@ -155,7 +155,7 @@
             wx.showTabBarRedDot({
               index: 3
             })
-          }else {
+          } else {
             wx.hideTabBarRedDot({
               index: 3
             })

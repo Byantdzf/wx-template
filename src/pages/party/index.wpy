@@ -118,7 +118,7 @@
             wx.showTabBarRedDot({
               index: 3
             })
-          }else {
+          } else {
             wx.hideTabBarRedDot({
               index: 3
             })
@@ -204,7 +204,6 @@
         }
       })
     }
-
 
     getLibraries(keyword) {
       let _this = this

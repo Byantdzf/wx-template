@@ -8,6 +8,7 @@
       <!--<view  class="flo_l font_12" style="width: 45%;margin-top: 28rpx">{{ user.mobile }}</view>-->
     </view>
   <view class="orderdata">
+    <view style="height: 100rpx"></view>
     <!--<view  class="list {{NameFocus ? 'InputFocus' : ''}}" >-->
       <!--<span class="flo_l">姓名</span>-->
       <!--<input type='text' placeholder="输入您的名字" class="Inp" @blur="typing('name')" value="{{name}}"  focus="{{NameFocus}}"/>-->
@@ -42,7 +43,7 @@
     </view>
     <view  class="list {{StatureFocus ? 'InputFocus' : ''}}">
     <span >身高</span>
-    <input type="number" placeholder="输入您的身高（cm）" class="Inp"  @blur="typing('stature')" value="{{stature}}" focus="{{StatureFocus}}"/>
+    <input type="number" placeholder="输入您的身高（cm）" class="Inp"  @input="typing('stature')" value="{{stature}}" focus="{{StatureFocus}}"/>
   </view>
     <view  class="list {{WeightFocus ? 'InputFocus' : ''}}">
     <span class="flo_l">体重</span>
@@ -101,10 +102,11 @@
       </picker>
     </view>
     <view  class="list">
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange2" bindcolumnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{objectMultiArray}}" >
+      <picker mode="multiSelector" @change="bindMultiPickerChange2" @columnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{objectMultiArray}}" >
         <view class="picker">
           行业
           <text class="text" wx:if="{{show}}">{{objectMultiArray[0][multiIndex2[0]]}}，{{objectMultiArray[1][multiIndex2[1]]}}</text>
+          <!--<text class="text" >{{objectMultiArray[0][multiIndex2[0]]}}，{{objectMultiArray[1][multiIndex2[1]]}}</text>-->
           <text class="text" wx:else> {{industry}},{{industry_sub}}</text>
         </view>
       </picker>
@@ -155,7 +157,9 @@
     <view style="height: 88rpx"></view>
     </view>
     <view class="next text-center">
-      <view  class="btn_red" @tap="ensure" style="margin: auto;">完成</view>
+      <open-data type="userAvatarUrl"  mode="aspectFit" class="party_image flo_l" style="width: 100rpx;height: 100rpx;box-shadow: 1rpx 1rpx 12rpx #dedede;margin:10rpx 36rpx;"></open-data>
+
+      <view  class="btn_red font_26 flo_r" @tap="ensure" style="margin-right:12rpx;width: 180rpx;height: 108rpx;line-height: 108rpx;">保存</view>
     </view>
     </view>
     </template>
@@ -395,7 +399,7 @@
               birthday: this.birthday,
               company: this.company,
               sex: this.sexIndex == 0 ? 1 : 2,
-              age: this.age,
+//              age: this.age,
               stature: this.stature,
               weight: this.weight,
               graduate_school: this.graduate_school,
@@ -417,7 +421,7 @@
               industry_sub: this.objectMultiArray[1][this.multiIndex2[1]],
               work_sort: this.work_sort[this.work_sortIndex]
             }
-            console.log(this.age)
+//            console.log(this.age)
 //            if (!this.name) {
 //              this.NameFocus = true
 //              console.log(this.NameFocus)
@@ -427,9 +431,11 @@
 //              this.AgeFocus = true
 //              this.ShowModal('请填写年龄')
 //            } else
+            console.log(this.stature)
             if (!this.stature) {
               this.StatureFocus = true
               this.ShowModal('请填写身高（cm）')
+              debugger
             } else if (!this.weight) {
               this.WeightFocus = true
               this.ShowModal('请填写体重（kg）')
@@ -473,9 +479,8 @@
           bindMultiPickerChange2(e) {
             console.log(e)
             console.log('picker发送选择改变，携带值为', e.detail.value)
-            this.setData({
-              multiIndex2: e.detail.value
-            })
+            this.multiIndex2 = e.detail.value
+            this.$apply()
           },
           bindMultiPickerColumnChange2(e) {
             let that = this
@@ -483,26 +488,28 @@
               objectMultiArray: that.data.objectMultiArray,
               multiIndex2: that.data.multiIndex2
             }
+            console.log(data)
             that.show = true
-            that.$apply()
-            data.multiIndex2[e.detail.column] = e.detail.value
+            that.multiIndex2[e.detail.column] = e.detail.value
             console.log(e.detail.column)
             switch (e.detail.column) {
               case 0:
                 for (let i = 0; i < that.Business.length; i++) {
-                  if (data.multiIndex2[0] === i) {
-                    data.objectMultiArray[1] = that.Business[i].items
+                  if (that.multiIndex2[0] === i) {
+                    that.objectMultiArray[1] = that.Business[i].items
                   }
                 }
-                data.multiIndex2[1] = 0
+                that.multiIndex2[1] = 0
                 break
             }
-            this.setData(data)
+            that.$apply()
           },
           typing(type, e) {
-            if (this.isDefined(this[type])) {
+            console.log(e.detail.value)
+//            if (this.isDefined(this[type])) {
               this[type] = e.detail.value
-            }
+              this.$apply()
+//            }
           },
           stateChange(e) {
             this.stateiIndex = e.detail.value
@@ -610,11 +617,14 @@
   .next{
     position: fixed;
     right: 0;
-    bottom:0;
+    top:0;
+    height: 120rpx;
+    border-top: 1rpx solid #d9d9d9 ;
+    border-bottom: 1rpx solid #d9d9d9 ;
     z-index: 10;
     width: 100%;
     background: white;
-    box-shadow: 5rpx 5rpx 12rpx #c2571f;
+    /*box-shadow: 5rpx 5rpx 12rpx #c2571f;*/
   }
   .InputFocus{
     border: 1px solid red;

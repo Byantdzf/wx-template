@@ -84,8 +84,8 @@
           bindconfirm="hideAddress"
           >
     <view class="addresslList black_6"><span class="orange">收货人：</span>{{goods.name}}</view>
-    <view class="addresslList black_6"><span class="orange">手机号：</span>{{goods.mobile}}</view>
-    <view class="addresslList black_6"><span class="orange">收货地址：</span>{{goods.address}}</view>
+    <view class="addresslList "><span class="orange">手机号：</span>{{goods.mobile}}</view>
+    <view class="addresslList"><span class="orange">收货地址：</span>{{goods.address}}</view>
   </modal>
 
 </template>
@@ -301,7 +301,6 @@
           }
         }
         this.$apply()
-
       },
       goto(url) {
         wx.navigateTo({url: url})
