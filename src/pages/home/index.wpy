@@ -10,7 +10,7 @@
         <cover-view class="font_32 orange bold" bindtap="showModal_v">赶紧邀请好友，一起来寻找"Ta"吧！</cover-view>
       </cover-view>
       <cover-view class='btn'
-                  style="background: white;width: 200rpx;position: absolute;right: 0;bottom: 16%;padding: 12rpx;">
+                  style="background: white;width: 200rpx;position: absolute;right: 0;bottom: 18%;padding: 12rpx;">
         <cover-image src='../../images/icon/position.png' @tap="moveToLocation" class='ten_l flo_l'
                      style="width: 62rpx;height: 62rpx;margin-right: 22rpx;"></cover-image>
         <cover-image src='../../images/icon/search.png' @tap="goto('/pages/home/search')" class='code flo_l'
@@ -32,9 +32,10 @@
         </cover-view>
 
         <cover-view style="padding: 6rpx;">
-          <cover-view class="flo_r font_26 orange" style="margin-top: 6rpx;">查看"Ta"</cover-view>
+          <cover-view style="width: 100%;height: 2rpx;background: #d4d4d4;"></cover-view>
+          <cover-view class="flo_r font_26 orange" style="margin-top: 12rpx;">查看"Ta"</cover-view>
           <cover-image src='../../images/icon/love.png' class='ten_l flo_r'
-                       style="width: 38rpx;height: 38rpx;margin-right: 8rpx;"></cover-image>
+                       style="width: 38rpx;height: 38rpx;margin-right: 8rpx;margin-top: 6rpx"></cover-image>
         </cover-view>
       </cover-view>
       <cover-view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></cover-view>
@@ -139,10 +140,8 @@
       enablePullDownRefresh: false
     }
     data = {
-//      markers标记点
       markers: [],
       polyline: [],
-//      title: '为营造更好的读书气氛，欢迎各位书友创建共享图书馆！',
       longitude: 0,
       latitude: 0,
       myLong: '',
@@ -202,11 +201,11 @@
       let that = this
       wx.getSystemInfo({
         success: function (res) {
-          if (type) {
-            that.height = res.windowHeight - 156 + 'px'
-          } else {
+//          if (type) {
+//            that.height = res.windowHeight - 156 + 'px'
+//          } else {
             that.height = res.windowHeight + 'px'
-          }
+//          }
           that.$apply()
         }
       })

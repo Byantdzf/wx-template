@@ -92,6 +92,7 @@
       monay: 0,
       show: true,
       hide: true,
+      loaded: false,
       infor: {},
       score: 0
 

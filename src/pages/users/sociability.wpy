@@ -15,7 +15,7 @@
         </view>
       </radio-group>
       <view class="font_32 flo_r black_6" style="margin: 4%;">
-        <span class="orange">{{index_M+1}}</span> / {{questionsList.length}}
+        <span class="orange">{{index+1}}</span> / {{questionsList.length}}
       </view>
       <view class="clearfloat"></view>
       <block wx:if="{{index_M}}">
