@@ -51,7 +51,7 @@ export default class ShareMessage extends wepy.mixin {
         console.log(res.target)
       }
       return {
-        // title: '',
+        title: '福恋',
         path: url,
         // 设置转发image，不设默认当前截图
         imageUrl: '',

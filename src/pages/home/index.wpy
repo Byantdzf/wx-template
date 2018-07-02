@@ -5,9 +5,9 @@
          @regionchange="regionchange" show-location  wx:if="{{showMap}}" style="width: 100%; height: {{height}};"   polyline="{{polyline}}">
       <cover-view class='btn' @tap="showModal_v"
                   style="background: white;width: 580rpx;position: absolute;right: 8%;top: 22rpx;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3">
-        <cover-image src='../../images/icon/share_active.png' bindtap="showModal_v" class='ten_l flo_l'
+        <cover-image src='../../images/icon/share_active.png' class='ten_l flo_l'
                      style="width: 48rpx;height: 48rpx;margin-right: 22rpx;"></cover-image>
-        <cover-view class="font_32 orange bold" bindtap="showModal_v">赶紧邀请好友，一起来寻找"Ta"吧！</cover-view>
+        <cover-view class="font_32 orange bold" >赶紧邀请好友，一起来寻找"Ta"吧！</cover-view>
       </cover-view>
       <cover-view class='btn'
                   style="background: white;width: 200rpx;position: absolute;right: 0;bottom: 18%;padding: 12rpx;">
@@ -56,7 +56,7 @@
                            style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>
             </cover-view>
             <cover-view class="weui-cell__bd">
-              <button open-type="share" class="btn font_32" style="position: relative;z-index: 11111">发送给朋友或微信群</button>
+              <button open-type="share" class="btn font_32" style="position: relative;z-index: 99999">发送给朋友或微信群</button>
             </cover-view>
             <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
           </cover-view>
@@ -82,6 +82,38 @@
         <!--</cover-view>-->
       <!--</cover-view>-->
     </map>
+    <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+    <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"
+                    @tap="goto('/pages/home/sharePay')">
+          <view class="weui-cell__hd">
+            <image src="../../images/icon/pay_v.png"
+                         style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
+          </view>
+          <view class="weui-cell__bd font_32">邀请Ta并替Ta支付</view>
+          <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
+        </view>
+        <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+            <image src="../../images/icon/weixin.png"
+                         style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
+          </view>
+          <view class="weui-cell__bd">
+            <button open-type="share" class="btn font_32" style="position: relative;z-index: 99999">发送给朋友或微信群</button>
+          </view>
+          <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
+        </view>
+        <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__hd">
+            <image src="../../images/icon/friend_v.png"
+                         style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
+          </view>
+          <view class="weui-cell__bd font_32" @tap="shareFriend">生成卡片到朋友圈分享</view>
+          <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
+        </view>
+      </view>
+    </view>
     <modal  hidden="{{showImage}}"
             confirm-text="保存"
             cancel-text="取消"
@@ -286,6 +318,28 @@
               })
               wx.hideLoading()
               that.markers = markersNew
+              let markerId = wx.getStorageSync('markerId')
+              if(markerId){
+                that.markers.forEach((item, index, arr) => {
+                  if (arr[index].id == markerId && arr[index].id !== 0) {
+                    that.polyline = [{
+                      points: [{
+                        longitude: that.myLong,
+                        latitude: that.myLat
+                      }, {
+                        longitude: arr[index].longitude,
+                        latitude: arr[index].latitude
+                      }],
+                      width: 2,
+                      arrowLine: true,
+                      dottedLine: true,
+                      color: '#FF0000'
+                    }]
+                    that.$apply()
+                    arr[index].iconPath = '../../images/icon/icon-position_red.png'
+                  }
+                })
+              }
               that.$apply()
               that.noMoreList = false
             },
@@ -533,15 +587,51 @@
       })
     }
     methods = {
+      onShareAppMessage(res) {
+        let that = this
+        if (that.from_openid == '') {
+          that.from_openid = wx.getStorageSync('openid')
+        }
+        that.$apply()
+        let pages = getCurrentPages()    //获取加载的页面
+        let currentPage = pages[pages.length - 1]    //获取当前页面的对象
+        let link = currentPage.route    //当前页面url
+        let options = currentPage.options.id
+        let id = options ? '?id=' + options : ''
+        let url = ''
+        if (options) {
+          url = link + id + '&from_openid=' + that.from_openid
+        } else {
+          url = link + '?from_openid=' + that.from_openid
+        }
+        console.log(url)
+        // debugger
+        if (res.from === 'menu') {
+          console.log(res.target)
+        }
+        return {
+          title: '刚好遇见你！',
+          path: url,
+          // 设置转发image，不设默认当前截图
+          imageUrl: that.shareimage,
+          success: function (res) {
+            wx.showToast({
+              title: '转发成功',
+              icon: 'success',
+              duration: 1500
+            })
+            var shareTickets = res.shareTickets;
+            if (shareTickets.length == 0) {
+              return false;
+            }
+          },
+          fail: function (res) {
+            // 转发失败
+          }
+        }
+      },
       shareFriend() {
         this.$showLoading('加载中...')
-        this.$get({url: service.shareimage}, {
-          success: ({code, data}) => {
-            this.shareimage = data.pic
-            this.$apply()
-            wx.hideLoading()
-          }
-        })
         this.showMap = false
         this.showImage = false
         this.$apply()
@@ -559,6 +649,7 @@
           this.showModalStatus = false
           this.$apply()
         }.bind(this), 200)
+        wx.hideLoading()
 //        this.showImage()
 //        var animation = wx.createAnimation({
 //          duration: 200,
@@ -645,6 +736,7 @@
       },
       showModal_v() {
         // 显示遮罩层
+        this.showMap =false
         var animation = wx.createAnimation({
           duration: 200,
           timingFunction: 'linear',
@@ -661,9 +753,17 @@
           this.$apply()
           this.getSystem()
         }.bind(this), 200)
+        this.$get({url: service.shareimage}, {
+          success: ({code, data}) => {
+            this.shareimage = data.pic
+            this.$apply()
+            wx.hideLoading()
+          }
+        })
       },
       hideModal() {
         // 隐藏遮罩层
+        this.showMap = true
         var animation = wx.createAnimation({
           duration: 200,
           timingFunction: 'linear',
@@ -810,6 +910,7 @@
       markertap(e) {
         console.log(e)
         console.log(e.markerId)
+        wx.setStorageSync('markerId', e.markerId)
         let that = this,
 //          id = e.markerId,
           data = {
@@ -867,7 +968,7 @@
       top:0;
       left:0;
       background:#000;
-      opacity:0.2;
+      opacity:0.4;
       overflow:hidden;
       z-index:1000;
       color:#fff;
