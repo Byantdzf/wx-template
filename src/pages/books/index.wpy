@@ -107,7 +107,7 @@
       screenWidth: 360,
       user: {},
       page: 1,
-      title: '专题',
+      title: '推荐',
       noMore: false,
       loading: false,
       inputShowed: false,
@@ -291,7 +291,7 @@
         } else if (this.activeIndex == 3) {
           this.title = '个人成长'
         } else {
-          this.title = '专题'
+          this.title = '推荐'
         }
         this.$apply()
         this.getLibraries()
