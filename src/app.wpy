@@ -11,7 +11,7 @@
     config = {
       pages: [
         'pages/home/index',
-        'pages/home/index_V',
+//        'pages/home/index_V',
         'pages/home/search',
         'pages/home/sharePay',
         'pages/home/sharing',
@@ -47,6 +47,21 @@
         'pages/users/integralAddress',
         'pages/users/upgradingVIP'
       ],
+//      'subPackages': [
+//        {
+//          'root': 'page/component/',
+//          'pages': [
+//            'pages/cat',
+//            'pages/dog'
+//          ]
+//        }, {
+//          'root': 'packageB',
+//          'pages': [
+//            'pages/apple',
+//            'pages/banana'
+//          ]
+//        }
+//      ],
       window: {
         navigationBarTitleText: '福恋',
         navigationBarTextStyle: 'black',
@@ -197,7 +212,7 @@
     onShareAppMessage(title = '友福聚会') {
       return {
         title: title,
-//      path: '/pages/index.wpy',
+//      path: '/pages/index_M.wpy',
         // imageUrl: '',
         success: function (res) {
           // 转发成功
