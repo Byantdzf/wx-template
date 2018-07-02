@@ -233,7 +233,7 @@
       bindMultiPickerChange2(e) {
         console.log(e)
         console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.multiIndex2 =  e.detail.value
+        this.multiIndex2 = e.detail.value
         this.$apply()
       },
       bindMultiPickerColumnChange2(e) {
@@ -291,8 +291,8 @@
           birthday: this.birthday,
           sex: this.sexIndex == 0 ? 1 : 2,
 //          wechat_id: this.wechat_id,
-          industry: this.objectMultiArray[0][this.multiIndex2[0]],
-          industry_sub: this.objectMultiArray[1][this.multiIndex2[1]]
+          industry: this.show ? this.objectMultiArray[0][this.multiIndex2[0]] : this.industry,
+          industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub
 //          degree: this.degree[this.degreeIndex]
         }
         if (!this.company) {

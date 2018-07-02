@@ -235,6 +235,7 @@
           data = data.data
           if (this.isArray(data) && data.length === 0) {
             _this.noMore = true
+            _this.loading = false
             _this.list = []
             return
           }

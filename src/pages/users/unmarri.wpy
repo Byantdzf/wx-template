@@ -417,8 +417,8 @@
 //              salary_id: this.salary_id ? this.salary_id : this.salaries[0].id,
 //              h_car: this.carIndex,
 //              h_housing: this.housingIndex,
-              industry: this.objectMultiArray[0][this.multiIndex2[0]],
-              industry_sub: this.objectMultiArray[1][this.multiIndex2[1]],
+              industry: this.show ? this.objectMultiArray[0][this.multiIndex2[0]] : this.industry,
+              industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub,
               work_sort: this.work_sort[this.work_sortIndex]
             }
 //            console.log(this.age)
@@ -507,8 +507,8 @@
           typing(type, e) {
             console.log(e.detail.value)
 //            if (this.isDefined(this[type])) {
-              this[type] = e.detail.value
-              this.$apply()
+            this[type] = e.detail.value
+            this.$apply()
 //            }
           },
           stateChange(e) {

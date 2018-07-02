@@ -15,10 +15,10 @@
         </view>
       </radio-group>
       <view class="font_32 flo_r black_6" style="margin: 4%;">
-        <span class="orange">{{index+1}}</span> / {{questionsList.length}}
+        <span class="orange">{{index_M+1}}</span> / {{questionsList.length}}
       </view>
       <view class="clearfloat"></view>
-      <block wx:if="{{index}}">
+      <block wx:if="{{index_M}}">
         <view style="padding: 0 16%;" class="text-center">
           <view class="next btn_white inline-block" @tap="ensure" >上一题</view>
           <view class="next btn_red inline-block" @tap="ensure_from" style="margin-top: -8rpx;" wx:if="{{!show}}">完成</view>
@@ -300,7 +300,7 @@
       }
     }
 
-    components = {userTitle : userTitle}
+    components = {userTitle: userTitle}
   }
 </script>
 

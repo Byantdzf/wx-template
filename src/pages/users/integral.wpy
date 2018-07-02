@@ -1,6 +1,6 @@
 <template>
   <view class="page-user integral_box">
-    <view class="bold orange ">我的福分:</view>
+    <view class="bold orange integral_title">我的福分:</view>
     <view class="text-center">
       <view class="integral_num bold">{{score}}</view>
       <!--<image src="http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/13/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.1Wrkpu792OPp8264ecf980b4c04dd0f5705b15fe6602.png" style="width:140px; height: 140px;"></image>-->
@@ -206,16 +206,16 @@ page{
   .integral_box{
     box-shadow: 1rpx 1rpx 12rpx #d3d3d3;
     padding: 22rpx;
-    margin:22rpx 32rpx;
+    margin:22rpx;
     border-radius: 12rpx;
   }
 .page-user{
 
-  .{
-    margin-bottom: 22rpx;
+  .integral_title{
+    /*margin-bottom: 22rpx;*/
   }
   .integral_num{
-    font-size: 68rpx;
+    font-size: 80rpx;
     /*margin-bottom: -160rpx;*/
     position: relative;
     color: #0DB5A5;

@@ -129,6 +129,7 @@
       this.$get({url: service.user}, {
         success: ({code, data}) => {
           this.user = data
+          this.$apply()
           if (this.user.new_notice_count != 0) {
             wx.showTabBarRedDot({
               index: 3
@@ -139,7 +140,6 @@
             })
           }
           wx.setStorageSync('type', data.type)
-          this.$apply()
         }
       })
     }

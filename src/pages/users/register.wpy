@@ -105,12 +105,12 @@
 
 //    computed = {
 //      listIndex() {
-//        const arr = this.getArray((this.list || []).filter((item, index.wpy) => {
-//          item.TEMPINDEX = index.wpy
+//        const arr = this.getArray((this.list || []).filter((item, index_M.wpy) => {
+//          item.TEMPINDEX = index_M.wpy
 //          return this.getString(this.value) === this.getString(item.id)
 //        }))
-//        const index.wpy = arr[0] && arr[0].TEMPINDEX
-//        return this.getNumber(index.wpy)
+//        const index_M.wpy = arr[0] && arr[0].TEMPINDEX
+//        return this.getNumber(index_M.wpy)
 //      },
 //      realPrice() {
 //        const item = this.list && this.list[this.listIndex]
