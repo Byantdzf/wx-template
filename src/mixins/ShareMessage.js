@@ -8,7 +8,11 @@ export default class ShareMessage extends wepy.mixin {
     let that = this
     if(Boolean(e.from_openid)) {
       wx.setStorageSync('from_openid', e.from_openid)
-      that.from_openid = e.from_openid
+      if (e.from_openid) {
+        that.from_openid = e.from_openid
+      } else {
+        that.from_openid = wx.getStorageSync('openid')
+      }
       that.$apply()
       // wx.showToast({
       //       title: e.from_openid,
@@ -29,9 +33,6 @@ export default class ShareMessage extends wepy.mixin {
     onShareAppMessage(res) {
       console.log(res)
       let that = this
-      if (that.from_openid == '') {
-        that.from_openid = wx.getStorageSync('openid')
-      }
       // wx.setStorageSync('from_openid', that.from_openid)
       that.$apply()
       let pages = getCurrentPages()    //获取加载的页面
