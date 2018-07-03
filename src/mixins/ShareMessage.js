@@ -8,11 +8,11 @@ export default class ShareMessage extends wepy.mixin {
     let that = this
     if(Boolean(e.from_openid)) {
       wx.setStorageSync('from_openid', e.from_openid)
-      if (e.from_openid) {
-        that.from_openid = e.from_openid
-      } else {
+      // if (e.from_openid) {
+      //   that.from_openid = e.from_openid
+      // } else {
         that.from_openid = wx.getStorageSync('openid')
-      }
+      // }
       that.$apply()
       // wx.showToast({
       //       title: e.from_openid,
