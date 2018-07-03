@@ -11,7 +11,7 @@
   <view class="page-user">
     <view class="bold orange integral_title">充值:</view>
     <view class="text-center">
-      <input  class="input_price flo_l font_28"  placeholder="请输入充值金额" type="digit" @input="bindKeyInput"/>
+      <input  class="input_price flo_l font_28"  placeholder="请输入充值金额" type="number" @input="bindKeyInput"/>
       <view class="btn_red font_26 flo_r" style="width: 200rpx;height: 100rpx;line-height: 115rpx;margin: auto;margin-top: -36rpx;margin-right: -42rpx;" @tap="recharge">充值</view>
     </view>
     <view class="clearfloat"></view>
@@ -114,6 +114,9 @@
         if (!this.price) {
           return this.$showToast('请输入金额')
         }
+        if (this.price > 100000 ) {
+          return this.$showToast('输入金额不能大于十万')
+        }
         let that = this,
           data = {
             price: that.price
@@ -163,6 +166,9 @@
       bindKeyInput(e) {
         this.price = e.detail.value
         this.$apply()
+        if (this.price > 100000 ) {
+          return this.$showToast('输入金额不能大于十万')
+        }
       },
       conversion(item) {
 //      wx.showToast({

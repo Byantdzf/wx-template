@@ -4,7 +4,7 @@
     <view class="list">
       <picker value="{{salaryIndex}}" range="{{salary}}" @change="salaryChange">
         <view class="picker weui-cell__bd ">
-          薪水级别
+          平均月薪
           <text class=" weui-cell__ft weui-cell__ft_in-access flo_r" wx:if="{{Salaryshow}}">{{salary[salaryIndex]}}</text>
           <text class=" weui-cell__ft weui-cell__ft_in-access flo_r" wx:else> {{salary[salaryIndex]}}</text>
         </view>
@@ -251,10 +251,10 @@
               icon: 'success',
               duration: 1200
             })
-//            setTimeout(() => {
-//              let url = '/pages/home/index'
-//              wx.switchTab({url: url})
-//            }, 1200)
+            setTimeout(() => {
+              let url = '/pages/users/vipSetting'
+              wx.redirectTo({url: url})
+            }, 1200)
           },
           fail: ({code, data}) => {
           },

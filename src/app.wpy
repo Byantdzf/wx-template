@@ -45,7 +45,8 @@
         'pages/users/addFriendSet',
         'pages/users/upgradeVIP',
         'pages/users/integralAddress',
-        'pages/users/upgradingVIP'
+        'pages/users/upgradingVIP',
+        'pages/users/myTest'
       ],
 //      'subPackages': [
 //        {
