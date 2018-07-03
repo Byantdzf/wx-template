@@ -245,6 +245,7 @@
       },
       saveImage(type) {
         var that = this
+        console.log(that.invite_pic)
         wepy.downloadFile({
           url: that.invite_pic,
           success: (res) => {

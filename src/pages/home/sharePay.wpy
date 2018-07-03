@@ -278,11 +278,13 @@
                           duration: 2000
                         })
                         that.initPageData()
+                        that.$showLoading('加载图片中')
                         that.$get({url: service.invitee + '/' + that.invite_order_id + '/share/pic'}, {
                           success: ({code, data}) => {
-                            that.shareImage = false
                             that.pic = data.pic
+                            that.shareImage = false
                             that.$apply()
+                            wx.hideLoading()
                           },
                           fail: ({code, data}) => {},
                           complete: () => {}
@@ -318,14 +320,16 @@
 //                      fail: ({code, data}) => {},
 //                      complete: () => {}
 //                    })
+                      that.$showLoading('加载图片中')
                       that.$post({url: service.orderpay + '/' + that.trade_no}, {
                         success: ({code, data}) => {
                           that.initPageData()
                           that.$get({url: service.invitee + '/' + that.invite_order_id + '/share/pic'}, {
                             success: ({code, data}) => {
-                              that.shareImage = false
                               that.pic = data.pic
+                              that.shareImage = false
                               that.$apply()
+                              wx.hideLoading()
                             },
                             fail: ({code, data}) => {},
                             complete: () => {}
@@ -334,14 +338,14 @@
                         fail: ({code, data}) => {
                         },
                         complete: () => {
-                          this.loaded = false
+//                          this.loaded = false
                         }
                       })
                     },
                     fail: ({code, data}) => {
                     },
                     complete: () => {
-                      this.loaded = false
+//                      this.loaded = false
                     }
                   })
                 },

@@ -835,7 +835,7 @@
     border-radius: 6rpx;
     border: 1rpx solid #d3d3d3;
     height: 48rpx;line-height: 48rpx;
-    margin-top: -22rpx;
+    margin-top: -40rpx;
   }
   .atten_w{
     width: 140rpx;
@@ -846,7 +846,7 @@
      padding:2rpx 12rpx;
      /*height: 52rpx;*/
      font-size: 80rpx;
-     margin-top: -82rpx;
+     margin-top: -100rpx;
     margin-right: -12rpx;
    }
   .list_name_box {
