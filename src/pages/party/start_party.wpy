@@ -162,7 +162,7 @@
         success: ({code, data}) => {
           console.log(data)
           that.extraData = {
-            'uid': data,
+            'uid': data.uid,
             'party_id': that.party_id
           }
           that.$apply()

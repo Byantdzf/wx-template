@@ -18,7 +18,7 @@
         <span class="orange">{{index+1}}</span> / {{questionsList.length}}
       </view>
       <view class="clearfloat"></view>
-      <block wx:if="{{index_M}}">
+      <block wx:if="{{index}}">
         <view style="padding: 0 16%;" class="text-center">
           <view class="next btn_white inline-block" @tap="ensure" >上一题</view>
           <view class="next btn_red inline-block" @tap="ensure_from" style="margin-top: -8rpx;" wx:if="{{!show}}">完成</view>
