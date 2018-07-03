@@ -41,7 +41,7 @@
               {{item.distance}}
               <span>{{login_time}}前活跃</span>
             </view>
-            <view class="font_28 white text-left flo_l" wx:if="{{mylibs.marriage.name}}" style="width: 60%;margin-left: 24rpx" @tap="gotofriends({{mylibs.marriage}})">
+            <view class="font_28 white text-left flo_l" wx:if="{{mylibs.marriage.name}}" style="width: 55%;margin-left: 24rpx" @tap="gotofriends({{mylibs.marriage}})">
               由{{mylibs.marriage.name}}推荐加入福恋
             </view>
             <view class="clearfloat"></view>
