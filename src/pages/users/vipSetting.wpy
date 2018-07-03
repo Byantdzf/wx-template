@@ -51,6 +51,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access" wx:else>未完成</view>
       </view>
     </view>
+    <view class="next btn_red" @tap="ensure">完成</view>
   </view>
 </template>
 
@@ -111,6 +112,9 @@
       })
     }
     methods = {
+      ensure() {
+        wx.switchTab({url: '/pages/home/index'})
+      },
       gotoUser(type) {
         let url = ''
         if (type == 'single') {
@@ -258,6 +262,9 @@
       position: absolute;
       right: 32rpx;
       top: 32rpx;
+    }
+    .next{
+      margin: 32rpx auto;
     }
     .message_red{
       background: red;

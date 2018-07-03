@@ -297,7 +297,7 @@
                     longitude: item.location_longitude,
                     name: item.name,
 //                    mobile: item.mobile,
-//                    sex: item.sex,
+                    sex: item.sex,
                     type: item.type,
                     avatar: item.avatar,
                     width: 30,

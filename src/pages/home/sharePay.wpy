@@ -320,11 +320,16 @@
 //                    })
                       that.$post({url: service.orderpay + '/' + that.trade_no}, {
                         success: ({code, data}) => {
-                          wx.showToast({
-                            title: '支付成功',
-                            duration: 2000
-                          })
                           that.initPageData()
+                          that.$get({url: service.invitee + '/' + that.invite_order_id + '/share/pic'}, {
+                            success: ({code, data}) => {
+                              that.shareImage = false
+                              that.pic = data.pic
+                              that.$apply()
+                            },
+                            fail: ({code, data}) => {},
+                            complete: () => {}
+                          })
                         },
                         fail: ({code, data}) => {
                         },
