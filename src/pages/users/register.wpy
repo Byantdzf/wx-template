@@ -124,7 +124,7 @@
 
     onLoad() {
       // 初始化页面数据
-      this.initPageData()
+//      this.initPageData()
       wx.setNavigationBarColor({
         frontColor: '#ffffff',
         backgroundColor: '#CDA6C1',
@@ -137,7 +137,7 @@
     }
 
     onShow() {
-//      this.initPageData()
+      this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
