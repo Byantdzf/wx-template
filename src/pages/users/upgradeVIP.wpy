@@ -49,7 +49,8 @@
     </view>
     <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
       <span class="bold">订单支付：</span>
-      <span class="flo_r">{{price}}</span>
+      <span class="flo_r" wx:if="{{price -my_rank_price > 0}}">{{price -my_rank_price}}</span>
+      <span class="flo_r" wx:else>你的等级已经是<span class="orange bold">{{my_rank_name}}</span> </span>
       <view class="clearfloat"></view>
     </view>
     <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;">
@@ -60,7 +61,7 @@
     <block wx:if="{{show}}">
       <view style="padding: 12rpx 32rpx;border-bottom: 1rpx solid #d3d3d3;" >
         <span class="bold">剩余福分：</span>
-        <span class="flo_r orange">{{score - price}}</span>
+        <span class="flo_r orange">{{score - (price - my_rank_price)}}</span>
         <view class="clearfloat"></view>
       </view>
     </block>
@@ -103,6 +104,8 @@
       show: true,
       hide: true,
       score: 0,
+      my_rank_price: 0,
+      my_rank_name: '',
       message: {}
     }
     computed = {
@@ -147,13 +150,20 @@
               that.$apply()
             } else if (arr[index].type == '海外VIP') {
               that.paylist2.push(arr[index])
-              that.$apply()
             }
           })
           if (data.score != 0) {
 //            let num = data.score.split('.')
             that.score = data.score
           }
+          if (data.my_rank_price != 0) {
+            that.my_rank_price = data.my_rank_price
+          }
+          if (data.my_rank_name != '') {
+            that.my_rank_name = data.my_rank_name
+          }
+          console.log(that.my_rank_price)
+          that.$apply()
 //          that.paylist = data
 //          that.paylist.length = 3
           console.log(that.paylist)
@@ -170,10 +180,11 @@
 
     methods = {
       showmodel(item) {
+        console.log(item)
         this.ranks = item
         this.hide = false
         this.price = item.price
-        let monay = this.score - this.price
+        let monay = this.score - (this.price - this.my_rank_price)
         if (monay < 0) {
           this.show = false
           this.monay = Math.abs(monay)

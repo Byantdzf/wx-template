@@ -114,7 +114,7 @@
         if (!this.price) {
           return this.$showToast('请输入金额')
         }
-        if (this.price > 100000 ) {
+        if (this.price > 100000) {
           return this.$showToast('输入金额不能大于十万')
         }
         let that = this,
