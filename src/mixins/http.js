@@ -63,7 +63,8 @@ export default class httpMixin extends wepy.mixin {
     wx.showNavigationBarLoading()
     // 构造请求体
     const request = {
-      url: url + '?XDEBUG_SESSION_START=1&from_openid='+ wx.getStorageSync('from_openid'),
+      // url: url + '?XDEBUG_SESSION_START=1&from_openid='+ wx.getStorageSync('from_openid'),
+      url: url + '?XDEBUG_SESSION_START=1',
       method: ['GET', 'POST','PUT', 'DELETE'].indexOf(methods) > -1 ? methods : 'GET',
       header: Object.assign({
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
@@ -137,7 +138,7 @@ export default class httpMixin extends wepy.mixin {
 
                   if (!data.token ) {
                     // wx.reLaunch({url: '/pages/users/register'})
-                    wx.navigateTo({url: '/pages/users/register'})
+                    wx.navigateTo({url: '/pages/users/register?from_openid='+ wx.getStorageSync('from_openid')})
                   } else {
                     wx.reLaunch({url: url})
                   }
@@ -161,7 +162,18 @@ export default class httpMixin extends wepy.mixin {
           wx.setStorageSync('jump', url)
 
           if (data.message == 'rank') {
-            wx.navigateTo({url: '/pages/users/upgradingVIP'})
+            wx.showModal({
+              title: '提示',
+              content: '需要升级为VIP，才可查看',
+              confirmText: '跳转升级',
+              success: function(res) {
+                if (res.confirm) {
+                  wx.navigateTo({url: '/pages/users/upgradingVIP'})
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
           }
           if (data.message == 'profile') {
             if (wx.getStorageSync('type') == 'marriage') {
