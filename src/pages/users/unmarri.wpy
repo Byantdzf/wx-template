@@ -68,7 +68,7 @@
     <view  class="list ">
       <picker  mode = 'region' value="{{region_id}}"  bindchange="region_idChange" >
         <view class="picker">
-          户口地
+          成长地
           <text class="text">{{region_id[1]}},{{region_id[2]}}</text>
         </view>
       </picker>
@@ -105,9 +105,9 @@
       <picker mode="multiSelector" @change="bindMultiPickerChange2" @columnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{objectMultiArray}}" >
         <view class="picker">
           行业
-          <text class="text" wx:if="{{show}}">{{objectMultiArray[0][multiIndex2[0]]}}，{{objectMultiArray[1][multiIndex2[1]]}}</text>
+          <text class="text ellipsis_1" style="width: 80%" wx:if="{{show}}">{{objectMultiArray[0][multiIndex2[0]]}}，{{objectMultiArray[1][multiIndex2[1]]}}</text>
           <!--<text class="text" >{{objectMultiArray[0][multiIndex2[0]]}}，{{objectMultiArray[1][multiIndex2[1]]}}</text>-->
-          <text class="text" wx:else> {{industry}},{{industry_sub}}</text>
+          <text class="text ellipsis_1" style="width: 80%" wx:else> {{industry}},{{industry_sub}}</text>
         </view>
       </picker>
     </view>
@@ -140,7 +140,7 @@
       个人介绍（家庭情况，兴趣爱好，自我评价）
       <view class="weui-cell">
         <view class="weui-cell__bd" style="border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;">
-          <textarea class="" @input="typing('introduction')"  style="width: 100% !important;" value="{{introduction}}" focus="{{IntroductionFocus}}" cursor-spacing="200"/>
+          <textarea class="" @input="typing('introduction')"  style="width: 100% !important;" value="{{introduction}}" focus="{{IntroductionFocus}}" />
         </view>
         <!--<view class="font_12" style="text-align: right">限140字</view>-->
       </view>
@@ -149,7 +149,7 @@
       理想对象（写下你对另一半的期望）
       <view class="weui-cell" >
         <view class="weui-cell__bd" style="border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;">
-          <textarea class="" @input="typing('ideal_mate')" style="width: 100% !important;"  value="{{ideal_mate}}" focus="{{Ideal_mateFocus}}"  cursor-spacing="200"/>
+          <textarea class="" @input="typing('ideal_mate')" style="width: 100% !important;"  value="{{ideal_mate}}" focus="{{Ideal_mateFocus}}" />
         </view>
         <!--<view class="font_12" style="text-align: right">限140字</view>-->
       </view>

@@ -81,17 +81,20 @@
 
     // 初始化页面数据
     initPageData() {
-      this.$get({url: service.user}, {
+      let that = this
+      that.$get({url: service.user}, {
         success: ({code, data}) => {
-          this.user = data
-          this.friend_question = data.friend_question
-          if (!this.friend_question) {
-            return this.$showToast('数据显示错误')
+          that.user = data
+          that.friend_question = data.friend_question
+          that.question = data.friend_question
+          that.$apply()
+          if (!that.friend_question) {
+            return that.$showToast('数据显示错误')
           }
-          this.list.forEach((item, index, arr) => {
-            this.friend_question.forEach((item1, index1, arr1) => {
+          that.list.forEach((item, index, arr) => {
+            that.friend_question.forEach((item1, index1, arr1) => {
               if (arr1[index1] == arr[index].name) {
-                this.list[index].checked = true
+                that.list[index].checked = true
               }
             })
           })
@@ -142,8 +145,11 @@
             wx.showToast({
               title: '设置成功',
               icon: 'success',
-              duration: 2000
+              duration: 1200
             })
+            setTimeout(() => {
+              wx.navigateTo({url: '/pages/users/vipSetting'})
+            }, 1200)
           },
           fail: ({code, data}) => {
           },

@@ -7,8 +7,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </view>
       <view class='list_item_box'>
-        <view class='list_item' wx:for='{{love_languages}}' wx:key='this' catchtap='listItemTap' data-index='{{index}}'
-              data-parentindex='{{parentIndex}}'>
+        <view class='list_item' wx:for='{{love_languages}}' wx:key='this'  >
           <view class='list_item_name_box' @tap="showModalV({{item.title}}, {{item.content}})" style="background: white">
             <text class='list_item_name'>{{item.title}}</text>
             <view class="weui-cell__ft weui-cell__ft_in-access">{{item.num}}</view>
@@ -22,8 +21,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </view>
       <view class='list_item_box'>
-        <view class='list_item' wx:for='{{love_characters}}' wx:key='this' catchtap='listItemTap' data-index='{{index}}'
-              data-parentindex='{{parentIndex}}'>
+        <view class='list_item' wx:for='{{love_characters}}' wx:key='this' >
           <view class='list_item_name_box' @tap="showModalV({{item.title}}, {{item.content}})" style="background: white">
             <text class='list_item_name'>{{item.title}}</text>
             <view class="weui-cell__ft weui-cell__ft_in-access">{{item.num}}</view>
@@ -35,8 +33,8 @@
   <view class="font_32 wx_Title orange" style="margin:0; padding: 22rpx 16rpx 16rpx 26rpx;">我的优势</view>
   <view class="booklist  font_28">
     <block wx:if="{{character == null}}">
-      <view style="margin: 0 44rpx;" class="wx_Title font_32" >
-        <span class="black_6">该会员还未参加自身优点测试!</span>
+      <view style="margin: 0 ;" class="wx_Title font_32" >
+        <span class="black_6">你还未参加《我的优点》测试哦!</span>
       </view>
     </block>
     <block wx:else style="background: white">

@@ -100,8 +100,24 @@
       <span class="flo_r">{{profile_courtship.resident_type}}</span>
     </view>
     <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.resident_province != null}}">
-      <span>户口所在地</span>
+      <span>成长地</span>
       <span class="flo_r">{{profile_courtship.resident_province}}</span>
+    </view>
+    <view wx:if="{{profile_courtship.introduction != null}}">
+      <view style="margin: 0 44rpx;width: 18%" class="wx_Title" >
+        <span class="orange">自我介绍</span>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title">
+        <span>{{profile_courtship.introduction}}</span>
+      </view>
+    </view>
+    <view wx:if="{{profile_courtship.ideal_mate != null}}">
+      <view style="margin: 0 44rpx;width: 18%" class="wx_Title" >
+        <span class="orange">理想对象</span>
+      </view>
+      <view style="margin: 0 44rpx;" class="wx_Title">
+        <span>{{profile_courtship.ideal_mate}}</span>
+      </view>
     </view>
   </view>
   <block wx:if="{{userType == 'single'}}">
@@ -128,16 +144,18 @@
                style="width: 120rpx;height: 120rpx;margin-right: 12rpx" wx:for="{{profile_courtship.photos}}"
                wx:key="*this"></image>
       </view>
-      <view style="margin: 0 44rpx;" class="wx_Title orange">
-        <span>身份证</span>
-        <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.identification_photos.length}}张
+      <block wx:if="{{mylibs.self == 1}}">
+        <view style="margin: 0 44rpx;" class="wx_Title orange">
+          <span>身份证</span>
+          <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.identification_photos.length}}张
+          </view>
         </view>
-      </view>
-      <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.identification_photos.length}} != 0">
-        <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.identification_photos}} )" mode="aspectFit"
-               style="width: 120rpx;height: 120rpx;margin-right: 12rpx"
-               wx:for="{{profile_courtship.identification_photos}}" wx:key="*this"></image>
-      </view>
+        <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.identification_photos.length}} != 0">
+          <image src="{{item}}" @tap="previewImage({{item}},{{profile_courtship.identification_photos}} )" mode="aspectFit"
+                 style="width: 120rpx;height: 120rpx;margin-right: 12rpx"
+                 wx:for="{{profile_courtship.identification_photos}}" wx:key="*this"></image>
+        </view>
+      </block>
       <view style="margin: 0 44rpx;" class="wx_Title orange">
         <span>毕业证</span>
         <view class="weui-cell__ft weui-cell__ft_in-access flo_r">{{profile_courtship.graduate_photos.length}}张</view>
@@ -186,13 +204,13 @@
     <view class="font_32 wx_Title orange" style="padding: 12rpx 0;">Ta的优势</view>
     <view class="booklist  font_28">
       <view style="margin: 0 44rpx;" class="wx_Title text-center orange" wx:if="{{showAdvantages}}" @tap="showAdvantagesV">
-        <view class="weui-loading"></view>
+        <!--<view class="weui-loading"></view>-->
         <span>点击查看</span>
       </view>
       <view wx:else>
         <block wx:if="{{character == null}}">
           <view style="margin: 0 44rpx;" class="wx_Title font_32" >
-            <span class="black_6">该会员还未参加自身优点测试!</span>
+            <span class="black_6">该会员还未参加《我的优点》测试哦!</span>
           </view>
         </block>
         <block wx:else>
@@ -312,7 +330,7 @@
       showAdvantages: true,
       userType: '',
       character: {},
-      login_time: 0
+      login_time: 1 + '分钟'
     }
 
     computed = {}
@@ -383,6 +401,8 @@
               return self.login_time = data.login_time.min + '分钟'
             } else if (data.login_time.sec) {
               return self.login_time = data.login_time.sec + '秒'
+            } else {
+              return self.login_time = '1分钟'
             }
           }
         },

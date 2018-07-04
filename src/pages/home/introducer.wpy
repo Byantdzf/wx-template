@@ -70,15 +70,15 @@
   <!--</view>-->
   <view class="font_32 wx_Title orange">基本资料</view>
   <view class="booklist  font_28">
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.birthday != null}}">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_marriage.birthday != null}}">
       <span>出生年月日</span>
       <span class="flo_r">{{profile_marriage.birthday}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.industry != null}}">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{mylibs.industry != null}}">
       <span>所在行业</span>
       <span class="flo_r">{{mylibs.industry}}</span>
     </view>
-    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_courtship.company != null}}">
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_marriage.company != null}}">
       <span>公司名称</span>
       <span class="flo_r">{{profile_marriage.company}}</span>
     </view>
@@ -149,7 +149,7 @@
       profile_courtship: [],
       profile_marriage: [],
       paramet_v: false,
-      login_time: ''
+      login_time: 1 + '分钟'
     }
 
     computed = {}
@@ -212,6 +212,8 @@
               return self.login_time = data.login_time.min + '分钟'
             } else if (data.login_time.sec) {
               return self.login_time = data.login_time.sec + '秒'
+            } else {
+              return self.login_time = '1分钟'
             }
           }
         },

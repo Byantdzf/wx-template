@@ -45,14 +45,14 @@
           <view>已婚：进入成为介绍人，推荐周围单身，寻找主内单身！</view>
         </view>
       </view>
-      <view style="width: 40%; background: white;margin-left: 32rpx" class="text-center flo_l">
-        <view  class="weui-btn btn_red font_28" >
-          <button class="btn text-center font_28 white" style="line-height: 140rpx" open-type="getUserInfo" @getuserinfo="getuserinfo('single')" >我是单身</button>
-        </view>
-      </view>
       <view style="width: 40%; background: white;margin-right: 32rpx" class="text-center flo_r">
         <view  class="weui-btn btn_red font_28" >
           <button class="btn text-center font_28 white" style="line-height: 140rpx" open-type="getUserInfo" @getuserinfo="getuserinfo('marriage')" >我是介绍人</button>
+        </view>
+      </view>
+      <view style="width: 40%; background: white;margin-left: 32rpx" class="text-center flo_l">
+        <view  class="weui-btn btn_red font_28" >
+          <button class="btn text-center font_28 white" style="line-height: 140rpx" open-type="getUserInfo" @getuserinfo="getuserinfo('single')" >我是单身</button>
         </view>
       </view>
         <!--<view class="weui-cell weui-cell_input reset-input">-->
@@ -122,7 +122,10 @@
 //      }
 //    }
 
-    onLoad() {
+    onLoad(e) {
+      if(e.from_openid) {
+        wx.setStorageSync('from_openid', e.from_openid)
+      }
       // 初始化页面数据
 //      this.initPageData()
       wx.setNavigationBarColor({

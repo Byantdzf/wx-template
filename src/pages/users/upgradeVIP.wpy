@@ -226,11 +226,11 @@
             that.trade_no = data.order_pay.trade_no
             that.$apply()
             if (data.order_pay.wx_pay.length == 0) {
-              wx.showModal({
-                title: '提示',
-                content: '您的福分足够抵用本次支付！',
-                success: function (res) {
-                  if (res.confirm) {
+//              wx.showModal({
+//                title: '提示',
+//                content: '您的福分足够抵用本次支付！',
+//                success: function (res) {
+//                  if (res.confirm) {
                     that.$post({url: service.orderpay + '/' + that.trade_no}, {
                       success: ({code, data}) => {
                         wx.showToast({
@@ -244,11 +244,11 @@
                         this.loaded = false
                       }
                     })
-                  } else if (res.cancel) {
-                    console.log('用户点击取消')
-                  }
-                }
-              })
+//                  } else if (res.cancel) {
+//                    console.log('用户点击取消')
+//                  }
+//                }
+//              })
             } else {
               let wxconfig = data.order_pay.wx_pay.config
 //            wx.config(JSON.parse(response.data.data.order.wx_pay.js));
