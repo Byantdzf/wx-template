@@ -21,7 +21,7 @@
     <view class="weui-cells weui-cells_after-title">
       <navigator url="/pages/users/integral" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
-          <image src="../../images/icon/pay.png"
+          <image src="../../../images/icon/pay.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">我的福分</view>
@@ -29,7 +29,7 @@
       </navigator>
       <navigator url="/pages/users/myGift" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
-          <image src="../../images/icon/gift.png"
+          <image src="../../../images/icon/gift.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">我的礼物</view>
@@ -37,7 +37,7 @@
       </navigator>
       <view  class="weui-cell weui-cell_access" @tap="gotoVipSet" hover-class="weui-cell_active" wx:if="{{user.type == 'single'}}">
         <view class="weui-cell__hd">
-          <image src="../../images/icon/text1.png"
+          <image src="../../../images/icon/text1.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">VIP设置</view>
@@ -45,7 +45,7 @@
       </view>
       <navigator url="/pages/users/myPay" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
-          <image src="../../images/icon/order.png"
+          <image src="../../../images/icon/order.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">我的订单</view>
@@ -53,7 +53,7 @@
       </navigator>
       <navigator url="/pages/users/myTest?id={{user.id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
-          <image src="../../images/icon/test.png"
+          <image src="../../../images/icon/test.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <view class="weui-cell__bd">我的测试</view>
@@ -63,7 +63,7 @@
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
-          <image src="../../images/icon/service.png"
+          <image src="../../../images/icon/service.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <button class="btn weui-cell__bd" open-type="feedback" style='padding: 0rpx;height: 48rpx;line-height: 48rpx;'>
@@ -73,7 +73,7 @@
       </view>
       <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
-          <image src="../../images/icon/share.png"
+          <image src="../../../images/icon/share.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
         <button class="btn weui-cell__bd" open-type="share" style='padding: 0rpx;height: 48rpx;line-height: 48rpx;'>
@@ -87,12 +87,12 @@
 
 <script>
   import wepy from 'wepy'
-  import http from '../../mixins/http'
-  import base from '../../mixins/base'
-  import user from '../../mixins/user'
-  import ShareMessage from '../../mixins/ShareMessage'
-  import userTitle from '../../components/userTitle'
-  import { service } from '../../config.js'
+  import http from '../../../mixins/http'
+  import base from '../../../mixins/base'
+  import user from '../../../mixins/user'
+  import ShareMessage from '../../../mixins/ShareMessage'
+  import userTitle from '../../../components/userTitle'
+  import { service } from '../../../config.js'
 
   export default class pageUser extends wepy.page {
     mixins = [base, http, user, ShareMessage]
@@ -209,8 +209,8 @@
 </script>
 
 <style lang="less">
-  @import "../../styles/custom/reset.less";
-  @import "../../styles/custom/fn.less";
+  @import "../../../styles/custom/reset.less";
+  @import "../../../styles/custom/fn.less";
 page{
   background: #ececec;
 }

@@ -231,19 +231,22 @@
 //                content: '您的福分足够抵用本次支付！',
 //                success: function (res) {
 //                  if (res.confirm) {
-                    that.$post({url: service.orderpay + '/' + that.trade_no}, {
-                      success: ({code, data}) => {
-                        wx.showToast({
-                          title: '支付成功',
-                          duration: 2000
-                        })
-                      },
-                      fail: ({code, data}) => {
-                      },
-                      complete: () => {
-                        this.loaded = false
-                      }
-                    })
+              that.$post({url: service.orderpay + '/' + that.trade_no}, {
+                success: ({code, data}) => {
+                  wx.showToast({
+                    title: '支付成功',
+                    duration: 1200
+                  })
+                  setTimeout(() => {
+                    wx.navigateTo({url: '/pages/users/vipSetting'})
+                  }, 1200)
+                },
+                fail: ({code, data}) => {
+                },
+                complete: () => {
+                  this.loaded = false
+                }
+              })
 //                  } else if (res.cancel) {
 //                    console.log('用户点击取消')
 //                  }
@@ -263,8 +266,11 @@
                     success: ({code, data}) => {
                       wx.showToast({
                         title: '支付成功',
-                        duration: 2000
+                        duration: 1200
                       })
+                      setTimeout(() => {
+                        wx.navigateTo({url: '/pages/users/vipSetting'})
+                      }, 1200)
                     },
                     fail: ({code, data}) => {
                     },
@@ -324,7 +330,6 @@
     }
     .pay{
       margin: 22rpx;
-
     }
     .loveTitle{
       border-bottom: 1rpx solid #dedede;

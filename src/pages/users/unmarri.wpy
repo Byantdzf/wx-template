@@ -60,7 +60,7 @@
     <view  class="list ">
       <picker  value="{{residentIndex}}" range="{{resident_type}}"  bindchange="resident_typeChange" >
         <view class="picker">
-          户口类型
+          成长环境
           <text class="text">{{resident_type[residentIndex]}}</text>
         </view>
       </picker>
@@ -182,7 +182,7 @@
           sexIndex: 0,
           state: ['未婚', '离异', '丧偶'],
           stateiIndex: 0,
-          resident_type: ['城市户口', '农村户口'],
+          resident_type: ['城市', '乡村'],
           residentIndex: 0,
           degree: ['大专', '本科', '硕士', '博士', '其他'],
           degreeIndex: 0,
@@ -464,7 +464,7 @@
                     if (data.is_rank == 0) {
                       wx.redirectTo({url: '/pages/users/upgradingVIP'})
                     } else {
-                      wx.switchTab({url: '/pages/users/index'})
+                      wx.switchTab({url: '/pages/tabBar/users/index'})
                     }
                   }, 1200)
                 },

@@ -91,7 +91,7 @@
       this.$get({url: service.goodses}, {
         success: ({code, data}) => {
           self.loading = false
-          let num = data.score.remain_amount.split('.')
+//          let num = data.score.remain_amount.split('.')
           self.score = data.score.remain_amount
           self.list = data.goodses
           self.$apply()
@@ -166,7 +166,7 @@
       bindKeyInput(e) {
         this.price = e.detail.value
         this.$apply()
-        if (this.price > 100000 ) {
+        if (this.price > 100000) {
           return this.$showToast('输入金额不能大于十万')
         }
       },

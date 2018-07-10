@@ -127,7 +127,7 @@
                 duration: 1500
               })
               setTimeout(() => {
-                wx.switchTab({url: '/pages/home/index'})
+                wx.switchTab({url: '/pages/tabBar/home/index'})
               }, 1000)
             } else {
               wx.showModal({
@@ -136,7 +136,7 @@
                 confirmText: '返回首页',
                 success: function (res) {
                   if (res.confirm) {
-                    wx.switchTab({url: '/pages/home/index'})
+                    wx.switchTab({url: '/pages/tabBar/home/index'})
                   } else if (res.cancel) {
                     console.log('用户点击取消')
                   }

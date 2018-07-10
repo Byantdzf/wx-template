@@ -27,7 +27,7 @@
           <!--<image src="../../images/icon/text1.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>-->
         </view>
         <view class="weui-cell__bd">了解爱情语言（市级VIP）</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{user.city_vip_test == 1}}">已完成</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{user.is_love_language == 1}}">已完成</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" wx:else>未完成</view>
       </view>
     </view>
@@ -37,7 +37,7 @@
         <!--<image src="../../images/icon/pay.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>-->
         <!--</view>-->
         <view class="weui-cell__bd">了解交往基因（省级VIP）</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{user.province_vip_test == 1}}">已完成</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{user.is_love_character == 1}}">已完成</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" wx:else>未完成</view>
       </view>
     </view>
@@ -47,7 +47,7 @@
           <!--<image src="../../images/icon/pay.png" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>-->
         </view>
         <view class="weui-cell__bd">了解自己的优势（全国VIP）</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{user.country_vip_test == 1}}">已完成</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{user.is_character == 1}}">已完成</view>
         <view class="weui-cell__ft weui-cell__ft_in-access" wx:else>未完成</view>
       </view>
     </view>
@@ -113,7 +113,7 @@
     }
     methods = {
       ensure() {
-        wx.switchTab({url: '/pages/home/index'})
+        wx.switchTab({url: '/pages/tabBar/home/index'})
       },
       gotoUser(type) {
         let url = ''

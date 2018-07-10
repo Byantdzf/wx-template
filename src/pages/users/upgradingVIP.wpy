@@ -21,7 +21,7 @@
       </block>
       <view class="font_28 orange flo_r" @tap="goto('/pages/users/upgradeVIP')" style="margin-top: 22rpx;" >更多VIP服务》</view>
       <view class="text-center pay">
-        <view class="btn_white font_32 flo_l" @tap="switchTab('/pages/home/index')">继续使用</view>
+        <view class="btn_white font_32 flo_l" @tap="switchTab('/pages/tabBar/home/index')">继续使用</view>
         <view class="btn_red font_32 flo_l" style="margin-top: -6rpx; margin-left: 54rpx;" @tap="showmodel">确认支付</view>
         <view class="clearfloat"></view>
       </view>
@@ -237,26 +237,26 @@
 //                title: '提示',
 //                content: '您的福分足够抵用本次支付！',
 //                success: function (res) {
-                  if (res.confirm) {
-                    that.$post({url: service.orderpay + '/' + that.trade_no}, {
-                      success: ({code, data}) => {
-                        wx.showToast({
-                          title: '支付成功',
-                          duration: 1200
-                        })
-                        setTimeout(() => {
-                          wx.navigateTo({url: '/pages/users/vipSetting'})
-                        }, 1200)
-                      },
-                      fail: ({code, data}) => {
-                      },
-                      complete: () => {
-                        this.loaded = false
-                      }
-                    })
-                  } else if (res.cancel) {
-                    console.log('用户点击取消')
-                  }
+//                  if (res.confirm) {
+              that.$post({url: service.orderpay + '/' + that.trade_no}, {
+                success: ({code, data}) => {
+                  wx.showToast({
+                    title: '支付成功',
+                    duration: 1200
+                  })
+                  setTimeout(() => {
+                    wx.navigateTo({url: '/pages/users/vipSetting'})
+                  }, 1200)
+                },
+                fail: ({code, data}) => {
+                },
+                complete: () => {
+                  this.loaded = false
+                }
+              })
+//                  } else if (res.cancel) {
+//                    console.log('用户点击取消')
+//                  }
 //                }
 //              })
             } else {

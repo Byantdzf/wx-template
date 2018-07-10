@@ -307,7 +307,7 @@
                 icon: 'success',
                 duration: 1200,
                 success: (res) => {
-                  let url = '/pages/home/index'
+                  let url = '/pages/tabBar/home/index'
                   wx.switchTab({url: url})
                 }
               })

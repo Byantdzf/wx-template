@@ -5,15 +5,15 @@
          @regionchange="regionchange" show-location  wx:if="{{showMap}}" style="width: 100%; height: 100vh;"   polyline="{{polyline}}">
       <cover-view class='btn' @tap="showModal_v"
                   style="background: white;width: 580rpx;position: absolute;right: 8%;top: 22rpx;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3">
-        <cover-image src='../../images/icon/share_active.png' class='ten_l flo_l'
+        <cover-image src='../../../images/icon/share_active.png' class='ten_l flo_l'
                      style="width: 48rpx;height: 48rpx;margin-right: 22rpx;"></cover-image>
         <cover-view class="font_32 orange bold" >赶紧邀请好友，一起来寻找"Ta"吧！</cover-view>
       </cover-view>
       <cover-view class='btn'
                   style="background: white;width: 200rpx;position: absolute;right: 0;bottom: 18%;padding: 12rpx;">
-        <cover-image src='../../images/icon/position.png' @tap="moveToLocation" class='ten_l flo_l'
+        <cover-image src='../../../images/icon/position.png' @tap="moveToLocation" class='ten_l flo_l'
                      style="width: 62rpx;height: 62rpx;margin-right: 22rpx;"></cover-image>
-        <cover-image src='../../images/icon/search.png' @tap="goto('/pages/home/search')" class='code flo_l'
+        <cover-image src='../../../images/icon/search.png' @tap="goto('/pages/home/search')" class='code flo_l'
                      style="width: 68rpx;height: 68rpx;"></cover-image>
       </cover-view>
       <cover-view class='btn'
@@ -25,16 +25,16 @@
           <cover-view class="font_32 orange bold">{{friends.name}}
             <cover-view class="font_26 black_6 bold flo_r">{{friends.distance}}千米</cover-view>
           </cover-view>
-          <cover-image src='../../images/icon/man_v.png' wx:if="{{friends.sex  == '1'}}" class='ten_l flo_l'
+          <cover-image src='../../../images/icon/man_v.png' wx:if="{{friends.sex  == '1'}}" class='ten_l flo_l'
                        style="width: 38rpx;height: 38rpx;margin-right: 22rpx;margin-top: 8rpx"></cover-image>
-          <cover-image src='../../images/icon/woman_v.png' wx:else class='ten_l flo_l'
+          <cover-image src='../../../images/icon/woman_v.png' wx:else class='ten_l flo_l'
                        style="width: 38rpx;height: 38rpx;margin-right: 22rpx;margin-top: 8rpx"></cover-image>
         </cover-view>
 
         <cover-view style="padding: 6rpx;">
           <cover-view style="width: 100%;height: 2rpx;background: #d4d4d4;"></cover-view>
           <cover-view class="flo_r font_26 orange" style="margin-top: 12rpx;">查看"Ta"</cover-view>
-          <cover-image src='../../images/icon/love.png' class='ten_l flo_r'
+          <cover-image src='../../../images/icon/love.png' class='ten_l flo_r'
                        style="width: 38rpx;height: 38rpx;margin-right: 8rpx;margin-top: 6rpx"></cover-image>
         </cover-view>
       </cover-view>
@@ -44,7 +44,7 @@
           <cover-view class="weui-cell weui-cell_access" hover-class="weui-cell_active"
                       @tap="goto('/pages/home/sharePay')">
             <cover-view class="weui-cell__hd">
-              <cover-image src="../../images/icon/pay_v.png"
+              <cover-image src="../../../images/icon/pay_v.png"
                            style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>
             </cover-view>
             <cover-view class="weui-cell__bd font_32">邀请Ta并替Ta支付</cover-view>
@@ -52,7 +52,7 @@
           </cover-view>
           <cover-view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <cover-view class="weui-cell__hd">
-              <cover-image src="../../images/icon/weixin.png"
+              <cover-image src="../../../images/icon/weixin.png"
                            style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>
             </cover-view>
             <cover-view class="weui-cell__bd">
@@ -62,7 +62,7 @@
           </cover-view>
           <cover-view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <cover-view class="weui-cell__hd">
-              <cover-image src="../../images/icon/friend_v.png"
+              <cover-image src="../../../images/icon/friend_v.png"
                            style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>
             </cover-view>
             <cover-view class="weui-cell__bd font_32" @tap="shareFriend">生成卡片到朋友圈分享</cover-view>
@@ -88,7 +88,7 @@
         <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"
                     @tap="goto('/pages/home/sharePay')">
           <view class="weui-cell__hd">
-            <image src="../../images/icon/pay_v.png"
+            <image src="../../../images/icon/pay_v.png"
                          style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
           </view>
           <view class="weui-cell__bd font_32">邀请Ta并替Ta支付</view>
@@ -96,7 +96,7 @@
         </view>
         <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__hd">
-            <image src="../../images/icon/weixin.png"
+            <image src="../../../images/icon/weixin.png"
                          style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
           </view>
           <view class="weui-cell__bd">
@@ -106,7 +106,7 @@
         </view>
         <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__hd">
-            <image src="../../images/icon/friend_v.png"
+            <image src="../../../images/icon/friend_v.png"
                          style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
           </view>
           <view class="weui-cell__bd font_32" @tap="shareFriend">生成卡片到朋友圈分享</view>
@@ -158,12 +158,12 @@
 
 <script>
   import wepy from 'wepy'
-  import http from '../../mixins/http'
-  import base from '../../mixins/base'
-  import user from '../../mixins/user'
-  import ShareMessage from '../../mixins/ShareMessage'
-  import { service } from '../../config.js'
-  import message from '../../components/message'
+  import http from '../../../mixins/http'
+  import base from '../../../mixins/base'
+  import user from '../../../mixins/user'
+  import ShareMessage from '../../../mixins/ShareMessage'
+  import { service } from '../../../config.js'
+  import message from '../../../components/message'
 
   export default class indexV extends wepy.page {
     mixins = [base, http, user, ShareMessage]
@@ -208,17 +208,6 @@
     }
     onLoad() {
       this.getSystem()
-      // wx.setNavigationBarColor({
-      //   frontColor: '#ffffff',
-      //   backgroundColor: '#CDA6C1',
-      //   animation: {
-      //     duration: 400,
-      //     timingFunc: 'easeIn'
-      //   }
-      // })
-      // wx.setNavigationBarTitle({
-      //   title: 'Ta的信息'
-      // })
     }
 
     onShow() {
@@ -236,7 +225,7 @@
 //          if (type) {
 //            that.height = res.windowHeight - 156 + 'px'
 //          } else {
-            that.height = res.windowHeight + 'px'
+          that.height = res.windowHeight + 'px'
 //          }
           that.$apply()
         }
@@ -278,10 +267,10 @@
           that.$get({
             url: service.near_single,
             data: {
+              southwest: that.southwest,
+              northeast: that.northeast,
               location_latitude: that.myLat,
               location_longitude: that.myLong,
-//              southwest: that.southwest,
-//              northeast: that.northeast,
               nopage: 1
             }
           }, {
@@ -291,7 +280,7 @@
               that.nearFriends.forEach((item, index, arr) => {
                 markersNew.push(
                   {
-                    iconPath: '../../images/icon/icon-position.png',
+                    iconPath: '../../../images/icon/icon-position.png',
                     id: item.id,
                     latitude: item.location_latitude,
                     longitude: item.location_longitude,
@@ -303,23 +292,13 @@
                     width: 30,
                     distance: item.distance,
                     height: 30
-//                    callout: {
-//                      content: item.name,
-//                      color: '#2c8df6',
-//                      fontSize: 14,
-//                      borderRadius: 6,
-//                      bgColor: '#fff',
-//                      padding: 6,
-//                      display: 'ALWAYS',
-//                      boxShadow: '2px 2px 10px #aaa'
-//                    }
                   }
                 )
               })
               wx.hideLoading()
               that.markers = markersNew
               let markerId = wx.getStorageSync('markerId')
-              if(markerId){
+              if (markerId) {
                 that.markers.forEach((item, index, arr) => {
                   if (arr[index].id == markerId && arr[index].id !== 0) {
                     that.polyline = [{
@@ -336,7 +315,7 @@
                       color: '#FF0000'
                     }]
                     that.$apply()
-                    arr[index].iconPath = '../../images/icon/icon-position_red.png'
+                    arr[index].iconPath = '../../../images/icon/icon-position_red.png'
                   }
                 })
               }
@@ -351,9 +330,6 @@
           })
         }
       })
-//      if (token) {
-//        console.log(token)
-//      }
     }
     getCenterLocation() {
       let that = this
@@ -364,7 +340,6 @@
           that.myLat = res.latitude
           wx.setStorageSync('myLong', res.longitude)
           wx.setStorageSync('myLat', res.latitude)
-//          that.mapFunction()
           that.$apply()
         },
         fail: function () {
@@ -374,218 +349,12 @@
         }
       })
     }
-    mapFunction() {
-      let that = this
-      that.$get({
-        url: service.maps,
-        data: {
-          location_latitude: that.myLat,
-          location_longitude: that.myLong,
-          my_location_longitude: that.myLong,
-          my_location_latitude: that.myLat
-        }
-      }, {
-        success: ({code, data}) => {
-          that.distance1 = data.distance1
-          that.distance_library = data.distance_library
-          if (data.distance_library == null) {
-            return wx.showToast({
-              title: '距离太远了！',
-              image: '../images/icon/icon-error.png',
-              duration: 1500
-            })
-          }
-          if (that.distance_library.type == 'SHARE') {
-            that.distance_library.url = '/pages/library/shareLibrary?id=' + that.distance_library.id
-            that.$apply()
-          } else {
-            that.distance_library.url = '/pages/library/library?id=' + that.distance_library.id
-            that.$apply()
-          }
-          console.log(that.distance_library)
-          that.libraries = data.libraries
-          let markersNew = []
-          that.libraries.forEach((item, index, arr) => {
-            markersNew.push(
-              {
-                iconPath: '/images/icon-position.png',
-                id: item.id,
-                latitude: item.location_latitude,
-                longitude: item.location_longitude,
-                width: 30,
-                height: 30
-//                callout: {
-//                  content: item.name,
-//                  color: '#2c8df6',
-//                  fontSize: 14,
-//                  borderRadius: 6,
-//                  bgColor: '#fff',
-//                  padding: 6,
-//                  display: 'BYCLICK',
-//                  boxShadow: '2px 2px 10px #aaa'
-//                }
-              }
-            )
-          })
-          that.markers = markersNew
-          that.$apply()
-          that.noMoreList = false
-        },
-        fail: ({code, data}) => {},
-        complete: () => {
-          this.loading = false
-        }
-      })
-    }
-    getLngLat() {
-      let that = this
-      that.mapCtx = wx.createMapContext('map')
-      that.mapCtx.getCenterLocation({
-        success: function (res) {
-          that.longitude = res.longitude
-          that.latitude = res.latitude
-          that.$apply()
-          let data = {
-            location_latitude: that.latitude,
-            location_longitude: that.longitude,
-            my_location_longitude: that.myLong,
-            my_location_latitude: that.myLat
-          }
-          that.$get({
-            url: service.maps,
-            data: data
-          }, {
-            success: ({code, data}) => {
-              that.distance1 = data.distance1
-              that.distance_library = data.distance_library
-              if (data.distance_library == null) {
-                return wx.showToast({
-                  title: '距离太远了！',
-                  image: '../images/icon/icon-error.png',
-                  duration: 1500
-                })
-              }
-              if (that.distance_library.type == 'SHARE') {
-                that.distance_library.url = '/pages/library/shareLibrary?id=' + that.distance_library.id
-                that.$apply()
-              } else {
-                that.distance_library.url = '/pages/library/library?id=' + that.distance_library.id
-                that.$apply()
-              }
-              let markersNew = []
-              that.libraries.forEach((item, index, arr) => {
-                if (arr[index].id == that.distance_library.id) {
-                  markersNew.push(
-                    {
-                      iconPath: '/images/icon-position_red.png',
-                      id: item.id,
-                      latitude: item.location_latitude,
-                      longitude: item.location_longitude,
-                      width: 30,
-                      height: 30
-//                      callout: {
-//                        content: item.name,
-//                        color: '#2c8df6',
-//                        fontSize: 14,
-//                        borderRadius: 6,
-//                        bgColor: '#fff',
-//                        padding: 6,
-//                        display: 'BYCLICK',
-//                        boxShadow: '2px 2px 10px #aaa'
-//                      }
-                    }
-                  )
-                } else {
-                  markersNew.push(
-                    {
-                      iconPath: '/images/icon-position.png',
-                      id: item.id,
-                      latitude: item.location_latitude,
-                      longitude: item.location_longitude,
-                      width: 30,
-                      height: 30
-//                      callout: {
-//                        content: item.name,
-//                        color: '#2c8df6',
-//                        fontSize: 14,
-//                        borderRadius: 6,
-//                        bgColor: '#fff',
-//                        padding: 6,
-//                        display: 'BYCLICK',
-//                        boxShadow: '2px 2px 10px #aaa'
-//                      }
-                    }
-                  )
-                }
-              })
-              that.markers = markersNew
-              that.markers.push(
-                {
-                  id: 0,
-                  iconPath: '/images/icon-label.png',
-                  longitude: res.longitude,
-                  latitude: res.latitude,
-                  width: 30,
-                  height: 30
-                }
-              )
-              that.$apply()
-            },
-            fail: ({code, data}) => {
-            },
-            complete: () => {
-            }
-          })
-        }
-      })
-    }
-    distance() {
-      let to = ''
-      this.markers.forEach((item, index, arr) => {
-        to = arr[index].latitude + ',' + arr[index].longitude
-      })
-      let data = {
-        mode: 'driving',
-        from: this.latitude + ',' + this.longitude,
-        to: to,
-        key: 'DQ3BZ-SWT3U-HUQV7-BBO3U-OU7WS-53FBV'
-      }
-      let url = 'http://apis.map.qq.com/ws/distance/v1/'
-      this.$get({url: url, data}, {
-        success: ({code, data}) => {
-          wx.setStorageSync('is_new', data.user.is_news)
-          if (data.user.is_news) {
-            wepy.showTabBarRedDot({
-              index: 4
-            })
-          } else {
-            wepy.hideTabBarRedDot({
-              index: 4
-            })
-          }
-        }
-      })
-    }
 //    showImage() {
 //      // 显示遮罩层
 //      this.showModal = true
 //      this.showMap = false
 //      this.$apply()
 //    }
-    writePhotosAlbum() {
-      wx.getSetting({
-        success(res) {
-          if (!res.authSetting['scope.writePhotosAlbum']) {
-            wx.authorize({
-              scope: 'scope.writePhotosAlbum',
-              success() {
-                wx.startRecord()
-              }
-            })
-          }
-        }
-      })
-    }
     methods = {
       onShareAppMessage(res) {
         let that = this
@@ -593,9 +362,9 @@
           that.from_openid = wx.getStorageSync('openid')
         }
         that.$apply()
-        let pages = getCurrentPages()    //获取加载的页面
-        let currentPage = pages[pages.length - 1]    //获取当前页面的对象
-        let link = currentPage.route    //当前页面url
+        let pages = getCurrentPages()    // 获取加载的页面
+        let currentPage = pages[pages.length - 1]    // 获取当前页面的对象
+        let link = currentPage.route    // 当前页面url
         let options = currentPage.options.id
         let id = options ? '?id=' + options : ''
         let url = ''
@@ -620,9 +389,9 @@
               icon: 'success',
               duration: 1500
             })
-            var shareTickets = res.shareTickets;
+            var shareTickets = res.shareTickets
             if (shareTickets.length == 0) {
-              return false;
+              return false
             }
           },
           fail: function (res) {
@@ -630,6 +399,7 @@
           }
         }
       },
+      // 生成卡片分享
       shareFriend() {
         this.$showLoading('加载中...')
         this.showMap = false
@@ -643,29 +413,13 @@
         this.animation = animation
         animation.translateY(300).step()
         this.animationData = animation.export()
-        setTimeout(function() {
+        setTimeout(function () {
           animation.translateY(0).step()
           this.animationImage = animation.export()
           this.showModalStatus = false
           this.$apply()
         }.bind(this), 200)
         wx.hideLoading()
-//        this.showImage()
-//        var animation = wx.createAnimation({
-//          duration: 200,
-//          timingFunction: 'linear',
-//          delay: 0
-//        })
-//        this.animation = animation
-//        animation.translateY(300).step()
-//        this.animationImage = animation.export()
-//        this.showModalStatus = true
-//        this.$apply()
-//        setTimeout(function() {
-//          animation.translateY(0).step()
-//          this.animationData = animation.export()
-//          this.$apply()
-//        }.bind(this), 200)
       },
       saveImage(type) {
         var that = this
@@ -707,36 +461,10 @@
             console.log('fail')
           }
         })
-//          downloadTask.onProgressUpdate((res) => {
-//            console.log('下载进度', res.progress)
-//            console.log('已经下载的数据长度', res.totalBytesWritten)
-//            console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
-//          })
-
-//          downloadTask.abort()
-//          wx.showToast({
-//             title: '下载成功！',
-//             duration: 1500
-//          })
-//        }
-//        var animation = wx.createAnimation({
-//          duration: 200,
-//          timingFunction: 'linear',
-//          delay: 0
-//        })
-//        this.animation = animation
-//        animation.translateY(300).step()
-//        this.animationImage = animation.export()
-//        setTimeout(function () {
-//          animation.translateY(0).step()
-//          this.animationImage = animation.export()
-//          this.showModal = false
-//          this.$apply()
-//        }.bind(this), 200)
       },
       showModal_v() {
         // 显示遮罩层
-        this.showMap =false
+        this.showMap = false
         var animation = wx.createAnimation({
           duration: 200,
           timingFunction: 'linear',
@@ -772,7 +500,7 @@
         this.animation = animation
         animation.translateY(300).step()
         this.animationData = animation.export()
-        setTimeout(function() {
+        setTimeout(function () {
           animation.translateY(0).step()
           this.animationData = animation.export()
           this.showModalStatus = false
@@ -799,20 +527,6 @@
           this.hide = true
           this.$apply()
         }
-      },
-      translateMarker() {
-        this.mapCtx.translateMarker({
-          markerId: 0,
-          autoRotate: true,
-          duration: 1000,
-          destination: {
-            latitude: 23.10229,
-            longitude: 113.3345211
-          },
-          animationEnd() {
-            console.log('animation end')
-          }
-        })
       },
       regionchange(e) {
         console.log(e.type, 'aajsksalj')
@@ -947,11 +661,11 @@
               dottedLine: true
             }]
             that.$apply()
-            arr[index].iconPath = '../../images/icon/icon-position_red.png'
+            arr[index].iconPath = '../../../images/icon/icon-position_red.png'
 //            wx.hideLoading()
           }
           if (arr[index].id !== e.markerId && arr[index].id !== 0) {
-            arr[index].iconPath = '../../images/icon/icon-position.png'
+            arr[index].iconPath = '../../../images/icon/icon-position.png'
           }
         })
       }
