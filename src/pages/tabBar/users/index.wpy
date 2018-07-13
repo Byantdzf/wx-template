@@ -71,12 +71,12 @@
         </button>
         <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
       </view>
-      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" @tap="goto('/pages/users/myShare')">
         <view class="weui-cell__hd">
           <image src="../../../images/icon/share.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-        <button class="btn weui-cell__bd" open-type="share" style='padding: 0rpx;height: 48rpx;line-height: 48rpx;'>
+        <button class="btn weui-cell__bd" style='padding: 0rpx;height: 48rpx;line-height: 48rpx;'>
           分享给好友
         </button>
         <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->

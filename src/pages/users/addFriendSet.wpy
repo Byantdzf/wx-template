@@ -13,9 +13,9 @@
               <view class="clearfix"></view>
             </view>
           </label>
-          <view class="section">
-            <input placeholder="添加新问题" class="set_input font_26" @confirm="addQuestion"/>
-          </view>
+          <!--<view class="section">-->
+            <!--<input placeholder="添加新问题" class="set_input font_26" @confirm="addQuestion"/>-->
+          <!--</view>-->
           <view class="clearfix"></view>
         </view>
       </checkbox-group>

@@ -65,7 +65,8 @@
             'integralAddress',
             'upgradingVIP',
             'myTest',
-            'myNews'
+            'myNews',
+            'myShare'
           ]
         }
 
@@ -217,7 +218,7 @@
       }
     }
 
-    onShareAppMessage(title = '福恋') {
+    onShareAppMessage(title) {
       return {
         title: title,
 //      path: '/pages/index_M.wpy',

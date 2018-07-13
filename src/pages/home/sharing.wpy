@@ -1,25 +1,26 @@
 <template>
-  <view class="page-user">
-    <view class="text-center">
-      <image src="{{image}}" mode="aspectFill" class="image"></image>
-    </view>
-    <view >
-        <view class="paylist">
-              <view class="flo_l" >
-                <span  class="font_32 flo_l bold" style="margin-right: 22rpx;">{{inviteData.user.name}}</span>
-                <span class="font_28">邀请你加入福恋，并替你升级为</span>
-              </view>
-              <view class="flo_l orange bold" style="margin-left: 48rpx">{{inviteData.rank.name}}</view>
-              <image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 62rpx;height: 62rpx" class="flo_l"></image>
-              <view class='font_26 orange flo_r' style="width: 80%;text-align: right;">{{inviteData.rank.content}}</view>
-              <view class="clearfix"></view>
-          <view class="clearfix"></view>
-        </view>
-      <view class="text-center pay">
-        <view class="btn_red font_32" style="margin-left: 200rpx" @tap="binding">接受邀请</view>
-      </view>
-    </view>
-  </view>
+  <!--<view class="page-user">-->
+    <!--<view class="text-center">-->
+      <!--<image src="{{image}}" mode="aspectFill" class="image"></image>-->
+    <!--</view>-->
+    <!--<view >-->
+        <!--<view class="paylist">-->
+              <!--<view class="flo_l" >-->
+                <!--<span  class="font_32 flo_l bold" style="margin-right: 22rpx;">{{inviteData.user.name}}</span>-->
+                <!--<span class="font_28">邀请你加入福恋，并替你升级为</span>-->
+              <!--</view>-->
+              <!--<view class="flo_l orange bold" style="margin-left: 48rpx">{{inviteData.rank.name}}</view>-->
+              <!--<image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 62rpx;height: 62rpx" class="flo_l"></image>-->
+              <!--<view class='font_26 orange flo_r' style="width: 80%;text-align: right;">{{inviteData.rank.content}}</view>-->
+              <!--<view class="clearfix"></view>-->
+          <!--<view class="clearfix"></view>-->
+        <!--</view>-->
+      <!--<view class="text-center pay">-->
+        <!--<view class="btn_red font_32" style="margin-left: 200rpx" @tap="binding">接受邀请</view>-->
+      <!--</view>-->
+    <!--</view>-->
+  <!--</view>-->
+  <image src="{{image}}" mode="aspectFill" style="width: 100vw;height: 100vh"></image>
 </template>
 
 <script>
@@ -27,20 +28,22 @@
   import http from '../../mixins/http'
   import base from '../../mixins/base'
   import user from '../../mixins/user'
-  import ShareMessage from '../../mixins/ShareMessage'
+//  import ShareMessage from '../../mixins/ShareMessage'
   import { service } from '../../config.js'
 
   export default class sharing extends wepy.page {
-    mixins = [base, http, user, ShareMessage]
+    mixins = [base, http, user]
     config = {
-      navigationBarTitleText: '欢迎加入',
+      navigationBarTitleText: '接受邀请',
+      navigationBarBackgroundColor: "#FEEDEE",
       enablePullDownRefresh: true
     }
     data = {
       user: {},
       is_vip: false,
       sharePay_id: '',
-      image: 'http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/14/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.1tLfwJxq23Oma0294409f50b26300af2046aefa10286.png',
+      image: 'http://images.ufutx.com/201807/11/wxc41491431733671e.o6zAJs2lf_SH4K2plnWTlsSfhR70.VsaXiH2wymJT358c658072b493c19fa981e94512bce6.jpg',
+//      image: 'http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/14/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.1tLfwJxq23Oma0294409f50b26300af2046aefa10286.png',
       paylist: [
         {name: '市级VIP', money: '10元', code: '陈牧师', message: '特权：仅可添加本市的好友', iv: '邀请你加入福恋，并替你升级为'}
       ],

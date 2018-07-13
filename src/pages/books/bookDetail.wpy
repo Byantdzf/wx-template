@@ -9,11 +9,11 @@
   import http from '../../mixins/http'
   import base from '../../mixins/base'
   import user from '../../mixins/user'
-  import ShareMessage from '../../mixins/ShareMessage'
+//  import ShareMessage from '../../mixins/ShareMessage'
   import { service } from '../../config.js'
 
   export default class bookdetail extends wepy.page {
-    mixins = [base, http, user, ShareMessage]
+    mixins = [base, http, user]
     config = {
       navigationBarTitleText: '文章详情',
       enablePullDownRefresh: true
@@ -22,6 +22,7 @@
       libraries: {},
       user: {},
       nickName: '加载中...',
+      from_openid: '',
       url: ''
     }
 
@@ -37,12 +38,35 @@
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
     onShareAppMessage(res) {
-      return this.$parent.onShareAppMessage(this.config.navigationBarTitleText)
+      let that = this
+      let url = '/pages/books/bookDetail?url=' + encodeURIComponent(that.url) + '&from_openid=' + that.from_openid
+      console.log(url)
+      return {
+        title: '基督徒资讯阅读',
+        path: url,
+        // 设置转发image，不设默认当前截图
+        imageUrl: '',
+        success: function(res) {
+          wx.showToast({
+            title: '转发成功',
+            icon: 'success',
+            duration: 1500
+          })
+          var shareTickets = res.shareTickets;
+          if (shareTickets.length == 0) {
+            return false;
+          }
+        },
+        fail: function(res) {
+          // 转发失败
+        }
+      }
     }
 
     onLoad(e) {
       console.log(e)
       this.url = decodeURIComponent(e.url)
+      this.from_openid = wx.getStorageSync('openid')
       this.$apply()
     }
 

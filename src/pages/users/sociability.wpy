@@ -99,6 +99,7 @@
     }
 
     getQuestions() {
+      this.$showLoading('加载题目中')
       let data = {type: this.type},
         that = this
       this.$get({url: service.user}, {
@@ -120,6 +121,7 @@
             arr[index].checked = false
           })
           that.$apply()
+          wx.hideLoading()
         }
       })
     }
@@ -129,16 +131,6 @@
       this.$get({url: service.user}, {
         success: ({code, data}) => {
           this.user = data.user
-          this.libraries = data.libraries
-          this.libraries.forEach((item) => {
-            if (item.type == 'SHARE') {
-              item.url = '/pages/library/shareLibrary?id=' + item.id
-            } else {
-              item.url = '/pages/library/library?id=' + item.id
-            }
-          })
-          wx.setStorageSync('openid', data.user.wechat.openid)
-          wx.setStorageSync('is_new', data.user.is_news)
           if (data.user.is_news) {
             wepy.showTabBarRedDot({
               index: 4
@@ -186,8 +178,6 @@
           console.log(that.answer)
         } else {
           that.answer.push(quert)
-          that.$apply()
-          console.log(that.answer)
           setTimeout(() => {
             if (that.index < that.questionsList.length - 1) {
               that.index++
@@ -197,13 +187,12 @@
                 arr[index].checked = false
               })
               that.value = ''
-              that.$apply()
             }
             if (that.index == that.questionsList.length - 1) {
               that.show = false
-              that.$apply()
             }
-          }, 500)
+            that.$apply()
+          }, 200)
         }
       },
       goto(url) {

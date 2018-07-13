@@ -301,6 +301,7 @@
               if (markerId) {
                 that.markers.forEach((item, index, arr) => {
                   if (arr[index].id == markerId && arr[index].id !== 0) {
+                    that.friends = arr[index]
                     that.polyline = [{
                       points: [{
                         longitude: that.myLong,
@@ -318,6 +319,7 @@
                     arr[index].iconPath = '../../../images/icon/icon-position_red.png'
                   }
                 })
+                that.showfriend = true
               }
               that.$apply()
               that.noMoreList = false
@@ -423,11 +425,6 @@
       },
       saveImage(type) {
         var that = this
-//        wx.getSetting({
-//          success: (res) => {
-//            console.log(res)
-//          }
-//        })
 //        if (type) {
         wepy.downloadFile({
           url: that.shareimage,

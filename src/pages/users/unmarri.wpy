@@ -140,7 +140,7 @@
       个人介绍（家庭情况，兴趣爱好，自我评价）
       <view class="weui-cell">
         <view class="weui-cell__bd" style="border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;">
-          <textarea class="" @input="typing('introduction')"  style="width: 100% !important;" value="{{introduction}}" focus="{{IntroductionFocus}}" />
+          <textarea class="" @input="typing('introduction')" adjust-position="true" style="width: 100% !important;" value="{{introduction}}" focus="{{IntroductionFocus}}" />
         </view>
         <!--<view class="font_12" style="text-align: right">限140字</view>-->
       </view>
@@ -148,9 +148,9 @@
     <view  class="list {{Ideal_mateFocus ? 'InputFocus' : ''}}" style="height: 420rpx">
       理想对象（写下你对另一半的期望）
       <view class="weui-cell" >
-        <view class="weui-cell__bd" style="border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;">
-          <textarea class="" @input="typing('ideal_mate')" style="width: 100% !important;"  value="{{ideal_mate}}" focus="{{Ideal_mateFocus}}" />
-        </view>
+        <!--<view class="weui-cell__bd" >-->
+          <textarea class="" @input="typing('ideal_mate')" adjust-position="true" style="width: 100% !important;border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;"  value="{{ideal_mate}}" focus="{{Ideal_mateFocus}}" />
+        <!--</view>-->
         <!--<view class="font_12" style="text-align: right">限140字</view>-->
       </view>
     </view>
@@ -601,9 +601,9 @@
     border-radius: 6rpx;
     background: white;
   }
-  .list:active{
-    background: #e3e3e3;
-  }
+  /*.list:active{*/
+    /*background: #e3e3e3;*/
+  /*}*/
   .Inp{
     text-align: right; width: 72%;height: 72rpx;
     float: right;

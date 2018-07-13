@@ -56,7 +56,7 @@
         服务格言(为何喜欢做介绍人)
         <view class="weui-cell">
           <view class="weui-cell__bd" style="border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;">
-            <textarea class="weui-textarea" style="width: 100% !important;"   @input="typing('slogan')" value="{{slogan}}" focus="{{SloganFocus}}"  cursor-spacing="200"/>
+            <textarea class="weui-textarea" style="width: 100% !important;"   @input="typing('slogan')" value="{{slogan}}" focus="{{SloganFocus}}"  adjust-position="true"/>
           </view>
         </view>
       </view>
@@ -383,9 +383,9 @@
     border-radius: 6rpx;
     background: white;
   }
-  .list:active{
-    background: #e3e3e3;
-  }
+  /*.list:active{*/
+    /*background: #e3e3e3;*/
+  /*}*/
   .Inp{
     text-align: right; width: 72%;height: 72rpx;
     float: right;
