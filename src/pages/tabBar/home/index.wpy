@@ -315,11 +315,11 @@
                       dottedLine: true,
                       color: '#FF0000'
                     }]
+                    that.showfriend = true
                     that.$apply()
                     arr[index].iconPath = '../../../images/icon/icon-position_red.png'
                   }
                 })
-                that.showfriend = true
               }
               that.$apply()
               that.noMoreList = false
