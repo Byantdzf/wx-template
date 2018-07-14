@@ -1,9 +1,43 @@
 <template>
   <view class="page__bd ">
-    <image mode="aspectFill" style="width: 100vw;height: 100vh" src="http://images.ufutx.com/201807/12/wxc41491431733671e.o6zAJs2lf_SH4K2plnWTlsSfhR70.A0twCCODeLa2809a7306eb6c677a5f3c85f7ef84b7ba.jpg" ></image>
+    <image mode="aspectFill" style="width: 100%;height:100vh;position: fixed;top: 0;left: 0;" src="http://images.ufutx.com/201807/14/b8b840778df41ea95d0a4fdaefaa4037.png" ></image>
   </view>
-  <button open-type="share" class="btn shareBtn" ></button>
-  <button @tap="saveImage('save')" class="btn shareBtnV " ></button>
+  <view>
+    <view class="text-center" style="position: fixed;width: 100%;top: 5%;">
+      <image  mode="aspectFit" src="{{avatar}}" class="party_image"></image>
+      <view style="margin-top: 22rpx">我是{{name}},我为福恋代言！</view>
+    </view>
+  </view>
+  <view>
+    <view class="text-center" style="position: fixed;width: 100%;bottom: 2%;">
+      <image  mode="aspectFit" src="{{qrcode}}" style="width: 360rpx;height: 360rpx;"></image>
+      <view style="margin-top: 16rpx;width: 91%;padding: 0 32rpx;">
+        <view class="text-center flo_l">
+          <view  class="btn_red_v font_28" style="width: 260rpx;" >
+            <button class="btn text-center font_28 white"  open-type="share" >邀请好友</button>
+          </view>
+        </view>
+        <view  class="text-center flo_r">
+          <view  class="btn_red_v font_28" style="width: 260rpx;" >
+            <button class="btn text-center font_28 white"  @tap="saveImage('save')" >保存海报</button>
+          </view>
+        </view>
+        <view class="clearfloat"></view>
+        <view style="color: #FFFFFF;margin: 36rpx 32rpx;" class="font_24 text-left">
+          <view>
+            <!--<image src="../../images/icon/wenhao.png" mode="aspectFill" style="width: 48rpx;height:48rpx;margin-top: -6rpx" class="flo_l"></image>-->
+            <view class="text-left" style="background: #CE7A89;padding: 6rpx 22rpx;">推广规则</view>
+            <!--<view class="clearfloat"></view>-->
+          </view>
+          <view style="padding: 12rpx 22rpx;border: 1rpx solid #CE7A89;">
+            <view>邀请好友加入福恋平台，好友升级VIP费用的10%，将折算福分，在福恋平台上全场抵现金使用！可用于升级会员，购买礼物个兑换商品等。</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--<button open-type="share" class="btn shareBtn " >asda</button>-->
+  <!--<button @tap="saveImage('save')" class="btn shareBtnV " >dsadasd</button>-->
   <!--<block wx:if="{{loading}}">-->
     <!--<view class="weui-loadmore">-->
       <!--<view class="weui-loading"></view>-->
@@ -76,6 +110,9 @@
       shareImage: true,
       showOpenSet: true,
       showAddress: true,
+      name: '',
+      avatar: '',
+      qrcode: '',
       goods: {},
       invite_pic: 'http://images.ufutx.com/201807/12/wxc41491431733671e.o6zAJs2lf_SH4K2plnWTlsSfhR70.A0twCCODeLa2809a7306eb6c677a5f3c85f7ef84b7ba.jpg',
       message: {}
@@ -89,7 +126,7 @@
 
     onShow() {
       // 初始化页面数据
-//      this.initPageData()
+      this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
@@ -98,55 +135,16 @@
     }
 
     onLoad() {
-
+//      this.initPageData()
     }
-
-//    onPullDownRefresh() {
-//      this.page = 1
-//      this.initPageData()
-//    }
-//
-//    onReachBottom() {
-//      this.initPageData()
-//    }
 
     // 初始化页面数据
     initPageData() {
-      var _this = this,
-        data = {
-          page: _this.page
-        }
-      _this.loading = true
-      this.$get({url: service.users + '/orders', data}, {
+      this.$get({url: service.user_share,}, {
         success: ({code, data}) => {
-          _this.noMore = false
-          _this.loading = false
-//          if (data.data.length == 0 && data.last_page == 1) {
-//            _this.loading = false
-//            _this.noMore = true
-//            _this.list = []
-//            return
-//          }
-          if (data.current_page > data.last_page) {
-            _this.noMore = true
-            _this.loading = false
-            return
-          }
-          data = data.data
-          if (this.isArray(data) && data.length === 0) {
-            _this.noMore = true
-            _this.list = []
-            return
-          }
-          if (_this.list.length === 0 || _this.page === 1) {
-            _this.list = data
-          } else {
-            data.map(function (item, index) {
-              _this.list.push(item)
-            })
-          }
-          _this.noMore = true
-          _this.page += 1
+          this.avatar = data.avatar
+          this.name = data.name
+          this.qrcode = data.qrcode
         },
         fail: ({code, data}) => {
         },
@@ -336,5 +334,17 @@ page{
   .addresslList{
     padding: 12rpx;
     border-bottom: 1rpx solid #d3d3d3;
+  }
+  .party_image{
+    overflow: hidden;
+    display: block;
+    width: 160rpx;
+    height: 160rpx;
+    margin: 20rpx;
+    margin-top: 50rpx;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin: auto;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
   }
 </style>

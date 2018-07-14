@@ -214,8 +214,8 @@
       this.mapCtx = wx.createMapContext('map')
       this.getCenterLocation()
       this.initPageData()
-      this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
       this.updataMap()
+      this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
     getSystem(type) {
@@ -295,7 +295,7 @@
                   }
                 )
               })
-              wx.hideLoading()
+
               that.markers = markersNew
               let markerId = wx.getStorageSync('markerId')
               if (markerId) {
@@ -327,7 +327,8 @@
             fail: ({code, data}) => {
             },
             complete: () => {
-              this.loading = false
+//              this.loading = false
+              wx.hideLoading()
             }
           })
         }
@@ -527,9 +528,12 @@
       },
       regionchange(e) {
         console.log(e.type, 'aajsksalj')
-        if (e.type == 'end') {
-          this.updataMap()
-        }
+//        if (!this.showLoad) {
+          if (e.type == 'begin') {
+            this.updataMap()
+          }
+//        }
+
 //        let that = this
 //        if (e.type == 'end') {
 //          this.getLngLat()

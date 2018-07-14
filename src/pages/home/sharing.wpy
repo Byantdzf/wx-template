@@ -1,26 +1,42 @@
 <template>
-  <!--<view class="page-user">-->
-    <!--<view class="text-center">-->
-      <!--<image src="{{image}}" mode="aspectFill" class="image"></image>-->
-    <!--</view>-->
-    <!--<view >-->
-        <!--<view class="paylist">-->
-              <!--<view class="flo_l" >-->
-                <!--<span  class="font_32 flo_l bold" style="margin-right: 22rpx;">{{inviteData.user.name}}</span>-->
-                <!--<span class="font_28">邀请你加入福恋，并替你升级为</span>-->
-              <!--</view>-->
-              <!--<view class="flo_l orange bold" style="margin-left: 48rpx">{{inviteData.rank.name}}</view>-->
-              <!--<image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 62rpx;height: 62rpx" class="flo_l"></image>-->
-              <!--<view class='font_26 orange flo_r' style="width: 80%;text-align: right;">{{inviteData.rank.content}}</view>-->
-              <!--<view class="clearfix"></view>-->
-          <!--<view class="clearfix"></view>-->
-        <!--</view>-->
-      <!--<view class="text-center pay">-->
-        <!--<view class="btn_red font_32" style="margin-left: 200rpx" @tap="binding">接受邀请</view>-->
-      <!--</view>-->
-    <!--</view>-->
-  <!--</view>-->
-  <image src="{{image}}" mode="aspectFill" style="width: 100vw;height: 100vh"></image>
+  <view class="page-user">
+    <view class="flo_r">
+      <image src="http://images.ufutx.com/201807/14/537ac597bc1c88cd2b7d85cd7e1b3ef9.png" style="width: 100vw;height: 100vh;float: left"></image>
+    </view>
+    <view class="text-center" style="position: fixed;padding: 32rpx">
+      <view style="position: fixed; top: 5%;left: 40%;">
+        <image src="/images/tabbars/loge-1.png" mode="aspectFill" style="width: 148rpx;height: 148rpx;"></image>
+        <view class="text-center">
+          <image src="/images/tabbars/font.png" mode="aspectFill" style="width: 88rpx;height: 42rpx;"></image>
+        </view>
+        <!--<view class="text-center" style="margin-top: 92%">-->
+          <!--<image src="/images/tabbars/font1.png" mode="aspectFill" style="width: 336rpx;height: 28rpx;"></image>-->
+        </view>
+      </view>
+      <view class="paylist" style="position: fixed; bottom: 10%">
+        <view class="flo_l text-center" style="width: 100%">
+          <view class="text-center" style="margin-top: 46rpx">
+            <image  mode="aspectFit" src="{{inviteData.avatar}}" class="userinfo-avatar"></image>
+          </view>
+          <span  class="font_32">{{inviteData.user.name}}</span>
+          <span class="font_32">邀请你成为福恋</span>
+          <span class="font_32 white btn_red_v1" style="">{{inviteData.rank.name}}会员</span>!
+        </view>
+        <view class="flo_l text-center" style="width: 100%">
+          <span class="bold font_28">【特权】</span>
+          <span class='font_26' style="">{{inviteData.rank.content}}</span>
+        </view>
+        <view>
+          <view class="text-center pay">
+            <view class="btn_red_v font_32"  @tap="binding">接受邀请</view>
+          </view>
+        </view>
+        <!--<image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 62rpx;height: 62rpx" class="flo_l"></image>-->
+      </view>
+    </view>
+
+  </view>
+  <!--<image src="{{image}}" mode="aspectFill" style="width: 100vw;height: 100vh"></image>-->
 </template>
 
 <script>
@@ -28,11 +44,11 @@
   import http from '../../mixins/http'
   import base from '../../mixins/base'
   import user from '../../mixins/user'
-//  import ShareMessage from '../../mixins/ShareMessage'
+  import ShareMessage from '../../mixins/ShareMessage'
   import { service } from '../../config.js'
 
   export default class sharing extends wepy.page {
-    mixins = [base, http, user]
+    mixins = [base, http, user, ShareMessage]
     config = {
       navigationBarTitleText: '接受邀请',
       navigationBarBackgroundColor: "#FEEDEE",
@@ -164,26 +180,52 @@
   @import "../../styles/custom/fn.less";
   @import "../../styles/custom/reset.less";
   page{
-    background: #f5f5f5;
+    /*width: 100vw;*/
+    /*height: 100vh;*/
+    /*background: url("http://images.ufutx.com/201807/14/b5cb83b344f821d74f8aef6a9c3844ba.png");*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat ;*/
   }
   .page-user{
-    padding: 32rpx;
+    /*padding: 32rpx;*/
     .image{
       width: 718rpx;
       height: 760rpx;
       /*margin: 80rpx auto;*/
     }
     .paylist{
-      width: 88%;
-      margin: 22rpx;
-      background: white;
+      /*width: 88%;*/
+      /*margin: 22rpx;*/
+      /*background: white;*/
       padding: 22rpx;
-      border-radius: 12rpx;
-      box-shadow: 1rpx 1rpx 12rpx #d3d3d3;
+      /*border-radius: 12rpx;*/
+      /*box-shadow: 1rpx 1rpx 12rpx #d3d3d3;*/
     }
     .pay{
-      margin: 22rpx;
-
+      /*margin: 22rpx auto;*/
+      position: fixed;
+      bottom: 5%;
+      width: 100%;
+    }
+    .btn_red_v{
+      width: 300rpx;
+      height: 68rpx;
+      font-size: 42rpx;
+      line-height: 68rpx;
+      margin: auto;
+    }
+    .userinfo-avatar {
+      overflow: hidden;
+      display: block;
+      width: 160rpx;
+      height: 160rpx;
+      margin: 20rpx;
+      margin-top: 50rpx;
+      margin-left: -22rpx;
+      margin: auto;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     }
   }
 </style>
