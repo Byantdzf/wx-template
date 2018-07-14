@@ -7,7 +7,7 @@
           <label class="radio">
             <radio value="{{item.id}}" class="flo_l" checked="{{item.checked}}"/>
             <view class="font_28 flo_l" style="margin-left: 12rpx;">{{item.name}} <span class="orange">{{item.price}}元{{item.iv}}</span> </view>
-            <view class='font_26 orange flo_r' style="width: 80%;text-align: right;">{{item.content}}</view>
+            <view class='font_26 orange flo_l' style="text-align: left;">{{item.content}}</view>
             <view class="clearfix"></view>
           </label>
           <view class="clearfix"></view>

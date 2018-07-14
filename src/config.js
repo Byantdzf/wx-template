@@ -107,7 +107,9 @@ export const service = {
     //动态登录
     account: `${host}/account/uid`,
     //message_num
-    newnotices: `${host}/new/notices`
+    newnotices: `${host}/new/notices`,
+    // 分享
+    user_share: `${host}/my/share`
     // 主域
 }
 

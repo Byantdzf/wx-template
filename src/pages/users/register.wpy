@@ -3,60 +3,68 @@
     <image src="../../images/image/backgroundV1.png" mode="aspectFill" style="width: 100%;height:100vh;position: fixed;top: 0;left: 0;"></image>
   </view>
   <view class="main-register" >
-    <view class="weui-cells weui-cells_after-title main-address">
-      <view class="weui-cell reset-cell-block" style=" width: 100%; position: absolute;left: 25rpx;top: -80rpx;">
-        <open-data type="userAvatarUrl"  mode="aspectFit" class="party_image flo_l" style="width: 120rpx;height: 120rpx;box-shadow: 1rpx 1rpx 12rpx #dedede;margin-left: -12rpx;"></open-data>
-        <view class="font_28 flo_l bold black_6" style="width: 74%; margin-top: 80rpx;margin-left: 22rpx"> <span class="font_36 orange" style="margin-right: 6rpx;">{{marriage}}</span>邀请你加入福恋平台</view>
-        <view class="clearfloat"></view>
-      </view>
-      <!--<view class="weui-cell reset-cell-block">-->
-        <!--<view class="weui-media-box__title h3 color-666">姓名：</view>-->
-      <!--</view>-->
-      <view class="weui-cell weui-cell_input" >
-        <view class="weui-cell__bd h4">
-          <input @input="typing('name')" style="margin-top: 80rpx" class="weui-input" value="{{name}}" placeholder="你的真实姓名"/>
+    <view class="main-address">
+      <view class=" reset-cell-block">
+        <view class="text-center">
+          <image  mode="aspectFit" src="{{from_avatar}}" class="party_image"></image>
         </view>
+        <view class="font_28 text-center bold black_6" style="width: 74%; margin-top: 22rpx;margin: auto"> <span class="font_36 orange" style="margin-right: 6rpx;">{{marriage}}</span>邀请你加入福恋平台</view>
       </view>
-      <!--<view class="weui-cell reset-cell-block">-->
-        <!--<view class="weui-media-box__title h3 color-666">手机号：</view>-->
-      <!--</view>-->
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__bd h4">
-          <button class="btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
-            <input @input="typing('mobile')" style="margin-top: 32rpx" type="number" disabled class="weui-input border_b font_28" value="{{mobile}}" placeholder="请填写手机号码"/>
-          </button>
+      <view style="margin-top: 84rpx;">
+        <view class="text-center flo_l userinfo-avatar" style="margin-top: 48rpx">
+          <open-data type="userAvatarUrl" class="avater_user"></open-data>
+          <!--<image  mode="aspectFit" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3942989250,3371488751&fm=27&gp=0.jpg" ></image>-->
         </view>
-        <view class="weui-cell__hd">
-          <view class="weui-label">
-            <view class="btn_white" style="margin-top: 26rpx">
-              <button class="font_28 orange btn text-center" style="line-height: 126rpx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">从微信获取</button>
+        <view class="flo_r">
+          <view>
+            <view class=" h4">
+              <view class="h3 color-666">姓名：</view>
+              <input @input="typing('name')" class="weui-input border_b font_28" value="{{name}}" placeholder="你的真实姓名" style="border-radius:.25em;"/>
             </view>
+          </view>
+          <view>
+            <view class="h4" style="margin-top: 12rpx">
+              <view class="h3 color-666">手机号：</view>
+              <button class="btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+                <input @input="typing('mobile')" type="number" disabled class="weui-input border_b font_28" value="{{mobile}}" placeholder="使用微信绑定手机号"/>
+              </button>
+            </view>
+          </view>
+          <view class="">
+          <view class="weui-label">
+          <view class="btn_red_v1" style="margin-top: 26rpx;">
+          <button class="font_28 btn white text-center" style="" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">从微信获取</button>
+          </view>
+          </view>
           </view>
         </view>
       </view>
-      <view style="color: #b9b9b9;margin: 10rpx 32rpx;" class="font_24">
+      <view class="clearfloat"></view>
+      <view style="color: #FFFFFF;margin: 22rpx 32rpx;" class="font_24">
         <view>
-          <image src="../../images/icon/wenhao.png" mode="aspectFill" style="width: 48rpx;height:48rpx;margin-top: -6rpx" class="flo_l"></image>
-          <view class="flo_l">如果您现在是</view>
-          <view class="clearfloat"></view>
+          <!--<image src="../../images/icon/wenhao.png" mode="aspectFill" style="width: 48rpx;height:48rpx;margin-top: -6rpx" class="flo_l"></image>-->
+          <view class="" style="background: #CE7A89;padding: 6rpx 22rpx;">如果您现在是</view>
+          <!--<view class="clearfloat"></view>-->
         </view>
-        <view style="margin: 0 12rpx">
+        <view style="padding: 0 22rpx;border: 1rpx solid #CE7A89;">
           <view>单身：进入成为会员，寻找主内单身！</view>
           <view>已婚：进入成为介绍人，推荐周围单身，寻找主内单身！</view>
         </view>
       </view>
-      <view style="width: 40%; background: white;margin-right: 32rpx" class="text-center flo_l">
-        <view  class="weui-btn btn_red font_28" >
-          <button class="btn text-center font_28 white" style="line-height: 140rpx" open-type="getUserInfo" @getuserinfo="getuserinfo('marriage')" >我是介绍人</button>
+      <view style="margin-top: 146rpx;width: 100%">
+        <view class="text-center flo_l">
+          <view  class="btn_red_v font_28" style="width: 260rpx;" >
+            <button class="btn text-center font_28 white"  open-type="getUserInfo" @getuserinfo="getuserinfo('marriage')" >我是介绍人</button>
+          </view>
+        </view>
+        <view  class="text-center flo_r">
+          <view  class="btn_red_v font_28" style="width: 260rpx;" >
+            <button class="btn text-center font_28 white"  open-type="getUserInfo" @getuserinfo="getuserinfo('single')" >我是单身</button>
+          </view>
         </view>
       </view>
-      <view style="width: 40%; background: white;margin-left: 32rpx" class="text-center flo_r">
-        <view  class="weui-btn btn_red font_28" >
-          <button class="btn text-center font_28 white" style="line-height: 140rpx" open-type="getUserInfo" @getuserinfo="getuserinfo('single')" >我是单身</button>
-        </view>
-      </view>
-        <!--<view class="weui-cell weui-cell_input reset-input">-->
-          <!--<view class="weui-cell__bd h4">-->
+        <!--<view class="  reset-input">-->
+          <!--<view class=" h4">-->
             <!--<input @input="typing('code')" class="weui-input" value="{{code}}" placeholder="请输入验证码"/>-->
           <!--</view>-->
           <!--<view class="weui-cell__ft">-->
@@ -85,7 +93,10 @@
     mixins = [base, http, user, ShareMessage]
     config = {
       navigationBarTitleText: '注册',
-      enablePullDownRefresh: false
+      enablePullDownRefresh: false,
+      navigationBarBackgroundColor: '#CE7A89',
+      navigationBarTextStyle: 'white'
+
     }
     data = {
       // 手机号/验证码
@@ -100,6 +111,7 @@
       iv: '',
       avatarUrl: '',
       marriage: '',
+      from_avatar: '',
       nickName: ''
     }
 
@@ -128,14 +140,6 @@
 //      }
       // 初始化页面数据
 //      this.initPageData()
-      wx.setNavigationBarColor({
-        frontColor: '#ffffff',
-        backgroundColor: '#CDA6C1',
-        animation: {
-          duration: 400,
-          timingFunc: 'easeIn'
-        }
-      })
 //      this.getInfo()
     }
 
@@ -163,6 +167,7 @@
           let data = {code: res.code, from_openid: wx.getStorageSync('from_openid')}
           this.$post({url: service.login, data}, {
             success: ({code, data}) => {
+              this.from_avatar = data.from_avatar
               this.marriage = data.marriage
               this.$apply()
               if (data.token) {
@@ -392,22 +397,24 @@
 <style lang="less">
   @import "../../styles/custom/fn.less";
   .main-register{
-    background: white;
+    background: none;
     padding: 20rpx;
-    margin: 100rpx auto;
+    margin: 10rpx auto;
+    z-index: 9999;
+    position: fixed;
     .weui-media-box__title{
       padding-bottom: 0.5em;
     }
     .main-address{
       width: 85%;
       margin-bottom: 1.5em;
-      padding: 36rpx;
-      padding-top: 48rpx;
-      background: white;
+      padding: 12rpx 36rpx;
+      /*padding-top: 48rpx;*/
+      background: none;
       /*border-radius: 16rpx;*/
       margin: auto;
-      height:600rpx;
-      box-shadow: 1rpx 1rpx 12rpx #c5cec5;
+      /*height:600rpx;*/
+      /*box-shadow: 1rpx 1rpx 12rpx #c5cec5;*/
     }
     .reset-cell-block{
       display:block !important;
@@ -426,7 +433,9 @@
       padding-left: 1em;
     }
     .weui-input{
+      width: 360rpx;
       padding-left: 12rpx;
+      background: white;
     }
     .border_b{
       border-bottom: 1rpx solid #e8e8e8;
@@ -435,5 +444,33 @@
     .reset-input{
       padding: 6px 15px;
     }
-  }
+    .party_image{
+      overflow: hidden;
+      display: block;
+      width: 160rpx;
+      height: 160rpx;
+      margin: 20rpx;
+      margin-top: 50rpx;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      margin: auto;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    }
+    .avater_user {
+      width: 200rpx;
+      height: 200rpx
+    }
+    .userinfo-avatar {
+      overflow: hidden;
+      display: block;
+      width: 200rpx;
+      height: 200rpx;
+      margin: 20rpx;
+      margin-top: 50rpx;
+      margin-left: -22rpx;
+      /*border-radius: 50%;*/
+      border: 2px solid #fff;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    }
+    }
 </style>

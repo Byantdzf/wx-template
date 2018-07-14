@@ -345,7 +345,7 @@
               that.region[2] = result.dist
               that.region_id[1] = result.resident_city
               that.region_id[2] = result.resident_dist
-              that.residentIndex = result.resident_type === '城市户口' ? 0 : 1
+              that.residentIndex = result.resident_type === '城市' ? 0 : 1
               that.degree.forEach((item, index, arr) => {
                 console.log(arr[index])
                 if (result.degree == arr[index]) {
