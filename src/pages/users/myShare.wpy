@@ -114,7 +114,7 @@
       avatar: '',
       qrcode: '',
       goods: {},
-      invite_pic: 'http://images.ufutx.com/201807/12/wxc41491431733671e.o6zAJs2lf_SH4K2plnWTlsSfhR70.A0twCCODeLa2809a7306eb6c677a5f3c85f7ef84b7ba.jpg',
+      invite_pic: '',
       message: {}
     }
 
@@ -145,6 +145,8 @@
           this.avatar = data.avatar
           this.name = data.name
           this.qrcode = data.qrcode
+          this.invite_pic = data.pic
+          this.$apply()
         },
         fail: ({code, data}) => {
         },
