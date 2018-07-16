@@ -87,11 +87,11 @@
   import http from '../../mixins/http'
   import base from '../../mixins/base'
   import user from '../../mixins/user'
-  import ShareMessage from '../../mixins/ShareMessage'
+//  import ShareMessage from '../../mixins/ShareMessage'
   import { service } from '../../config.js'
 
   export default class myShare extends wepy.page {
-    mixins = [base, http, user, ShareMessage]
+    mixins = [base, http, user]
     config = {
       navigationBarTitleText: '分享给好友',
       navigationBarBackgroundColor: "#FEEDEE",
@@ -131,7 +131,27 @@
     }
 
     onShareAppMessage(res) {
-      return this.$parent.onShareAppMessage(this.config.navigationBarTitleText)
+      let url = 'pages/tabBar/home/index'
+      return {
+        title: '分享给好友',
+        path: url,
+        // 设置转发image，不设默认当前截图
+//        imageUrl: '',
+        success: function(res) {
+          wx.showToast({
+            title: '转发成功',
+            icon: 'success',
+            duration: 1500
+          })
+          var shareTickets = res.shareTickets;
+          if (shareTickets.length == 0) {
+            return false
+          }
+        },
+        fail: function(res) {
+          // 转发失败
+        }
+      }
     }
 
     onLoad() {
