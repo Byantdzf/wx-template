@@ -149,7 +149,7 @@
       profile_courtship: [],
       profile_marriage: [],
       paramet_v: false,
-      login_time: 1 + '分钟'
+      login_time: '潜水中...'
     }
 
     computed = {}
@@ -203,17 +203,18 @@
             self.array = ['举报']
           }
           self.profile_marriage = data.profile_marriage
+          let text = '前活跃'
           if (data.login_time) {
             if (data.login_time.day) {
-              return self.login_time = data.login_time.day + '天'
+              return self.login_time = data.login_time.day + '天' + text
             } else if (data.login_time.hour) {
-              return self.login_time = data.login_time.hour + '小时'
+              return self.login_time = data.login_time.hour + '小时' + text
             } else if (data.login_time.min) {
-              return self.login_time = data.login_time.min + '分钟'
+              return self.login_time = data.login_time.min + '分钟' + text
             } else if (data.login_time.sec) {
-              return self.login_time = data.login_time.sec + '秒'
+              return self.login_time = data.login_time.sec + '秒' + text
             } else {
-              return self.login_time = '1分钟'
+              return self.login_time = '潜水中...'
             }
           }
         },
