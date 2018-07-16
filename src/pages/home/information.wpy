@@ -39,7 +39,7 @@
             </view>
             <view class="font_24 white text-left flo_l" style="width: 60%;padding: 12rpx;">
               {{item.distance}}
-              <span>{{login_time}}前活跃</span>
+              <span>{{login_time}}</span>
             </view>
             <view class="font_28 white text-left flo_l" wx:if="{{mylibs.marriage.name}}" style="width: 55%;margin-left: 24rpx" @tap="gotofriends({{mylibs.marriage}})">
               由{{mylibs.marriage.name}}推荐加入福恋
@@ -330,7 +330,7 @@
       showAdvantages: true,
       userType: '',
       character: {},
-      login_time: 1 + '分钟'
+      login_time: '潜水中...'
     }
 
     computed = {}
@@ -389,20 +389,21 @@
           console.log(data.city_test_arr)
           self.profile_courtship = data.profile_courtship
           self.character = data.character
+          let  text = '前活跃'
           if (data.is_friend == 0) {
             self.array = ['举报']
           }
           if (data.login_time) {
             if (data.login_time.day) {
-              return self.login_time = data.login_time.day + '天'
+              return self.login_time = data.login_time.day + '天' + text
             } else if (data.login_time.hour) {
-              return self.login_time = data.login_time.hour + '小时'
+              return self.login_time = data.login_time.hour + '小时' + text
             } else if (data.login_time.min) {
-              return self.login_time = data.login_time.min + '分钟'
+              return self.login_time = data.login_time.min + '分钟' + text
             } else if (data.login_time.sec) {
-              return self.login_time = data.login_time.sec + '秒'
+              return self.login_time = data.login_time.sec + '秒' + text
             } else {
-              return self.login_time = '1分钟'
+              return self.login_time = '潜水中...'
             }
           }
         },
