@@ -21,20 +21,20 @@
             </view>
             <view class="weui-cells__title" style="height: 80rpx;"></view>
             <view class="page__bd "  wx:for="{{list}}" wx:key="*this" >
-              <view class="flo_l borrowlist" @tap="goto('/pages/home/information?id={{item.id}}')">
+              <view class="flo_l borrowlist" @tap="goto('/pages/home/information?id={{item.rate_user.id}}')">
                 <view class="flo_l weui-cell__hd" >
-                  <image src="{{item.avatar}}" mode="aspectFit"   style="width: 120rpx;height: 120rpx;border-radius: 50%" class="flo_l"></image>
+                  <image src="{{item.rate_user.avatar}}" mode="aspectFit"   style="width: 120rpx;height: 120rpx;border-radius: 50%" class="flo_l"></image>
                 </view>
                 <view class="flo_l" style="width: 78%;">
                   <view  class="font_28 flo_l orange ellipsis_1 bold" style="margin-left: 12rpx;">
-                    {{item.name}}
+                    {{item.rate_user.name}}
                   </view>
                   <view  class="font_28 flo_l ellipsis_1" style="margin-left: 12rpx;">
-                    <image src="../../images/icon/man_v.png" mode="aspectFit" wx:if="{{item.sex == '1'}}" style="width: 38rpx;height: 38rpx;" class="flo_l"></image>
+                    <image src="../../images/icon/man_v.png" mode="aspectFit" wx:if="{{item.rate_user.sex == '1'}}" style="width: 38rpx;height: 38rpx;" class="flo_l"></image>
                     <image src="../../images/icon/woman_v.png" mode="aspectFit" wx:else   style="width: 38rpx;height: 38rpx;" class="flo_l"></image>
                   </view>
                 </view>
-                <view class="font_26 flo_l black_6 ellipsis_1" style="margin-left: 14rpx">距离你{{item.distance}}千米</view>
+                <view class="font_26 flo_l black_6 ellipsis_1" style="margin-left: 14rpx">距离你{{item.rate_user.distance}}千米</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
               </view>
             </view>
@@ -159,7 +159,7 @@
         myLong = wx.getStorageSync('myLong'),
         myLat = wx.getStorageSync('myLat')
       _this.loading = true
-      let url = service.near_single + '?keyword=' + this.inputVal
+      let url = service.near_singles + '?keyword=' + this.inputVal
       this.$get({
         url: url,
         data: {

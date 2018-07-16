@@ -207,19 +207,19 @@
       Message: message
     }
     onLoad() {
-
-      this.mapCtx = wx.createMapContext('map')
       this.getSystem()
+    }
+
+    onShow() {
+      this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
+    }
+
+    onReady () {
+      this.mapCtx = wx.createMapContext('map')
       this.getCenterLocation()
       this.initPageData()
       this.updataMap()
     }
-
-    onShow() {
-
-      this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
-    }
-
     getSystem(type) {
       let that = this
       wx.getSystemInfo({
