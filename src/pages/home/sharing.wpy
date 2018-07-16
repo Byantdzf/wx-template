@@ -51,7 +51,7 @@
     mixins = [base, http, user, ShareMessage]
     config = {
       navigationBarTitleText: '接受邀请',
-      navigationBarBackgroundColor: "#FEEDEE",
+      navigationBarBackgroundColor: '#FEEDEE',
       enablePullDownRefresh: true
     }
     data = {

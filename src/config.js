@@ -109,7 +109,9 @@ export const service = {
     //message_num
     newnotices: `${host}/new/notices`,
     // 分享
-    user_share: `${host}/my/share`
+    user_share: `${host}/my/share`,
+    // 首页
+    near_singles: `${host}/near/singles`
     // 主域
 }
 

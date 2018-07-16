@@ -207,14 +207,16 @@
       Message: message
     }
     onLoad() {
-      this.getSystem()
-    }
 
-    onShow() {
       this.mapCtx = wx.createMapContext('map')
+      this.getSystem()
       this.getCenterLocation()
       this.initPageData()
       this.updataMap()
+    }
+
+    onShow() {
+
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
@@ -265,7 +267,7 @@
           that.northeast = res.northeast
           that.$apply()
           that.$get({
-            url: service.near_single,
+            url: service.near_singles,
             data: {
               southwest: that.southwest,
               northeast: that.northeast,
@@ -281,16 +283,16 @@
                 markersNew.push(
                   {
                     iconPath: '../../../images/icon/icon-position.png',
-                    id: item.id,
-                    latitude: item.location_latitude,
-                    longitude: item.location_longitude,
-                    name: item.name,
+                    id: item.rate_user.id,
+                    latitude: item.rate_user.location_latitude,
+                    longitude: item.rate_user.location_longitude,
+                    name: item.rate_user.name,
 //                    mobile: item.mobile,
-                    sex: item.sex,
-                    type: item.type,
-                    avatar: item.avatar,
+                    sex: item.rate_user.sex,
+                    type: item.rate_user.type,
+                    avatar: item.rate_user.avatar,
                     width: 30,
-                    distance: item.distance,
+                    distance: item.rate_user.distance,
                     height: 30
                   }
                 )
