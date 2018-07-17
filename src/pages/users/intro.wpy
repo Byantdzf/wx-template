@@ -105,7 +105,7 @@
       industry_sub: '',
       multiIndex2: [0, 0],
       birthday: '1990-01-01',
-      belief: ['基督教', '佛教', '伊斯兰教'],
+      belief: ['基督教', '佛教', '伊斯兰教', '其他'],
       beliefIndex: 0,
       NameFocus: false,
       WordFocus: false,

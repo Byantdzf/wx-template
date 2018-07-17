@@ -196,7 +196,7 @@
           degreeIndex: 0,
           work_sort: ['事业单位', '公务员', '央企', '国企', '私企', '外企'],
           work_sortIndex: 0,
-          belief: ['基督教', '佛教', '伊斯兰教'],
+          belief: ['基督教', '佛教', '伊斯兰教', '其他'],
           beliefIndex: 0,
           salary: [],
           salaryIndex: 0,
