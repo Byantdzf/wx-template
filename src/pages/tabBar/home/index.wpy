@@ -164,6 +164,7 @@
   import ShareMessage from '../../../mixins/ShareMessage'
   import { service } from '../../../config.js'
   import message from '../../../components/message'
+  const util = require('../../../libs/util.js')
 
   export default class indexV extends wepy.page {
     mixins = [base, http, user, ShareMessage]
@@ -200,6 +201,7 @@
       new_notice_count: '',
       northeast: {},
       shareimage: '',
+      throttle: false,
       showLoad: true,
       animationImage: {}
     }
@@ -529,11 +531,16 @@
         }
       },
       regionchange(e) {
-        console.log(e.type, 'aajsksalj')
+        let that = this
+//        console.log(e.type, 'aajsksalj')
 //        if (!this.showLoad) {
-          if (e.type == 'begin') {
-            this.updataMap()
-          }
+        if (e.type == 'begin') {
+          util.throttle(function(){
+            //添加回调处理函数的函数体
+            console.log('测试回调')
+            that.updataMap()
+          },1500,true)
+        }
 //        }
 
 //        let that = this
