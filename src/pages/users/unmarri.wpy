@@ -43,11 +43,11 @@
     </view>
     <view  class="list {{StatureFocus ? 'InputFocus' : ''}}">
     <span >身高</span>
-    <input type="number" placeholder="输入您的身高（cm）" class="Inp"  @input="typing('stature')" value="{{stature}}" focus="{{StatureFocus}}"/>
+    <input type="number" placeholder="输入您的身高（cm）" class="Inp"  @input="typing('stature')" @blur="typing_v2" value="{{stature}}" focus="{{StatureFocus}}"/>
   </view>
     <view  class="list {{WeightFocus ? 'InputFocus' : ''}}">
     <span class="flo_l">体重</span>
-    <input type="number" placeholder="输入您的体重（kg）" class="Inp"   @blur="typing('weight')" value="{{weight}}" focus="{{WeightFocus}}"/>
+    <input type="number" placeholder="输入您的体重（kg）" class="Inp"   @input="typing('weight')" @blur="typing_v2" value="{{weight}}" focus="{{WeightFocus}}"/>
     </view>
     <view  class="list ">
       <picker  mode = 'region' value="{{region}}"  bindchange="cityChange" >
@@ -85,11 +85,11 @@
     </view>
     <view  class="list {{Graduate_schoolFocus ? 'InputFocus' : ''}}">
       <span class="flo_l">毕业学校</span>
-      <input type="text" placeholder="输入您的学校" class="Inp" @blur="typing('graduate_school')"   value="{{graduate_school}}" focus="{{Graduate_schoolFocus}}" cursor-spacing="50"/>
+      <input type="text" placeholder="输入您的学校" class="Inp" @input="typing('graduate_school')" @blur="typing_v2"   value="{{graduate_school}}" focus="{{Graduate_schoolFocus}}" cursor-spacing="50"/>
     </view>
     <view  class="list {{companyFocus ? 'InputFocus' : ''}}">
       <span class="flo_l">工作单位</span>
-      <input type="text" placeholder="公司名称" class="Inp" @blur="typing('company')"   value="{{company}}" focus="{{companyFocus}}" cursor-spacing="50"/>
+      <input type="text" placeholder="公司名称" class="Inp" @input="typing('company')" @blur="typing_v2"  value="{{company}}" focus="{{companyFocus}}" cursor-spacing="50"/>
     </view>
     <view  class="list ">
       <picker  value="{{work_sortIndex}}" range="{{work_sort}}"  bindchange="work_sortChange" >
@@ -140,7 +140,7 @@
       个人介绍（家庭情况，兴趣爱好，自我评价）
       <view class="weui-cell">
         <view class="weui-cell__bd" style="border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;">
-          <textarea class="" @input="typing('introduction')" adjust-position="true" style="width: 100% !important;" value="{{introduction}}" focus="{{IntroductionFocus}}" />
+          <textarea class="" @input="typing('introduction')" @blur="typing_v2" adjust-position="true" style="width: 100% !important;" value="{{introduction}}" focus="{{IntroductionFocus}}" />
         </view>
         <!--<view class="font_12" style="text-align: right">限140字</view>-->
       </view>
@@ -149,7 +149,7 @@
       理想对象（写下你对另一半的期望）
       <view class="weui-cell" >
         <!--<view class="weui-cell__bd" >-->
-          <textarea class="" @input="typing('ideal_mate')" adjust-position="true" style="width: 100% !important;border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;"  value="{{ideal_mate}}" focus="{{Ideal_mateFocus}}" />
+          <textarea class="" @input="typing('ideal_mate')" @blur="typing_v2" adjust-position="true" style="width: 100% !important;border-top: 1rpx solid #d3d3d3;border-bottom: 1rpx solid #d3d3d3;overflow: auto;"  value="{{ideal_mate}}" focus="{{Ideal_mateFocus}}" />
         <!--</view>-->
         <!--<view class="font_12" style="text-align: right">限140字</view>-->
       </view>
@@ -235,64 +235,6 @@
         }
 
         onLoad() {
-//          network.GET('user', {
-//            success: function (res) {
-//              let result = res.data.data
-//              that.salaries = result.salaries
-//              result.salaries.forEach(function (ele, index, array) {
-//                that.salary.push(ele.text)
-//              })
-//              that.name = result.user.name
-//              that.age = result.user.profile_courtship.age
-//              that.weight = result.user.profile_courtship.weight
-//              that.stature = result.user.profile_courtship.stature
-//              that.graduate_school = result.user.profile_courtship.graduate_school
-//              that.introduction = result.user.profile_courtship.introduction
-//              that.ideal_mate = result.user.profile_courtship.ideal_mate
-//              that.work_text = result.user.profile_courtship.work_sort
-//              that.DegreeText = result.user.profile_courtship.degree
-//              that.industry = result.user.industry
-//              that.industry_sub = result.user.industry_sub
-//              that.profile_courtship = result.user.profile_courtship
-//              that.region[0] = result.user.profile_courtship.province
-//              that.region[1] = result.user.profile_courtship.city
-//              that.region_id[1] = result.user.profile_courtship.resident_city
-//              that.setData({
-//                salary: that.salary,
-//                profile_courtship: that.profile_courtship,
-//                region: that.region,
-//                region_id: that.region_id,
-//                salaryIndex: that.profile_courtship.salary_id ? that.profile_courtship.salary_id : 0,
-//                residentIndex: that.profile_courtship.resident_type === '城市户口' ? 0 : 1,
-//                degreeIndex: that.profile_courtship.degree === '本科' ? 1 : 0,
-//                degreeIndex: that.profile_courtship.degree === '硕士' ? 2 : 0,
-//                degreeIndex: that.profile_courtship.degree === '博士' ? 3 : 0,
-//                degreeIndex: that.profile_courtship.degree === '其他' ? 4 : 0,
-//                work_sortIndex: that.profile_courtship.resident_type === '公务员' ? 1 : 0,
-//                work_sortIndex: that.profile_courtship.resident_type === '央企' ? 2 : 0,
-//                work_sortIndex: that.profile_courtship.resident_type === '国企' ? 3 : 0,
-//                work_sortIndex: that.profile_courtship.resident_type === '私企' ? 4 : 0,
-//                work_sortIndex: that.profile_courtship.resident_type === '外企' ? 5 : 0,
-//                carIndex: that.profile_courtship.h_car,
-//                housingIndex: that.profile_courtship.h_housing
-//              })
-//              that.$apply()
-//            }
-//          })
-//          network.GET('industry/json', {
-//            success: function (res) {
-//              let result = res.data.data
-//              that.Business = result
-//              let IndustryArr = []
-//              result.forEach(function (item, index, arr) {
-//                IndustryArr.push(arr[index].title)
-//              })
-//              that.objectMultiArray.push(IndustryArr)
-//              that.objectMultiArray.push(result[0].items)
-//              that.$apply()
-//              console.log(that.objectMultiArray)
-//            }
-//          })
         }
         onShow() {
           this.objectMultiArray = []
@@ -323,7 +265,6 @@
             }
           })
         }
-
         getuser() {
           let that = this
           this.loading = true
@@ -383,6 +324,39 @@
           })
         }
 
+        ensureData() {
+          let data = {
+            birthday: this.birthday,
+            company: this.company,
+            sex: this.sexIndex == 0 ? 1 : 2,
+            stature: this.stature,
+            weight: this.weight,
+            graduate_school: this.graduate_school,
+            introduction: this.introduction,
+            ideal_mate: this.ideal_mate,
+            state: this.state[this.stateiIndex],
+            province: this.region[0],
+            city: this.region[1],
+            dist: this.region[2],
+            resident_type: this.resident_type[this.residentIndex],
+            resident_province: this.region_id[0],
+            resident_city: this.region_id[1],
+            resident_dist: this.region_id[2],
+            degree: this.degree[this.degreeIndex],
+            industry: this.show ? this.objectMultiArray[0][this.multiIndex2[0]] : this.industry,
+            industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub,
+            work_sort: this.work_sort[this.work_sortIndex]
+          }
+          this.$put({url: service.courtship + '/v2', data}, {
+            success: ({code, data}) => {
+              console.log('参数保存成功！')
+            },
+            fail: ({code, data}) => {
+            },
+            complete: () => {
+            }
+          })
+        }
         methods = {
           ensure() {
             this.NameFocus = false
@@ -414,23 +388,10 @@
               resident_city: this.region_id[1],
               resident_dist: this.region_id[2],
               degree: this.degree[this.degreeIndex],
-//              salary_id: this.salary_id ? this.salary_id : this.salaries[0].id,
-//              h_car: this.carIndex,
-//              h_housing: this.housingIndex,
               industry: this.show ? this.objectMultiArray[0][this.multiIndex2[0]] : this.industry,
               industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub,
               work_sort: this.work_sort[this.work_sortIndex]
             }
-//            console.log(this.age)
-//            if (!this.name) {
-//              this.NameFocus = true
-//              console.log(this.NameFocus)
-//              this.ShowModal('请填写真实姓名')
-//            } else
-//            if (!this.age) {
-//              this.AgeFocus = true
-//              this.ShowModal('请填写年龄')
-//            } else
             console.log(this.stature)
             if (!this.stature) {
               this.StatureFocus = true
@@ -511,46 +472,56 @@
             this.$apply()
 //            }
           },
+          typing_v2(type, e) {
+            this.ensureData()
+          },
           stateChange(e) {
             this.stateiIndex = e.detail.value
+            this.ensureData()
           },
           resident_typeChange(e) {
             this.residentIndex = e.detail.value
+            this.ensureData()
           },
           cityChange(e) {
             this.region = e.detail.value
+            this.ensureData()
           },
           region_idChange(e) {
             this.region_id = e.detail.value
+            this.ensureData()
           },
           sexChange(e) {
             this.sexIndex = e.detail.value
+            this.ensureData()
           },
           degreeChange(e) {
             this.ShowDegree = true
             this.degreeIndex = e.detail.value
+            this.ensureData()
           },
           work_sortChange(e) {
             this.WorkShow = true
             this.work_sortIndex = e.detail.value
+            this.ensureData()
           },
-          salaryChange(e) {
-            console.log(e)
-            console.log(this.salaries)
-            this.Salaryshow = true
-            this.salaryIndex = e.detail.value
-            for (let i = 0; i < this.salaries.length; i++) {
-              if (this.salary[this.salaryIndex] == this.salaries[i].text) {
-                this.salary_id = this.salaries[i].id
-              }
-            }
-          },
-          carChange(e) {
-            this.carIndex = e.detail.value
-          },
-          housingChange(e) {
-            this.housingIndex = e.detail.value
-          }
+//          salaryChange(e) {
+//            console.log(e)
+//            console.log(this.salaries)
+//            this.Salaryshow = true
+//            this.salaryIndex = e.detail.value
+//            for (let i = 0; i < this.salaries.length; i++) {
+//              if (this.salary[this.salaryIndex] == this.salaries[i].text) {
+//                this.salary_id = this.salaries[i].id
+//              }
+//            }
+//          },
+//          carChange(e) {
+//            this.carIndex = e.detail.value
+//          },
+//          housingChange(e) {
+//            this.housingIndex = e.detail.value
+//          }
         }
   }
 </script>
