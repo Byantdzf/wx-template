@@ -111,6 +111,14 @@
         </view>
       </picker>
     </view>
+    <view  class="list ">
+      <picker  value="{{beliefIndex}}" range="{{belief}}"  bindchange="beliefChange" >
+        <view class="picker">
+          信仰
+          <text class="text" >{{belief[beliefIndex]}}</text>
+        </view>
+      </picker>
+    </view>
     <!--<view  class="list">-->
       <!--<picker  value="{{salaryIndex}}" range="{{salary}}"  bindchange="salaryChange" >-->
         <!--<view class="picker">-->
@@ -188,6 +196,8 @@
           degreeIndex: 0,
           work_sort: ['事业单位', '公务员', '央企', '国企', '私企', '外企'],
           work_sortIndex: 0,
+          belief: ['基督教', '佛教', '伊斯兰教'],
+          beliefIndex: 0,
           salary: [],
           salaryIndex: 0,
           car: ['无', '有'],
@@ -288,7 +298,6 @@
               that.region_id[2] = result.resident_dist
               that.residentIndex = result.resident_type === '城市' ? 0 : 1
               that.degree.forEach((item, index, arr) => {
-                console.log(arr[index])
                 if (result.degree == arr[index]) {
                   that.degreeIndex = index
                 }
@@ -302,6 +311,11 @@
               that.sex.forEach((item, index, arr) => {
                 if (result.sex == index + 1) {
                   that.sexIndex = index
+                }
+              })
+              that.belief.forEach((item, index, arr) => {
+                if (result.belief == arr[index]) {
+                  that.beliefIndex = index
                 }
               })
               that.industry = data.industry
@@ -345,7 +359,8 @@
             degree: this.degree[this.degreeIndex],
             industry: this.show ? this.objectMultiArray[0][this.multiIndex2[0]] : this.industry,
             industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub,
-            work_sort: this.work_sort[this.work_sortIndex]
+            work_sort: this.work_sort[this.work_sortIndex],
+            belief: this.belief[this.beliefIndex]
           }
           this.$put({url: service.courtship + '/v2', data}, {
             success: ({code, data}) => {
@@ -390,7 +405,8 @@
               degree: this.degree[this.degreeIndex],
               industry: this.show ? this.objectMultiArray[0][this.multiIndex2[0]] : this.industry,
               industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub,
-              work_sort: this.work_sort[this.work_sortIndex]
+              work_sort: this.work_sort[this.work_sortIndex],
+              belief: this.belief[this.beliefIndex]
             }
             console.log(this.stature)
             if (!this.stature) {
@@ -503,6 +519,10 @@
           work_sortChange(e) {
             this.WorkShow = true
             this.work_sortIndex = e.detail.value
+            this.ensureData()
+          },
+          beliefChange(e) {
+            this.beliefIndex = e.detail.value
             this.ensureData()
           },
 //          salaryChange(e) {

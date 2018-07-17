@@ -78,6 +78,10 @@
       <span>所在行业</span>
       <span class="flo_r">{{mylibs.industry}}</span>
     </view>
+    <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_marriage.resident_province != null}}">
+      <span>信仰</span>
+      <span class="flo_r">{{profile_courtship.belief}}</span>
+    </view>
     <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_marriage.company != null}}">
       <span>公司名称</span>
       <span class="flo_r">{{profile_marriage.company}}</span>

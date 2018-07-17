@@ -39,6 +39,14 @@
           </view>
         </picker>
       </view>
+      <view  class="list ">
+        <picker  value="{{beliefIndex}}" range="{{belief}}"  bindchange="beliefChange" >
+          <view class="picker">
+            信仰
+            <text class="text" >{{belief[beliefIndex]}}</text>
+          </view>
+        </picker>
+      </view>
       <!--<view  class="list {{WechatFocus ? 'InputFocus' : ''}}">-->
         <!--<span class="flo_l">微信号</span>-->
         <!--<input type="text" placeholder="输入您的微信号" class="Inp" @blur="typing('wechat_id')" value="{{profile_marriage.wechat_id}}" focus="{{WechatFocus}}"/>-->
@@ -97,6 +105,8 @@
       industry_sub: '',
       multiIndex2: [0, 0],
       birthday: '1990-01-01',
+      belief: ['基督教', '佛教', '伊斯兰教'],
+      beliefIndex: 0,
       NameFocus: false,
       WordFocus: false,
       WechatFocus: false,
@@ -202,6 +212,11 @@
           that.birthday = result.birthday
           that.company = result.company
           that.slogan = result.slogan
+          that.belief.forEach((item, index, arr) => {
+            if (result.belief == arr[index]) {
+              that.beliefIndex = index
+            }
+          })
 //          that.region[0] = result.province
 //          that.region[1] = result.city
 //          that.region_id[1] = result.resident_city
@@ -292,7 +307,8 @@
           sex: this.sexIndex == 0 ? 1 : 2,
 //          wechat_id: this.wechat_id,
           industry: this.show ? this.objectMultiArray[0][this.multiIndex2[0]] : this.industry,
-          industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub
+          industry_sub: this.show ? this.objectMultiArray[1][this.multiIndex2[1]] : this.industry_sub,
+          belief: this.belief[this.beliefIndex]
 //          degree: this.degree[this.degreeIndex]
         }
         if (!this.company) {
@@ -323,6 +339,9 @@
 //          this.WechatFocus = true
 //          this.ShowModal('请填写微信号')
 //        }
+      },
+      beliefChange(e) {
+        this.beliefIndex = e.detail.value
       },
       stateChange(e) {
         this.stateiIndex = e.detail.value
