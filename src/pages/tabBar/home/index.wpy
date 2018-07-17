@@ -18,7 +18,6 @@
       </cover-view>
       <cover-view class='btn'
                   style="background: white;width: 640rpx;position: absolute;right: 5%;bottom: 2%;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3"
-                  animation="{{animateFriend}}"
                   wx:if="{{showfriend}}" @tap="gotofriends({{friends}})">
         <cover-view style="padding-bottom: 12rpx">
           <cover-image src='{{friends.avatar}}' class='ten_l flo_l'
