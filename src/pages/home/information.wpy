@@ -124,6 +124,7 @@
       </view>
     </view>
   </view>
+  <view style="height: 150rpx;width: 100%" wx:if="{{userType == 'marriage'}}"></view>
   <block wx:if="{{userType == 'single'}}">
     <view class="font_32 wx_Title orange">VIP资料</view>
     <view class="booklist  font_28">
