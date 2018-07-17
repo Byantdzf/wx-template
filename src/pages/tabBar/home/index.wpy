@@ -1,7 +1,7 @@
 <template>
   <view class="map">
     <!--<Message :title.sync="title" ></Message>-->
-    <map id="map" longitude="{{myLong}}" latitude="{{myLat}}" scale="13" markers="{{markers}}" @markertap="markertap"
+    <map id="map" longitude="{{myLong}}" latitude="{{myLat}}" scale="13" markers="{{markers}}" @markertap="markertap"  @tap="hideFriend"
          @regionchange="regionchange" show-location  wx:if="{{showMap}}" style="width: 100%; height: 100vh;"   polyline="{{polyline}}">
       <cover-view class='btn' @tap="showModal_v"
                   style="background: white;width: 580rpx;position: absolute;right: 8%;top: 22rpx;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3">
@@ -18,6 +18,7 @@
       </cover-view>
       <cover-view class='btn'
                   style="background: white;width: 640rpx;position: absolute;right: 5%;bottom: 2%;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3"
+                  animation="{{animateFriend}}"
                   wx:if="{{showfriend}}" @tap="gotofriends({{friends}})">
         <cover-view style="padding-bottom: 12rpx">
           <cover-image src='{{friends.avatar}}' class='ten_l flo_l'
@@ -196,6 +197,8 @@
       friends: [],
       animation: [],
       animationData: {},
+      animation_F: [],
+      animateFriend: {},
       showMap: true,
       southwest: {},
       new_notice_count: '',
@@ -363,6 +366,9 @@
 //      this.$apply()
 //    }
     methods = {
+      hideFriend () {
+        this.showfriend = false
+      },
       onShareAppMessage(res) {
         let that = this
         if (that.from_openid == '') {
@@ -541,27 +547,6 @@
             that.updataMap()
           },1500,true)
         }
-//        }
-
-//        let that = this
-//        if (e.type == 'end') {
-//          this.getLngLat()
-//        } else {
-//          console.log('move')
-        // this.mapCtx.getCenterLocation({
-        //   success: function (res) {
-        //     that.longitude = res.longitude
-        //     that.latitude = res.latitude
-        //     that.$apply()
-        //   }
-        // })
-        // this.markers.forEach((item, index) => {
-        //   if (item.id == 0) {
-        //     console.log(index)
-        //     this.markers.splice(index, 1)
-        //   }
-        // })
-//        }
       },
       // 关闭图片下载显示
       listenerCancel() {
@@ -653,6 +638,24 @@
 //          fail: ({code, data}) => {},
 //          complete: () => { this.loaded = false }
 //        })
+        var animation = wx.createAnimation({
+          duration: 1000,
+          timingFunction: 'ease',
+        })
+        this.animation = animation
+        animation.rotate(360).scale(1, 1).step()
+        this.setData({
+          animateFriend: animation.export()
+        })
+
+        setTimeout(function () {
+          animation.translate(180).step()
+//          animation.translate(-180).step()
+          this.setData({
+            animateFriend: animation.export()
+          })
+        }.bind(this), 1000)
+
         that.markers.forEach((item, index, arr) => {
           if (arr[index].id == e.markerId && arr[index].id !== 0) {
             that.friends = arr[index]
