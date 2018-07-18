@@ -3,8 +3,8 @@
                         小程序配置文件
 ======================================================== */
 // 域名
-var host = 'https://love.ufutx.com/api',
-// var host = 'http://love.hankin.com/api',
+// var host = 'https://love.ufutx.com/api',
+var host = 'http://love.hankin.com/api',
     book = 'https://christ.data.ufutx.com/api',
     party= 'https://party.ufutx.com/api'
 export const service = {
@@ -111,7 +111,11 @@ export const service = {
     // 分享
     user_share: `${host}/my/share`,
     // 首页
-    near_singles: `${host}/near/singles`
+    near_singles: `${host}/near/singles`,
+    //获取聊天对象
+    chitchat_get: `${host}/chat/messages/with/users/`,
+    //发消息
+    chitchat_post: `${host}/send/chat/messages/to/users/`
     // 主域
 }
 
