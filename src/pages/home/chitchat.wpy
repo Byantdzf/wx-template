@@ -1,11 +1,11 @@
 <template>
   <template name="msgItem">
     <view wx:for="{{contents}}" style="display:inline-block;white-space:pre-line" wx:key="*this">
-      <text wx:if="item.type=='text'" style="padding:0;margin:0;width:auto;" selectable>{{item.text}}</text>
+      <text wx:if="item.type=='text'" style="padding:8rpx;margin:0;width:auto;" selectable>{{item.text}}</text>
       <!--<image wx:if="item.type=='image'" style="width:42rpx;height:42rpx;vertical-align:middle;margin:0 6rpx;" src="{{item.url}}"></image>-->
     </view>
   </template>
-  <scroll-view scroll-y style="height:{{scrollHeight}}rpx;background:#eee" scroll-into-view="{{toView}}">
+  <scroll-view scroll-y style="height:{{scrollHeight}}rpx;background:#eee;" scroll-into-view="{{toView}}">
     <view wx:for="{{messages}}" wx:for-item="i" wx:key="*this">
       <view id="{{i.id}}" class="padding clearfix" wx:if="{{i.me}}">
         <image class="right-Avatar padding_half" src="{{i.avatar}}"></image>
@@ -63,9 +63,12 @@
   export default class chitchat extends wepy.page {
     mixins = [base, http, user, ShareMessage]
     config = {
-      navigationBarTitleText: '聊天'
+      navigationBarTitleText: '聊天',
+      enablePullDownRefresh: true
     }
     data = {
+      other_userId: '',
+      other_name: '',
       messages: [],
       isSpeech: false,
       scrollHeight: 0,
@@ -92,6 +95,15 @@
     }
     async onLoad(e) {
       let that = this
+      that.other_userId = e.id
+      that.name = e.name
+      console.log(e)
+      console.log(that.other_userId)
+      wx.setNavigationBarTitle({
+        title: that.name,
+        success: function (res) {
+        }
+      })
 //      let emotions = []
 //      var emojis = app.globalData.emojis
 //      console.log(emojis)
@@ -114,12 +126,44 @@
       })
     }
     onShow() {
+      this.getData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
     onPullDownRefresh() {
+      this.getData()
     }
     onReachBottom() {
+    }
+    getData() {
+      let that = this
+      this.$get({url: service.chitchat_get + that.other_userId}, {
+        success: ({code, data}) => {
+          that.messages = []
+          let message = []
+          console.log(data)
+          data.forEach((item, index, arr)=>{
+            message = {
+              id: arr[index].id,
+              contents: util.getContents(arr[index].content),
+              me: arr[index].is_mine = 1 ? true : false,
+              avatar: arr[index].is_mine = 1 ? arr[index].user.avatar : arr[index].other_user.avatar,
+              speech: false
+            }
+            that.messages.push(message)
+          })
+          console.log(that.messages)
+//          let answer = res.data.text
+//          let contents = util.getContents(answer)
+//          let id = 'id_' + Date.parse(new Date()) / 1000
+//          let data = {id: id, contents: contents, me: false, avatar: '/images/robot.jpg', speech: false}
+//          let messages = that.data.messages
+//          messages.push(data)
+//          console.log(messages)
+//          that.messages = messages
+//          that.toView = id
+        }
+      })
     }
     methods = {
 //      chooseEmotion(e) {
@@ -162,42 +206,52 @@
 //        }
 //      },
       send() {
-        var that = this;
+        var that = this
         let msg = this.msg
         let contents = util.getContents(msg)
-        let id = 'id_' + Date.parse(new Date()) / 1000;
+        let id = 'id_' + Date.parse(new Date()) / 1000
         let data = { id: id, contents: contents, me: true, avatar: wx.getStorageSync('userInfo').avatarUrl, speech: false }
         let messages = this.data.messages
         messages.push(data)
+        console.log(this.messages)
         that.messages = messages
         that.msg = ''
-        that.toView= id
-        console.log(this.messages)
-        wx.request({
-          url: host + '/wx/robot',
-          method: 'POST',
-          data: { 'info': msg, 'userid': wx.getStorageSync('openid'), 'username': wx.getStorageSync('userInfo').nickName },
-          header: {
-            "content-type": "application/json"
-          },
-          success: function (res) {
-            if (res.statusCode == 200) {
-              let answer = res.data.text;
-              let contents = util.getContents(answer, res.data.url)
-                let id = 'id_' + Date.parse(new Date()) / 1000
-                let data = { id: id, contents: contents, me: false, avatar:  '/images/robot.jpg', speech: false }
-                let messages = that.data.messages
-                messages.push(data)
-                console.log(messages)
-                that.messages = messages
-                that.toView = id
-            }
-          },
-          fail: function (res) {
-            console.log(res)
+        that.toView = id
+        this.$post({ url: service.chitchat_post + that.other_userId, data: {content: msg} }, {
+          success: ({code, data}) => {
+            console.log('发送成功')
           }
         })
-      },
+//        this.$post({url: service.chitchat_post + that.other_userId, dataV}, {
+//          success: ({code, data}) => {
+//            debugger
+//          }
+//        })
+//        wx.request({
+//          url: host + '/wx/robot',
+//          method: 'POST',
+//          data: { 'info': msg, 'userid': wx.getStorageSync('openid'), 'username': wx.getStorageSync('userInfo').nickName },
+//          header: {
+//            "content-type": "application/json"
+//          },
+//          success: function (res) {
+//            if (res.statusCode == 200) {
+//              let answer = res.data.text;
+//              let contents = util.getContents(answer, res.data.url)
+//                let id = 'id_' + Date.parse(new Date()) / 1000
+//                let data = { id: id, contents: contents, me: false, avatar:  '/images/robot.jpg', speech: false }
+//                let messages = that.data.messages
+//                messages.push(data)
+//                console.log(messages)
+//                that.messages = messages
+//                that.toView = id
+//            }
+//          },
+//          fail: function (res) {
+//            console.log(res)
+//          }
+//        })
+      }
 //      startRecord() {
 //        var that = this;
 //        this.speechText= '松开 发送'
@@ -344,7 +398,6 @@
 <style lang="less">
   /*@import "../../styles/weui/base/fn.wxss";*/
   @import "../../styles/custom/wa-ui.less";
-
   page text {
     /*font-size: 14px;*/
     line-height: 20px;

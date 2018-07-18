@@ -285,14 +285,10 @@
     updataMap() {
 //      let token = wx.getStorageSync('token')
       let that = this
-      if (that.showLoad) {
-        that.$showLoading('加载中')
-        that.showLoad = false
-      }
       that.myLong = wx.getStorageSync('myLong')
       that.myLat = wx.getStorageSync('myLat')
       if (!that.myLat) {
-        return wx.hideLoading()
+        return
       }
       that.mapCtx.getRegion({
         success: function(res) {
@@ -300,6 +296,10 @@
           that.southwest = res.southwest
           that.northeast = res.northeast
           that.$apply()
+          if (that.showLoad) {
+            that.$showLoading('加载中')
+            that.showLoad = false
+          }
           that.$get({
             url: service.near_singles,
             data: {
@@ -380,7 +380,9 @@
           if (!wx.getStorageSync('myLong')) {
             wx.setStorageSync('myLong', res.longitude)
             wx.setStorageSync('myLat', res.latitude)
-            that.updataMap()
+            setTimeout(()=>{
+              return that.updataMap()
+            },500)
           }
           wx.setStorageSync('myLong', res.longitude)
           wx.setStorageSync('myLat', res.latitude)
