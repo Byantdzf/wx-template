@@ -1,7 +1,7 @@
-var globalData = getApp().globalData
-const host = globalData.host
-var emojis = globalData.emojis
-var emojisEn = globalData.emojisEn
+// var globalData = getApp().globalData
+// const host = globalData.host
+// var emojis = globalData.emojis
+// var emojisEn = globalData.emojisEn
 
 function formatTime(time) {
   const date = new Date(time)
