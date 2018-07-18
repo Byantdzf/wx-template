@@ -252,12 +252,14 @@
           showCancel: false
         })
       }
+      console.log(this.name)
       if (!this.getString(this.name)) {
         return this.$alert('温馨提示', '请输入姓名')
       }
       if (!this.isPhone(this.mobile)) {
         return this.$alert('温馨提示', '请输入正确的手机号码')
       }
+
 //        if (!this.nickName) {
 //          return wx.openSetting({
 //            success: (res) => {
