@@ -1,0 +1,476 @@
+<template>
+  <template name="msgItem">
+    <view wx:for="{{contents}}" style="display:inline-block;white-space:pre-line" wx:key="*this">
+      <text wx:if="item.type=='text'" style="padding:0;margin:0;width:auto;" selectable>{{item.text}}</text>
+      <!--<image wx:if="item.type=='image'" style="width:42rpx;height:42rpx;vertical-align:middle;margin:0 6rpx;" src="{{item.url}}"></image>-->
+    </view>
+  </template>
+  <scroll-view scroll-y style="height:{{scrollHeight}}rpx;background:#eee" scroll-into-view="{{toView}}">
+    <view wx:for="{{messages}}" wx:for-item="i" wx:key="*this">
+      <view id="{{i.id}}" class="padding clearfix" wx:if="{{i.me}}">
+        <image class="right-Avatar padding_half" src="{{i.avatar}}"></image>
+        <view class="right-Triangle"></view>
+        <!--<view class="right-speech-message padding_half" wx:if="{{i.speech}}" data-filePath="{{i.filePath}}" bindtap="playSpeech">-->
+          <!--<view style="display:inline-block;">-->
+            <!--<image style="width:52rpx;height:42rpx;vertical-align:middle;margin:0 6rpx;" src="{{playingSpeech==i.filePath?speechIcon:defaultSpeechIcon}}"></image> {{i.seconds}}″-->
+          <!--</view>-->
+        <!--</view>-->
+        <view class="right-message padding_half" wx:if="{{!i.speech}}">
+          <template is="msgItem" data="{{...i}}" />
+        </view>
+      </view>
+      <view id="{{i.id}}" class="padding clearfix" wx:if="{{!i.me}}">
+        <image class="left-Avatar padding_half" src="{{i.avatar}}"></image>
+        <view class="left-Triangle"></view>
+        <!--<view class="left-speech-message padding_half" wx:if="{{i.speech}}" data-filePath="{{i.filePath}}" bindtap="playRobotSpeech">-->
+          <!--<view style="display:inline-block;">-->
+            <!--<image style="width:52rpx;height:42rpx;vertical-align:middle;margin:0 6rpx;" src="{{playingSpeech==i.filePath?speechIcon:defaultSpeechIcon}}"></image> {{i.seconds}}″-->
+          <!--</view>-->
+        <!--</view>-->
+        <view class="left-message padding_half" wx:if="{{!i.speech}}">
+          <template is="msgItem" data="{{...i}}" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-icon_success"></view>
+  </scroll-view>
+  <view class="wa-row" style="height:100rpx;background: white">
+    <!--<image src="{{changeImageUrl}}" class="text-center icon ion-ios" style="height:32px;line-height:32px" @tap="changeType"></image>-->
+    <view wx:if="{{!isSpeech}}" class="padding_half" style="flex:1; height:60rpx; line-height:60rpx;border-bottom:1px solid gray;">
+      <input value="{{msg}}" @input="sendMessage" @enter="sendMessage"/>
+    </view>
+    <!--<view wx:if="{{isSpeech}}" class="padding_half" style="flex:1; height:60rpx; line-height:60rpx;">-->
+      <!--<button class="speech-button" hover-class='button-hover' hover-start-time="0" bindtouchstart="startRecord" bindtouchend="stopRecord">{{speechText}}</button>-->
+    <!--</view>-->
+    <!--<image src="{{emotionIcon}}" class="text-center icon ion-ios" style="height:64rpx;line-height:64rpx" bindtap="emotionBtn"></image>-->
+    <button type="" disabled="{{isSpeech||msg==''}}" size='mini' class="send-button" bindtap="send">发送</button>
+  </view>
+  <!--<view id="emotionPanel" wx:if="{{emotionBox}}">-->
+    <!--<image wx:for="{{ emotions }}" src="{{item.src}}" class="emotion" data-name="{{item.name}}" bindtap="chooseEmotion"></image>-->
+  <!--</view>-->
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { service } from '../../config.js'
+  import http from '../../mixins/http'
+  import base from '../../mixins/base'
+  import user from '../../mixins/user'
+//  import util from '../../utils/util'
+  import ShareMessage from '../../mixins/ShareMessage'
+  var util = require('../../utils/util')
+
+  export default class chitchat extends wepy.page {
+    mixins = [base, http, user, ShareMessage]
+    config = {
+      navigationBarTitleText: '聊天'
+    }
+    data = {
+      messages: [],
+      isSpeech: false,
+      scrollHeight: 0,
+      toView: '',
+      windowHeight: 0,
+      windowWidth: 0,
+      pxToRpx: 2,
+      msg: '',
+      emotionBox: false,
+      emotions: [],
+      speechText: '按住 说话',
+      changeImageUrl: '/images/voice.png',
+      speechIcon: '/images/speech0.png',
+      defaultSpeechIcon: '/images/speech0.png',
+      emotionIcon: '/images/emotion.png',
+      playingSpeech: ''
+    }
+
+    computed = {
+    }
+
+    onShareAppMessage(res) {
+      return this.$parent.onShareAppMessage(this.config.navigationBarTitleText)
+    }
+    async onLoad(e) {
+      let that = this
+//      let emotions = []
+//      var emojis = app.globalData.emojis
+//      console.log(emojis)
+//      for (let i = 0; i < emojis.length; i++) {
+//        emotions.push({
+//          src: '/emoji/' + util.getEmojiEn(emojis[i]) + '.png',
+//          id: i,
+//          name: emojis[i]
+//        })
+//      }
+//      this.setData({
+//        emotions: emotions
+//      })
+      wx.getSystemInfo({
+        success: (res) => {
+          that.windowHeight = res.windowHeight
+          that.pxToRpx = 750 / res.screenWidth
+          that.scrollHeight = (res.windowHeight - 50) * 750 / res.screenWidth
+        }
+      })
+    }
+    onShow() {
+      this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
+    }
+
+    onPullDownRefresh() {
+    }
+    onReachBottom() {
+    }
+    methods = {
+//      chooseEmotion(e) {
+//        this.setData({
+//          msg: this.data.msg + '[' + e.target.dataset.name + ']',
+//        })
+//      },
+      sendMessage(e) {
+        this.msg = e.detail.value
+        console.log(this.msg)
+      },
+//      emotionBtn() {
+//        if (this.data.emotionBox) {
+//          this.setData({
+//            emotionBox: false,
+//            scrollHeight: (this.data.windowHeight - 50) * this.data.pxToRpx
+//          })
+//        } else {
+//          this.setData({
+//            emotionBox: true,
+//            scrollHeight: (this.data.windowHeight - 285) * this.data.pxToRpx
+//          })
+//          if (this.data.isSpeech) {
+//            this.setData({
+//              isSpeech: false,
+//              changeImageUrl:  '/images/voice.png'
+//            });
+//          }
+//        }
+//      },
+//      changeType () {
+//        if (this.data.isSpeech) {
+//          this.isSpeech = false
+//          this.changeImageUrl = '/images/voice.png'
+//        } else {
+//          this.isSpeech = true
+//          this.changeImageUrl = '/images/keyinput.png'
+//          this.emotionBox = false
+//          this.scrollHeight = (this.windowHeight - 50) * this.pxToRpx
+//        }
+//      },
+      send() {
+        var that = this;
+        let msg = this.msg
+        let contents = util.getContents(msg)
+        let id = 'id_' + Date.parse(new Date()) / 1000;
+        let data = { id: id, contents: contents, me: true, avatar: wx.getStorageSync('userInfo').avatarUrl, speech: false }
+        let messages = this.data.messages
+        messages.push(data)
+        that.messages = messages
+        that.msg = ''
+        that.toView= id
+        console.log(this.messages)
+        wx.request({
+          url: host + '/wx/robot',
+          method: 'POST',
+          data: { 'info': msg, 'userid': wx.getStorageSync('openid'), 'username': wx.getStorageSync('userInfo').nickName },
+          header: {
+            "content-type": "application/json"
+          },
+          success: function (res) {
+            if (res.statusCode == 200) {
+              let answer = res.data.text;
+              let contents = util.getContents(answer, res.data.url)
+                let id = 'id_' + Date.parse(new Date()) / 1000
+                let data = { id: id, contents: contents, me: false, avatar:  '/images/robot.jpg', speech: false }
+                let messages = that.data.messages
+                messages.push(data)
+                console.log(messages)
+                that.messages = messages
+                that.toView = id
+            }
+          },
+          fail: function (res) {
+            console.log(res)
+          }
+        })
+      },
+//      startRecord() {
+//        var that = this;
+//        this.speechText= '松开 发送'
+//        var seconds = 0;
+//        var interval = setInterval(function () {
+//          seconds++
+//        }, 1000);
+//        wx.startRecord({
+//          success: function (res) {
+//            clearInterval(interval);
+//            var tempFilePath = res.tempFilePath
+//            seconds = seconds == 0 ? 1 : seconds;
+//            let id = 'id_' + Date.parse(new Date()) / 1000;
+//            let data = { id: id, me: true, avatar: wx.getStorageSync('userInfo').avatarUrl, speech: true, seconds: seconds, filePath: tempFilePath }
+//            let messages = that.data.messages
+//            messages.push(data)
+//            that.setData({
+//              messages: messages
+//            });
+//            that.setData({
+//              toView: id
+//            })
+//            let nickName = wx.getStorageSync('userInfo').nickName;
+//            if (!nickName) nickName = 'null';
+//            wx.uploadFile({
+//              url: host + '/wx/uploadSilk',
+//              filePath: tempFilePath,
+//              name: 'file',
+//              formData: {
+//                'userid': wx.getStorageSync('openid'),
+//                'username': wx.getStorageSync('userInfo').nickName
+//              },
+//              success: function (res) {
+//                let resData = JSON.parse(res.data);
+//                if (resData.code == 102) {
+//                  let answer = resData.text;
+//                  let contents = util.getContents(answer)
+//                  let id = 'id_' + Date.parse(new Date()) / 1000;
+//                  let data = { id: id, contents: contents, me: false, avatar:   '/images/robot.jpg', speech: false }
+//                  let messages = that.data.messages
+//                  messages.push(data)
+//                  that.setData({
+//                    messages: messages
+//                  })
+//                  that.setData({
+//                    toView: id
+//                  })
+//                } else if (resData.code == 101) {
+//                  var isFirst = true;
+//                  wx.playBackgroundAudio({
+//                    dataUrl: host + '/static/' + resData.text
+//                  });
+//                  wx.onBackgroundAudioPlay(function () {
+//                    wx.getBackgroundAudioPlayerState({
+//                      success: function (res) {
+//                        if (!isFirst) {
+//                          return;
+//                        }
+//                        isFirst = false;
+//                        let duration = res.duration;
+//                        wx.stopBackgroundAudio();
+//                        let id = 'id_' + Date.parse(new Date()) / 1000;
+//                        let data = { id: id, me: false, avatar:   '/images/robot.jpg', speech: true, seconds: duration == 0 ? 1 : duration, filePath: host + '/static/' + resData.text }
+//                        let messages = that.data.messages
+//                        messages.push(data)
+//                        that.setData({
+//                          messages: messages
+//                        });
+//                        that.setData({
+//                          toView: id
+//                        })
+//                      }
+//                    })
+//                  });
+//                }
+//              },
+//              fail: function (err) {
+//                console.log(err)
+//              }
+//            })
+//          },
+//          fail: function (err) {
+//            console.log(err)
+//          }
+//        })
+//      },
+//      stopRecord() {
+//        this.speechText = '按住 说话'
+//        wx.stopRecord();
+//      },
+//      playSpeech(event) {
+//        var that = this;
+//        var filePath = event.currentTarget.dataset.filepath;
+//        that.setData({
+//          playingSpeech: filePath
+//        });
+//        var num = 1;
+//        var interval = setInterval(function () {
+//          that.setData({
+//            speechIcon: '/images/speech' + num % 3 + '.png'
+//          });
+//          num++;
+//        }, 500);
+//        wx.playVoice({
+//          filePath: filePath,
+//          complete: function () {
+//            clearInterval(interval);
+//            that.setData({
+//              speechIcon: '/images/speech0.png',
+//              playingSpeech: ''
+//            });
+//          }
+//        })
+//      },
+//      playRobotSpeech(event) {
+//        var that = this;
+//        var filePath = event.currentTarget.dataset.filepath;
+//        that.setData({
+//          playingSpeech: filePath
+//        });
+//        var num = 1;
+//        var interval = setInterval(function () {
+//          that.setData({
+//            speechIcon: '/images/speech' + num % 3 + '.png'
+//          });
+//          num++;
+//        }, 500);
+//        wx.playBackgroundAudio({
+//          dataUrl: filePath
+//        });
+//        wx.onBackgroundAudioStop(function () {
+//          clearInterval(interval);
+//          that.setData({
+//            speechIcon: '/images/speech0.png',
+//            playingSpeech: ''
+//          });
+//        })
+//      }
+    }
+  }
+
+</script>
+
+<style lang="less">
+  /*@import "../../styles/weui/base/fn.wxss";*/
+  @import "../../styles/custom/wa-ui.less";
+
+  page text {
+    /*font-size: 14px;*/
+    line-height: 20px;
+    /*font-family: "Helvetica Neue", Helvetica, 'microsoft yahei ui', 'microsoft yahei', 'simhei', Arial, sans-serif*/
+  }
+
+  page view {
+    /*font-size: 14px;*/
+    line-height: 20px;
+    font-family: "Helvetica Neue", Helvetica, 'microsoft yahei ui', 'microsoft yahei', 'simhei', Arial, sans-serif
+  }
+  .right-Avatar {
+    float: right;
+    width: 85rpx;
+    height: 85rpx;
+  }
+
+  .right-Triangle {
+    float: right;
+    margin-top: 35rpx;
+    width: 0;
+    height: 0;
+    border-top: 16rpx solid transparent;
+    border-left: 24rpx solid yellowgreen;
+    border-bottom: 16rpx solid transparent;
+  }
+
+  .right-message {
+    float: right;
+    margin-top: 10rpx;
+    line-height: 65rpx;
+    background: yellowgreen;
+    border-radius: 10rpx;
+    font-size: 32rpx;
+  }
+
+  .right-speech-message {
+    float: right;
+    margin-top: 10rpx;
+    line-height: 65rpx;
+    background: yellowgreen;
+    border-radius: 10rpx;
+    font-size: 32rpx;
+    width: 150rpx;
+  }
+
+  .left-speech-message {
+    float: left;
+    margin-top: 10rpx;
+    line-height: 65rpx;
+    background: yellowgreen;
+    border-radius: 10rpx;
+    font-size: 32rpx;
+    width: 150rpx;
+  }
+
+  .left-Avatar {
+    float: left;
+    width: 85rpx;
+    height: 85rpx;
+  }
+
+  .left-Triangle {
+    float: left;
+    margin-top: 35rpx;
+    width: 0;
+    height: 0;
+    border-top: 16rpx solid transparent;
+    border-right: 24rpx solid yellowgreen;
+    border-bottom: 16rpx solid transparent;
+  }
+
+  .left-message {
+    float: left;
+    margin-top: 10rpx;
+    line-height: 65rpx;
+    background: yellowgreen;
+    border-radius: 10rpx;
+    font-size: 32rpx;
+  }
+
+  .speech-button {
+    height: 70rpx;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+    line-height: 70rpx;
+    background: white;
+  }
+
+  .button-hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    opacity: 0.7;
+  }
+
+  .icon {
+    vertical-align: middle;
+    margin-top: 8rpx;
+    width: 64rpx;
+    height: 64rpx;
+  }
+
+  .ion-ios {
+    background-size: 64rpx 64rpx;
+    background-repeat: no-repeat;
+    background-position: center center;
+    vertical-align: middle;
+  }
+
+  .emotion {
+    width: 64rpx;
+    height: 64rpx;
+    line-height: 64rpx;
+    margin: 10rpx;
+  }
+
+  #emotionPanel {
+    padding-left: 40rpx;
+  }
+
+  .send-button {
+    margin-left: 10rpx;
+    margin-top: 8rpx;
+    height: 64rpx;
+    line-height: 64rpx;
+    color: white;
+    background: #1AAD19 !important;
+  }
+
+</style>

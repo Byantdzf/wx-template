@@ -20,6 +20,7 @@
           'root': 'pages/home',
           'pages': [
             'search',
+            'chitchat',
             'sharePay',
             'sharing',
             'information',

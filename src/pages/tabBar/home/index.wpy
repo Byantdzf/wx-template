@@ -219,7 +219,34 @@
     }
 
     onReady () {
+      let that = this
       this.mapCtx = wx.createMapContext('map')
+      let token = wx.getStorageSync('token')
+      if(!token){
+         return wepy.login({
+              success: (res) => {
+                this.$post({ url: service.login, data: {code: res.code} }, {
+                  success: ({code, data}) => {
+                    if(data.token){
+                      wx.setStorageSync('token', data.token)
+                      wx.setStorageSync('openid', data.openid)
+                      let userInfo = {
+                        nickName: data.user.name,
+                        avatarUrl: data.user.avatar
+                      }
+                      that.getCenterLocation()
+                      that.initPageData()
+                      that.updataMap()
+                      wx.setStorageSync('userInfo', userInfo)
+                    }
+                  }
+                })
+              },
+              fail: (res) => {
+                console.log('wepy.login.fail:', res)
+              }
+            })
+      }
       this.getCenterLocation()
       this.initPageData()
       this.updataMap()
@@ -264,6 +291,9 @@
       }
       that.myLong = wx.getStorageSync('myLong')
       that.myLat = wx.getStorageSync('myLat')
+      if (!that.myLat) {
+        return wx.hideLoading()
+      }
       that.mapCtx.getRegion({
         success: function(res) {
           console.log('缩放')
@@ -347,6 +377,11 @@
         success: function(res) {
           that.myLong = res.longitude
           that.myLat = res.latitude
+          if (!wx.getStorageSync('myLong')) {
+            wx.setStorageSync('myLong', res.longitude)
+            wx.setStorageSync('myLat', res.latitude)
+            that.updataMap()
+          }
           wx.setStorageSync('myLong', res.longitude)
           wx.setStorageSync('myLat', res.latitude)
           that.$apply()
