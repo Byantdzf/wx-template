@@ -24,14 +24,7 @@
         </view>
         <view class="clearfloat"></view>
         <view style="color: #FFFFFF;margin: 36rpx 32rpx;" class="font_24 text-left">
-          <view>
-            <!--<image src="../../images/icon/wenhao.png" mode="aspectFill" style="width: 48rpx;height:48rpx;margin-top: -6rpx" class="flo_l"></image>-->
-            <view class="text-left" style="background: #CE7A89;padding: 6rpx 22rpx;">推广规则</view>
-            <!--<view class="clearfloat"></view>-->
-          </view>
-          <view style="padding: 12rpx 22rpx;border: 1rpx solid #CE7A89;">
-            <view>邀请好友加入福恋平台，好友升级VIP费用的10%，将折算福分，在福恋平台上全场抵现金使用！可用于升级会员，购买礼物和兑换商品等。</view>
-          </view>
+          
         </view>
       </view>
     </view>
