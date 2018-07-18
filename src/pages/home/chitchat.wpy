@@ -7,9 +7,9 @@
   </template>
   <scroll-view scroll-y style="height:{{scrollHeight}}rpx;background:#eee;" scroll-into-view="{{toView}}">
     <view wx:for="{{messages}}" wx:for-item="i" wx:key="*this">
-      <view class="text-center font_26 white" wx:if="{{i.time}}">
-        <view style="background: #DADADA;display: inline-block;padding: 0rpx 12rpx;border-radius: 6rpx;">{{i.time}}</view>
-      </view>
+      <!--<view class="text-center font_26 white" wx:if="{{i.time}}">-->
+        <!--<view style="background: #DADADA;display: inline-block;padding: 0rpx 12rpx;border-radius: 6rpx;">{{i.time}}</view>-->
+      <!--</view>-->
       <view id="{{i.id}}" class="padding clearfix" wx:if="{{i.me}}">
         <image class="right-Avatar padding_half" src="{{i.avatar}}"></image>
         <view class="right-Triangle"></view>
@@ -149,8 +149,8 @@
             message = {
               id: arr[index].id,
               contents: util.getContents(arr[index].content),
-              me: arr[index].is_mine = 1 ? true : false,
-              avatar: arr[index].is_mine = 1 ? arr[index].user.avatar : arr[index].other_user.avatar,
+              me: arr[index].is_mine == 1 ? true : false,
+              avatar: arr[index].avatar,
               speech: false,
               time: '昨天 7:30'
             }
@@ -224,6 +224,7 @@
         this.$post({ url: service.chitchat_post + that.other_userId, data: {content: msg} }, {
           success: ({code, data}) => {
             console.log('发送成功')
+            that.getData()
           }
         })
 //        this.$post({url: service.chitchat_post + that.other_userId, dataV}, {
