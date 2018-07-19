@@ -105,8 +105,12 @@
       })
     }
     onShow() {
-      this.getData()
-      this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
+      let that = this
+      that.getData()
+      setInterval(function () {
+        that.refreshMessage()
+      }, 3000)
+      that.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
     onPullDownRefresh() {
@@ -134,8 +138,12 @@
         success: ({code, data}) => {
           that.text = '点击加载更多'
           let message = []
+          if (data.length == 0) {
+            return that.text = '暂无消息'
+          }
           that.min_id = data[data.length - 1].id
-          console.log(that.min_id)
+          that.max_id = data[0].id
+          console.log(that.max_id)
           data.forEach((item, index, arr)=>{
             message = {
               id: arr[index].id,
@@ -151,6 +159,34 @@
         }
       })
     }
+
+    refreshMessage () {
+      var that = this
+      this.$get({url: service.refreshMessage + that.other_userId, data: {max_id: that.max_id}}, {
+        success: ({code, data}) => {
+          if (data.length == 0) {return}
+          that.max_id = data[0].id
+          console.log('刷新成功')
+          console.log(data)
+          let message = {}
+          data.forEach((item, index, arr) => {
+            console.log(arr[index].id)
+            message = {
+              id: 'id_' + Date.parse(new Date()) / 1000,
+              contents: util.getContents(arr[index].content),
+              me: arr[index].is_mine == 1 ? true : false,
+              avatar: arr[index].avatar,
+              speech: false,
+              time: '昨天 7:30'
+            }
+            that.messages.push(message)
+            that.msg = ''
+            that.toView = 'id_' + Date.parse(new Date()) / 1000
+          })
+          console.log(message)
+        }
+      })
+    }
     methods = {
       History () {
         this.showload = true
@@ -160,9 +196,12 @@
         }
         this.$get({url: service.chitchat_get + that.other_userId, data}, {
           success: ({code, data}) => {
-            that.text = '点击加载更多'
-            let message = []
+            if (data.length == 0) {
+              return that.text = '到顶了'
+            }
             console.log(data.data)
+            that.min_id = data[data.length - 1].id
+            let message = []
             data.forEach((item, index, arr)=>{
               message = {
                 id: arr[index].id,
@@ -174,6 +213,10 @@
               }
               that.messages.unshift(message)
             })
+          },
+          fail: ({code, data}) => {
+          },
+          complete: () => {
             that.showload = false
           }
         })
@@ -188,17 +231,27 @@
       send() {
         var that = this
         let msg = this.msg
-        let contents = util.getContents(msg)
-        let id = 'id_' + Date.parse(new Date()) / 1000
-        let data = { id: id, contents: contents, me: true, avatar: wx.getStorageSync('userInfo').avatarUrl, speech: false }
-        let messages = this.data.messages
-        messages.push(data)
-        console.log(this.messages)
-        that.msg = ''
-        that.toView = id
-        this.$post({ url: service.chitchat_post + that.other_userId, data: {content: msg} }, {
+        this.$post({ url: service.chitchat_post + that.other_userId, data: {content: msg, max_id: that.max_id} }, {
           success: ({code, data}) => {
+            that.max_id = data[0].id
             console.log('发送成功')
+            console.log(data)
+            let message = {}
+            data.forEach((item, index, arr) => {
+              console.log(arr[index].id)
+              message = {
+                id: 'id_' + Date.parse(new Date()) / 1000,
+                contents: util.getContents(arr[index].content),
+                me: arr[index].is_mine == 1 ? true : false,
+                avatar: arr[index].avatar,
+                speech: false,
+                time: '昨天 7:30'
+              }
+              that.messages.push(message)
+              that.msg = ''
+              that.toView = 'id_' + Date.parse(new Date()) / 1000
+            })
+            console.log(message)
           }
         })
       }
