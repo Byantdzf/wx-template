@@ -75,7 +75,7 @@
       defaultSpeechIcon: '/images/speech0.png',
       emotionIcon: '/images/emotion.png',
       playingSpeech: '',
-      mix_id: 0,
+      min_id: 0,
       page: 1
     }
 
@@ -128,14 +128,14 @@
     getData() {
       let that = this
       let data = {
-        mix_id: that.mix_id
+        min_id: that.min_id
       }
       this.$get({url: service.chitchat_get + that.other_userId, data}, {
         success: ({code, data}) => {
           that.text = '点击加载更多'
           let message = []
-          that.mix_id = data[data.length - 1].id
-          console.log(that.mix_id)
+          that.min_id = data[data.length - 1].id
+          console.log(that.min_id)
           data.forEach((item, index, arr)=>{
             message = {
               id: arr[index].id,
@@ -156,7 +156,7 @@
         this.showload = true
         let that = this
         let data = {
-          mix_id: that.mix_id
+          min_id: that.min_id
         }
         this.$get({url: service.chitchat_get + that.other_userId, data}, {
           success: ({code, data}) => {
@@ -196,11 +196,11 @@
         console.log(this.messages)
         that.msg = ''
         that.toView = id
-//        this.$post({ url: service.chitchat_post + that.other_userId, data: {content: msg} }, {
-//          success: ({code, data}) => {
-//            console.log('发送成功')
-//          }
-//        })
+        this.$post({ url: service.chitchat_post + that.other_userId, data: {content: msg} }, {
+          success: ({code, data}) => {
+            console.log('发送成功')
+          }
+        })
       }
     }
   }
