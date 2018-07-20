@@ -1,0 +1,63 @@
+<template>
+  <navigator url="/pages/tabBar/home/index" open-type="switchTab" hover-class="other-navigator-hover">
+    <view class="font_32 text-left flo_l D-box">
+      <!--<span class="flo_l">进入首页</span>-->
+      <image src="/images/icon/home.png" mode="aspectFit" class="flo_l"  style="width: 68rpx;height: 68rpx;"></image>
+      <view class="clearfloat"></view>
+    </view>
+  </navigator>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class userTitle extends wepy.component {
+    props = {
+
+    }
+    data = {
+    }
+    onLoad() {
+    }
+    methods = {
+      gotofriends(item) {
+        let url = ''
+        if (item.type == 'single') {
+          url = '/pages/home/information?id=' + item.id
+        } else {
+          url = '/pages/home/introducer?id=' + item.id
+        }
+        wx.navigateTo({url: url})
+      },
+      goto(url) {
+        wx.navigateTo({url: url})
+      },
+      gotoUser(type) {
+        let url = ''
+        if (type == 'single') {
+          url = '/pages/users/unmarri'
+        } else {
+          url = '/pages/users/intro'
+        }
+        wx.navigateTo({url: url})
+      }
+    }
+  }
+</script>
+
+<style type="less">
+@import "../styles/custom/fn.less";
+
+.weui-search-bar__cancel-btn {
+  color: @weuiColorPrimary;
+  }
+  .D-box{
+    margin:12rpx 32rpx 6rpx 32rpx;
+    border-radius: 50%;
+    border: 8rpx solid #f4f4f4;
+    padding: 16rpx;
+    box-shadow: 1rpx 1rpx 12rpx #d4d4d4;
+    position: fixed;right: 32rpx;
+    background: white;bottom: 18%
+  }
+</style>

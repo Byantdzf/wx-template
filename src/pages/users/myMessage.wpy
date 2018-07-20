@@ -38,6 +38,7 @@
         </view>
       </view>
     </view>
+    <goHome></goHome>
     <block wx:if="{{loading}}">
       <view class="weui-loadmore">
         <view class="weui-loading"></view>
@@ -59,6 +60,7 @@
   import base from '../../mixins/base'
   import user from '../../mixins/user'
   import ShareMessage from '../../mixins/ShareMessage'
+  import goHome from '../../components/goHome'
 
   export default class myMessage extends wepy.page {
     mixins = [base, http, user, ShareMessage]
@@ -82,8 +84,8 @@
       inputShowed: false,
       inputVal: ''
     }
-
     computed = {}
+    components = {goHome: goHome}
 
     onShareAppMessage(res) {
       return this.$parent.onShareAppMessage(this.config.navigationBarTitleText)

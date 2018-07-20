@@ -11,7 +11,7 @@
       </view>
       <view id="j_page" >
         <view wx:for="{{messages}}" wx:for-item="i" wx:key="*this">
-          <view class="text-center font_26 white" wx:if="{{i.time}}">
+          <view class="text-center font_26 white" wx:if="{{i.showTime}}">
             <view style="background: #DADADA;display: inline-block;padding: 0rpx 12rpx;border-radius: 6rpx;">{{i.time}}</view>
           </view>
           <view id="{{i.id}}" class="padding clearfix" wx:if="{{i.me}}">
@@ -224,6 +224,13 @@
         strTime = minutes + '分钟前'
       }
       retValue.PubTime = strTime
+      if(minutes < 5){
+        console.log('小于5')
+        return false
+      }else{
+        console.log('大于5')
+        return true
+      }
       console.log(retValue)
       return retValue
     }
