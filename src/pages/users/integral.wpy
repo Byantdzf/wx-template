@@ -12,7 +12,11 @@
     <view class="bold orange integral_title">充值:</view>
     <view class="text-center">
       <input  class="input_price flo_l font_28"  placeholder="请输入充值金额" type="number" @input="bindKeyInput"/>
-      <view class="btn_red font_26 flo_r" style="width: 200rpx;height: 100rpx;line-height: 115rpx;margin: auto;margin-top: -36rpx;margin-right: -42rpx;" @tap="recharge">充值</view>
+      <!--<form bindsubmit="formSubmit" report-submit>-->
+        <!--<button formType="submit" class="btn" data-type="click" >-->
+          <view class="btn_red font_26 flo_r" style="width: 200rpx;height: 100rpx;line-height: 115rpx;margin: auto;margin-top: -36rpx;margin-right: -42rpx;" @tap="recharge">充值</view>
+        <!--</button>-->
+      <!--</form>-->
     </view>
     <view class="clearfloat"></view>
   </view>
@@ -20,7 +24,11 @@
     <view wx:for="{{list}}" wx:key="*this" class="text-center gift_list inline-block">
       <image src="{{item.icon}}" style="width:80px; height: 80px;margin: 12rpx "></image>
       <view class="font_24">一{{item.unit}}{{item.name}} /<span class="orange">{{item.price}}福分</span> </view>
-      <view class="btn_red font_26" style="width: 150rpx;height: 80rpx;line-height: 84rpx;margin: auto" @tap="conversion({{item}})">兑换</view>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" class="btn" data-type="click">
+          <view class="btn_red font_26" style="width: 150rpx;height: 80rpx;line-height: 84rpx;margin: auto" @tap="conversion({{item}})">兑换</view>
+        </button>
+      </form>
     </view>
   </view>
   <block wx:if="{{loading}}">

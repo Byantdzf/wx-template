@@ -5,36 +5,48 @@
     </view>
     <view >
       <view class="font_32 loveTitle">普通VIP</view>
-      <view class="paylist"  wx:for="{{paylist}}" wx:key="*this" @tap="showmodel({{item}})">
-        <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
-          {{item.name}} <span class="red">{{item.price}}元</span>
-          <span class="red flo_r" >升级</span>
-        </view>
-        <view class='font_26 orange flo_r' style="width: 90%;text-align: left;">{{item.content}}</view>
-        <view class="clearfix"></view>
-      </view>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" class="btn" data-type="click">
+          <view class="paylist"  wx:for="{{paylist}}" wx:key="*this" @tap="showmodel({{item}})">
+            <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
+              {{item.name}} <span class="red line_35">{{item.price}}元</span>
+              <span class="red flo_r line_35" >升级</span>
+            </view>
+            <view class='font_26 orange flo_r line_35' style="width: 90%;text-align: left;">{{item.content}}</view>
+            <view class="clearfix"></view>
+          </view>
+        </button>
+      </form>
     </view>
     <view >
       <view class="font_32 loveTitle">高级VIP</view>
-      <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this" @tap="showmodel({{item}})">
-        <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
-          {{item.name}} <span class="red">{{item.price}}元</span>
-          <span class="red flo_r" >升级</span>
-        </view>
-        <view class='font_26 orange flo_r' style="width: 90%;text-align: left;">{{item.content}}</view>
-        <view class="clearfix"></view>
-      </view>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" class="btn" data-type="click">
+          <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this" @tap="showmodel({{item}})">
+            <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
+              {{item.name}} <span class="red line_35">{{item.price}}元</span>
+              <span class="red flo_r line_35" >升级</span>
+            </view>
+            <view class='font_26 orange flo_r line_35' style="width: 90%;text-align: left;">{{item.content}}</view>
+            <view class="clearfix"></view>
+          </view>
+        </button>
+      </form>
     </view>
     <view >
       <view class="font_32 loveTitle">海外VIP</view>
-      <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this" @tap="showmodel({{item}})">
-        <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
-          {{item.name}} <span class="red">{{item.price}}元</span>
-          <span class="red flo_r">升级</span>
-        </view>
-        <view class='font_26 orange flo_r' style="width: 90%;text-align: left;">{{item.content}}</view>
-        <view class="clearfix"></view>
-      </view>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" class="btn" data-type="click">
+          <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this" @tap="showmodel({{item}})">
+            <view class="font_28 flo_l" style="margin-left: 12rpx;width: 96%">
+              {{item.name}} <span class="red line_35">{{item.price}}元</span>
+              <span class="red flo_r line_35">升级</span>
+            </view>
+            <view class='font_26 orange flo_r line_35' style="width: 90%;text-align: left;">{{item.content}}</view>
+            <view class="clearfix"></view>
+          </view>
+        </button>
+      </form>
     </view>
   </view>
   <modal class="modal" hidden="{{hide}}" title="支付详情"  confirm-text="确认支付" bindcancel="listenerCancel1" @confirm="conversion({{ranks}})">

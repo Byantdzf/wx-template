@@ -37,7 +37,11 @@
       <view wx:if="{{!isSpeech}}" class="padding_half" style="flex:1; height:60rpx; line-height:60rpx;border-bottom:1px solid gray;">
         <input value="{{msg}}" @input="sendMessage" @enter="sendMessage"/>
       </view>
-      <button type="" disabled="{{isSpeech||msg==''}}" size='mini' class="send-button" bindtap="send">发送</button>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" type="" disabled="{{isSpeech||msg==''}}" size='mini' class="send-button"
+                bindtap="send">发送
+        </button>
+      </form>
     </view>
 </template>
 
@@ -294,7 +298,7 @@
                 me: arr[index].is_mine == 1 ? true : false,
                 avatar: arr[index].avatar,
                 speech: false,
-                time: '昨天 7:30'
+                time: that.getTime(arr[index].created_at)
               }
               that.messages.push(message)
               that.msg = ''
