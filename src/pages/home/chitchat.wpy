@@ -7,10 +7,13 @@
     <scroll-view scroll-y="true" style="height:{{scrollHeight}}rpx;background:#eee;"  scroll-into-view="{{toView}}" >
       <view class="text-center font_26 white">
         <view class="weui-loading" style="display: block;margin: auto;" wx-if="{{showload}}"></view>
-        <view style="background: #DADADA;display: inline-block;padding: 6rpx 12rpx;border-radius: 6rpx;margin-top: 22px"  @tap="History">{{text}}</view>
+        <view style="background: #DADADA;display: inline-block;padding: 6rpx 12rpx;border-radius: 6rpx;margin-top: 22px;margin-bottom: 22rpx"  @tap="History">{{text}}</view>
       </view>
       <view id="j_page" >
         <view wx:for="{{messages}}" wx:for-item="i" wx:key="*this">
+          <view class="text-center font_26 white" wx:if="{{i.time}}">
+            <view style="background: #DADADA;display: inline-block;padding: 0rpx 12rpx;border-radius: 6rpx;">{{i.time}}</view>
+          </view>
           <view id="{{i.id}}" class="padding clearfix" wx:if="{{i.me}}">
             <image class="right-Avatar padding_half" src="{{i.avatar}}"></image>
             <view class="right-Triangle"></view>
@@ -97,9 +100,9 @@
         success: function (res) {
         }
       })
-      that.Loadingtime = setInterval(function () {
-        that.refresh_v()
-      }, 5000)
+//      that.Loadingtime = setInterval(function () {
+//        that.refresh_v()
+//      }, 5000)
       console.log(that.Loadingtime)
       wx.getSystemInfo({
         success: (res) => {
@@ -158,15 +161,54 @@
               me: arr[index].is_mine == 1 ? true : false,
               avatar: arr[index].avatar,
               speech: false,
-              time: '昨天 7:30'
+              time: that.getTime(arr[index].created_at),
+              showTime: that.showTme(arr[index].created_at, arr[index].created_at)
             }
             that.messages.unshift(message)
           })
+          console.log(that.messages)
           that.showload = false
         }
       })
     }
-
+  // 显示时间
+    showTme (last_time, next_time) {
+      console.log(last_time)
+      console.log(next_time)
+    }
+  // 转换时间
+    getTime (time) {
+//      var time = '2018年07月19日 10:43:24'
+      // 时间统一函数
+      function getTimeText (argument) {
+        var timeS = argument
+        var todayT = '' //
+        var yestodayT = ''
+        var timeCha = getTimeS(timeS)
+        timeS = timeS.slice(-8)
+        todayT = new Date().getHours() * 60 * 60 * 1000 + new Date().getMinutes() * 60 * 1000 + new Date().getSeconds() * 1000
+        yestodayT = todayT + 24 * 60 * 60 * 1000
+        if (timeCha > yestodayT) {
+//          return argument.slice(0, 11)
+          return argument
+        }
+        if (timeCha > todayT && timeCha < yestodayT) {
+          return timeS.slice(0, 2) > 12 ? '昨天 下午' + (timeS.slice(0, 2) == 12 ? 12 : timeS.slice(0, 2) - 12) + timeS.slice(2, 5) : '昨天 上午' + timeS.slice(0, 5)
+        }
+        if (timeCha < todayT) {
+          return timeS.slice(0, 2) >= 12 ? '下午' + (timeS.slice(0, 2) == 12 ? 12 : timeS.slice(0, 2) - 12) + timeS.slice(2, 5) : '上午' + timeS.slice(0, 5)
+        }
+      }
+// 时间戳获取
+      function getTimeS (argument) {
+        var timeS = argument
+        timeS = timeS.replace(/[年月]/g, '/').replace(/[日]/, '')
+        return new Date().getTime() - new Date(timeS).getTime() - 1000 //有一秒的误差
+      }
+      var timeText = getTimeText(time)
+      console.log(time + '应该显示为   ' + timeText)
+      return timeText
+    }
     refresh_v () {
       var that = this
       this.$get({url: service.refreshMessage + that.other_userId, data: {max_id: that.max_id}}, {
@@ -184,7 +226,7 @@
               me: arr[index].is_mine == 1 ? true : false,
               avatar: arr[index].avatar,
               speech: false,
-              time: '昨天 7:30'
+              time: that.getTime(arr[index].created_at)
             }
             that.messages.push(message)
             that.msg = ''
@@ -216,7 +258,7 @@
                 me: arr[index].is_mine == 1 ? true : false,
                 avatar: arr[index].avatar,
                 speech: false,
-                time: '昨天 7:30'
+                time: that.getTime(arr[index].created_at)
               }
               that.messages.unshift(message)
             })

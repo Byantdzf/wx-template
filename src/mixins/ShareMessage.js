@@ -2,10 +2,12 @@ import wepy from 'wepy';
 
 export default class ShareMessage extends wepy.mixin {
   data = {
-    from_openid: ''
+    from_openid: '',
+    formId: [],
   };
   onLoad(e) {
     let that = this
+    // wx.removeStorageSync('formId')
     if(e.from_openid) {
       wx.setStorageSync('from_openid', e.from_openid)
       // if (e.from_openid) {
@@ -30,6 +32,11 @@ export default class ShareMessage extends wepy.mixin {
     })
   }
   methods = {
+    formSubmit(e) {
+      this.formId.push(e.detail.formId)
+      console.log(this.formId)
+      wx.setStorageSync('formId', this.formId)
+    },
     onShareAppMessage(res) {
       console.log(res)
       let that = this
