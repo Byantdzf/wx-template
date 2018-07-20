@@ -159,6 +159,7 @@
           that.max_id = data[0].id
           console.log(that.max_id)
           data.forEach((item, index, arr)=>{
+
             message = {
               id: arr[index].id,
               contents: util.getContents(arr[index].content),
@@ -166,7 +167,7 @@
               avatar: arr[index].avatar,
               speech: false,
               time: that.getTime(arr[index].created_at),
-              showTime: that.showTme(arr[index].created_at, arr[index].created_at)
+              showTime: that.showTme(arr[index].created_at, data[index + 1] ? data[index + 1].created_at : '')
             }
             that.messages.unshift(message)
           })
@@ -176,9 +177,55 @@
       })
     }
   // 显示时间
-    showTme (last_time, next_time) {
-      console.log(last_time)
-      console.log(next_time)
+    showTme (startTime, endTime) {
+      console.log(startTime)
+      console.log(endTime)
+      let dateEnd = new Date(startTime.replace(/-/g, "/"))
+      let dateBegin = new Date(endTime.replace(/-/g, "/"))
+      console.log(dateBegin)
+      var retValue = {}
+      var date3 = dateEnd.getTime() - dateBegin.getTime()  //时间差的毫秒数
+
+      //计算出相差天数
+      var days = Math.floor(date3 / (24 * 3600 * 1000))
+      retValue.Days = days
+
+      var years = Math.floor(days / 365)
+      retValue.Years = years
+
+      var months = Math.floor(days / 30)
+      retValue.Months = months
+
+      //计算出小时数
+      var leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+      var hours = Math.floor(leave1 / (3600 * 1000))
+      retValue.Hours = hours
+
+      //计算相差分钟数
+      var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+      var minutes = Math.floor(leave2 / (60 * 1000))
+      retValue.Minutes = minutes
+
+      //计算相差秒数
+      var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+      var seconds = Math.round(leave3 / 1000)
+      retValue.Seconds = seconds
+
+      var strTime = ''
+      if (years >= 1) {
+        strTime = years + '年前'
+      } else if (months >= 1) {
+        strTime = months + '个月前'
+      } else if (days >= 1) {
+        strTime = days + '天前'
+      } else if (hours >= 1) {
+        strTime = hours + '小时前'
+      } else {
+        strTime = minutes + '分钟前'
+      }
+      retValue.PubTime = strTime
+      console.log(retValue)
+      return retValue
     }
   // 转换时间
     getTime (time) {
@@ -210,7 +257,7 @@
         return new Date().getTime() - new Date(timeS).getTime() - 1000 //有一秒的误差
       }
       var timeText = getTimeText(time)
-      console.log(time + '应该显示为   ' + timeText)
+//      console.log(time + '应该显示为   ' + timeText)
       return timeText
     }
     refresh_v () {
@@ -262,7 +309,8 @@
                 me: arr[index].is_mine == 1 ? true : false,
                 avatar: arr[index].avatar,
                 speech: false,
-                time: that.getTime(arr[index].created_at)
+                time: that.getTime(arr[index].created_at),
+                showTime: that.showTme(arr[index].created_at, data[index + 1] ? data[index + 1].created_at : '')
               }
               that.messages.unshift(message)
             })

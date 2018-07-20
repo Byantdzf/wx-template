@@ -54,12 +54,16 @@
       <view style="margin-top: 146rpx;width: 100%">
         <view class="text-center flo_l">
           <view  class="btn_red_v font_28" style="width: 260rpx;" >
-            <button class="btn text-center font_28 white"  open-type="getUserInfo" @getuserinfo="getuserinfo('marriage')" >我是介绍人</button>
+            <form bindsubmit="formSubmit" report-submit>
+              <button formType="submit" class="btn text-center font_28 white"  open-type="getUserInfo" @getuserinfo="getuserinfo('marriage')" >我是介绍人</button>
+            </form>
           </view>
         </view>
         <view  class="text-center flo_r">
           <view  class="btn_red_v font_28" style="width: 260rpx;" >
-            <button class="btn text-center font_28 white"  open-type="getUserInfo" @getuserinfo="getuserinfo('single')" >我是单身</button>
+            <form bindsubmit="formSubmit" report-submit>
+              <button class="btn text-center font_28 white"  formType="submit"  open-type="getUserInfo" @getuserinfo="getuserinfo('single')" >我是单身</button>
+            </form>
           </view>
         </view>
       </view>
