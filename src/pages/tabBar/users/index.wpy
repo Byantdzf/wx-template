@@ -59,12 +59,12 @@
         <view class="weui-cell__bd">我的测试</view>
         <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
       </navigator>
-      <navigator url="/pages/users/myTest?id={{user.id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <navigator url="/pages/users/myMessage?id={{user.id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__hd">
-          <image src="../../../images/icon/test.png"
+          <image src="../../../images/icon/my_message.png"
                  style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>
-        <view class="weui-cell__bd">我的消息
+        <view class="weui-cell__bd">我的留言
         </view>
         <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
       </navigator>

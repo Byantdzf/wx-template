@@ -117,7 +117,9 @@ export const service = {
     //发消息
     chitchat_post: `${host}/send/chat/messages/to/users/`,
     // 获取消息
-    refreshMessage: `${host}/refresh/chat/messages/`
+    refreshMessage: `${host}/refresh/chat/messages/`,
+    // 我的留言
+    myMessgae: `${host}/message/linkmen`
     // 主域
 }
 

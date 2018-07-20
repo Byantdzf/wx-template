@@ -67,7 +67,8 @@
             'upgradingVIP',
             'myTest',
             'myNews',
-            'myShare'
+            'myShare',
+            'myMessage'
           ]
         }
 
