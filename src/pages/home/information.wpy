@@ -237,24 +237,32 @@
   </block>
   <block wx:if="{{mylibs.self != 1}}">
     <block wx:if="{{userType == 'marriage'}}">
-      <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;">
-        <!--<view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')">加好友-->
-        <!--</view>-->
-        <!--<view class="btn_white flo_l" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')">交换微信</view>-->
-        <view class="btn_red" style="margin-top: -8rpx;margin: auto;" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物
-        </view>
-        <view class="clearfloat"></view>
-      </view>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" class="btn" data-type="click">
+          <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;">
+            <!--<view class="btn_white flo_l" style="margin-left: 32rpx" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')">加好友-->
+            <!--</view>-->
+            <!--<view class="btn_white flo_l" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')">交换微信</view>-->
+            <view class="btn_red" style="margin-top: -8rpx;margin: auto;" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物
+            </view>
+            <view class="clearfloat"></view>
+          </view>
+        </button>
+      </form>
     </block>
     <block wx:else>
       <view style="height: 100rpx;width: 100%"></view>
-      <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;padding: 0 3%" >
-        <view class="btn_white flo_l" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')" wx:if="{{mylibs.is_friend == 1}}">交换微信</view>
-        <view class="btn_white flo_l" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')" style="margin:0 88rpx 0rpx 72rpx" wx:else>加好友</view>
-        <view class="btn_red flo_l" style="margin-top: -8rpx;" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物</view>
-        <view class="btn_red flo_l" style="margin-top: -8rpx;" wx:if="{{mylibs.is_friend == 1}}"  @tap="goto('/pages/home/chitchat?id={{mylibs.id}}&name={{mylibs.name}}')">聊天</view>
-        <view class="clearfloat"></view>
-      </view>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" class="btn" data-type="click">
+          <view class="fixed_bot font_32 text-center" style="width: 100%;background: white;margin-top: 12rpx;padding: 0 3%" >
+            <view class="btn_white flo_l" @tap="goto('/pages/home/swopWeChat?id={{mylibs.id}}')" wx:if="{{mylibs.is_friend == 1}}">交换微信</view>
+            <view class="btn_white flo_l" @tap="goto('/pages/home/addFriend?id={{mylibs.id}}')" style="margin:0 88rpx 0rpx 72rpx" wx:else>加好友</view>
+            <view class="btn_red flo_l" style="margin-top: -8rpx;" @tap="goto('/pages/home/giveGift?id={{mylibs.id}}')">送礼物</view>
+            <view class="btn_red flo_l" style="margin-top: -8rpx;" wx:if="{{mylibs.is_friend == 1}}"  @tap="goto('/pages/home/chitchat?id={{mylibs.id}}&name={{mylibs.name}}')">聊天</view>
+            <view class="clearfloat"></view>
+          </view>
+        </button>
+      </form>
     </block>
   </block>
   <block wx:if="{{loading}}">

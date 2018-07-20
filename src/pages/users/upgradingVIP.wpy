@@ -2,17 +2,21 @@
   <view class="page-user">
     <userTitle :user.sync="user"></userTitle>
     <view style="padding: 0 12rpx;">
-      <radio-group class="radio-group" bindchange="radioChange">
-        <view class="paylist"  wx:for="{{paylist}}" wx:key="*this">
-          <label class="radio">
-            <radio value="{{item.id}}" class="flo_l" checked="{{item.checked}}"/>
-            <view class="font_28 flo_l" style="margin-left: 12rpx;">{{item.name}} <span class="orange">{{item.price}}元{{item.iv}}</span> </view>
-            <view class='font_26 orange flo_l' style="text-align: left;">{{item.content}}</view>
-            <view class="clearfix"></view>
-          </label>
-          <view class="clearfix"></view>
-        </view>
-      </radio-group>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" class="btn" data-type="click">
+          <radio-group class="radio-group" bindchange="radioChange">
+            <view class="paylist"  wx:for="{{paylist}}" wx:key="*this">
+              <label class="radio">
+                <radio value="{{item.id}}" class="flo_l" checked="{{item.checked}}"/>
+                <view class="font_28 flo_l line_35" style="margin-left: 12rpx;">{{item.name}} <span class="orange">{{item.price}}元{{item.iv}}</span> </view>
+                <view class='font_26 orange flo_l line_35' style="text-align: left; width: 86%">{{item.content}}</view>
+                <view class="clearfix"></view>
+              </label>
+              <view class="clearfix"></view>
+            </view>
+          </radio-group>
+        </button>
+      </form>
       <block wx:if="{{loading}}">
         <view class="weui-loadmore">
           <view class="weui-loading"></view>
@@ -21,9 +25,13 @@
       </block>
       <view class="font_28 orange flo_r" @tap="goto('/pages/users/upgradeVIP')" style="margin-top: 22rpx;" >更多VIP服务》</view>
       <view class="text-center pay">
-        <view class="btn_white font_32 flo_l" @tap="switchTab('/pages/tabBar/home/index')">继续使用</view>
-        <view class="btn_red font_32 flo_l" style="margin-top: -6rpx; margin-left: 54rpx;" @tap="showmodel">确认支付</view>
-        <view class="clearfloat"></view>
+        <form bindsubmit="formSubmit" report-submit>
+          <button formType="submit" class="btn" data-type="click">
+            <view class="btn_white font_32 flo_l" @tap="switchTab('/pages/tabBar/home/index')">继续使用</view>
+            <view class="btn_red font_32 flo_l" style="margin-top: -6rpx; margin-left: 54rpx;" @tap="showmodel">确认支付</view>
+            <view class="clearfloat"></view>
+          </button>
+        </form>
       </view>
     </view>
   </view>
