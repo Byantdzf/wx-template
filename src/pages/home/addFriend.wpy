@@ -236,8 +236,18 @@
               self.$post({url: service.addFriend + '/' + self.id}, {
                 success: ({code, data}) => {
                   wx.showModal({
-                    title: '请求发送成功！',
-                    content: '等待对方审核！'
+                    title: '请求发送成功',
+                    content: '等待对方审核',
+                    success: function(res) {
+                      if (res.confirm) {
+                        wx.navigateBack({
+                          delta: 1
+                        })
+                        console.log('用户点击确定')
+                      } else if (res.cancel) {
+                        console.log('用户点击取消')
+                      }
+                    }
                   })
                 },
                 fail: ({code, data}) => {},
