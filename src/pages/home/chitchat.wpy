@@ -4,8 +4,8 @@
         <text wx:if="item.type=='text'" style="padding:8rpx;margin:0;width:auto;" selectable>{{item.text}}</text>
       </view>
     </template>
-    <scroll-view scroll-y="true" style="height:{{scrollHeight}}rpx;background:#eee;"   scroll-into-view="{{toView}}" >
-      <view class="text-center font_28 white">
+    <scroll-view scroll-y="true" style="height:{{scrollHeight}}rpx;background:#eee;"  scroll-into-view="{{toView}}" >
+      <view class="text-center font_26 white">
         <view class="weui-loading" style="display: block;margin: auto;" wx-if="{{showload}}"></view>
         <view style="background: #DADADA;display: inline-block;padding: 6rpx 12rpx;border-radius: 6rpx;margin-top: 22px"  @tap="History">{{text}}</view>
       </view>
@@ -96,6 +96,9 @@
         success: function (res) {
         }
       })
+//      setInterval(function () {
+//        that.refresh_v()
+//      }, 5000)
       wx.getSystemInfo({
         success: (res) => {
           that.windowHeight = res.windowHeight
@@ -107,9 +110,6 @@
     onShow() {
       let that = this
       that.getData()
-      setInterval(function () {
-        that.refreshMessage()
-      }, 3000)
       that.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
@@ -136,7 +136,7 @@
       }
       this.$get({url: service.chitchat_get + that.other_userId, data}, {
         success: ({code, data}) => {
-          that.text = '点击加载更多'
+          that.text = '点击查看更多'
           let message = []
           if (data.length == 0) {
             return that.text = '暂无消息'
@@ -160,7 +160,7 @@
       })
     }
 
-    refreshMessage () {
+    refresh_v () {
       var that = this
       this.$get({url: service.refreshMessage + that.other_userId, data: {max_id: that.max_id}}, {
         success: ({code, data}) => {
