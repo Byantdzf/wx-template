@@ -412,7 +412,6 @@
             if (!this.stature) {
               this.StatureFocus = true
               this.ShowModal('请填写身高（cm）')
-              debugger
             } else if (!this.weight) {
               this.WeightFocus = true
               this.ShowModal('请填写体重（kg）')
