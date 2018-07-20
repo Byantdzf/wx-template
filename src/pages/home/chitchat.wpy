@@ -75,6 +75,7 @@
       defaultSpeechIcon: '/images/speech0.png',
       emotionIcon: '/images/emotion.png',
       playingSpeech: '',
+      Loadingtime: '',
       min_id: 0,
       page: 1
     }
@@ -96,9 +97,10 @@
         success: function (res) {
         }
       })
-//      setInterval(function () {
-//        that.refresh_v()
-//      }, 5000)
+      that.Loadingtime = setInterval(function () {
+        that.refresh_v()
+      }, 5000)
+      console.log(that.Loadingtime)
       wx.getSystemInfo({
         success: (res) => {
           that.windowHeight = res.windowHeight
@@ -111,6 +113,11 @@
       let that = this
       that.getData()
       that.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
+    }
+
+    onUnload () {
+      let that = this
+      clearInterval(that.Loadingtime)
     }
 
     onPullDownRefresh() {
