@@ -1,8 +1,9 @@
 <template>
   <view class="page__bd "  wx:for="{{list1}}" wx:key="*this" >
-    <view class="flo_l borrowlist" @tap="goto('/pages/library/library?id={{item.id}}')">
+    <view class="flo_l borrowlist" >
       <view class="flo_r weui-cell__hd" >
-        <image src="{{other_user.wechat.avatar}}" mode="aspectFit"  style="width: 120rpx;height: 120rpx;border-radius: 50%; margin-right: 12rpx" class="flo_r"></image>
+        <image src="{{other_user.wechat.avatar}}" mode="aspectFit"  style="width: 120rpx;height: 120rpx;border-radius: 50%; margin-right: 12rpx"
+               class="flo_r {{doudun ? 'doudun' : ''}}"></image>
       </view>
       <view class="flo_l" style="width: 78%;">
         <view  class="font_28 flo_l orange bold" style="margin-left: 12rpx;width: 86%">
@@ -16,9 +17,10 @@
     福分</view>
   <view class="gift">
     <view wx:for="{{list}}" wx:key="*this" class="text-center gift_list inline-block">
-      <image src="{{item.icon}}" style="width:80px; height: 80px;margin: 12rpx "></image>
+      <image src="{{item.icon}}"  style="width:80px; height: 80px;margin: 12rpx " id="{{'_id' + item.id}}"></image>
+      <image src="{{item.icon}}" wx:if="{{item.showanimation}}"  animation="{{animationData}}" style="{{animation_css}}" id="{{'_id' + item.id}}"></image>
       <view class="font_24">一{{item.unit}}{{item.name}} /<span class="orange">{{item.price}}福分</span> </view>
-      <view class="btn_red font_26" style="width: 150rpx;height: 80rpx;line-height: 84rpx;margin: auto" @tap="conversion({{item}})">赠送</view>
+      <view class="btn_red font_26" style="width: 150rpx;height: 80rpx;line-height: 84rpx;margin: auto" @tap="conversion({{item}}, {{index}})">赠送</view>
     </view>
   </view>
   <modal class="modal" hidden="{{hide}}" title="付款详情"  confirm-text="确认支付" @confirm="modalChange2" @cancel="hidePay">
@@ -89,6 +91,12 @@
         }
       ],
       trade_no: '',
+      showanimation: false,
+      doudun: false,
+      animationData: {},
+      animation_css: {},
+      item: {},
+      index: '',
       list: []
 
     }
@@ -118,26 +126,59 @@
       this.getGifts()
     }
 
-    // 初始化页面数据
-//    initPageData() {
-//      var self = this
-//      self.loading = false
-//      this.$get({url: service.wechat + '/users/' + self.id}, {
-//        success: ({code, data}) => {
-//          self.user = data.user
-//          self.other_user = data.other_user
-//          self.$apply()
-//        },
-//        fail: ({code, data}) => {},
-//        complete: () => { this.loaded = false }
-//      })
-//    }
+    // 抖动动画
+    initAnimation (item, index) {
+      console.log('触发')
+      var query = wx.createSelectorQuery()
+      let that = this,
+        left = '',
+        top = ''
+      that.list.forEach((item, index, arr) => {
+        arr[index].showanimation = false
+      })
+      that.doudun = false
+      query.select('#_id' + item.id).boundingClientRect()
+      query.selectViewport().scrollOffset()
+      query.exec(function (res) {
+        left = res[0].left
+        top = res[0].top
+        console.log(left)
+        that.list[index].showanimation = true
+        that.animation_css = 'width:80px; height: 80px;margin: 12rpx;position: fixed;' + 'left:' + (left * 2 - 10) + 'rpx;' + 'top:' + (top * 2 - 10) + 'rpx;'
+        setTimeout(() => {
+          var animation = wx.createAnimation({
+            duration: 1000,
+            timingFunction: 'ease'
+          })
+          animation.rotate(360).scale(0.5, 0.5).left('520rpx').top('80rpx').opacity(0.4).step()
+          that.animationData = animation.export()
+          console.log(that.animationData)
+          that.$apply()
+        }, 100)
+        setTimeout(() => {
+          that.doudun = true
+          var animation = wx.createAnimation({
+            duration: 800,
+            timingFunction: 'ease'
+          })
+          animation.rotate(360).scale(0.1, 0.1).opacity(0).step()
+          that.animationData = animation.export()
+          that.$apply()
+        }, 1100)
+        that.animationData = {}
+        that.$apply()
+      })
+    }
     getGifts() {
       var self = this
       self.loading = false
       this.$get({url: service.users + '/' + self.id + '/gifts'}, {
         success: ({code, data}) => {
           self.list = data.gifts
+          self.list.forEach((item)=>{
+             return item.showanimation = false
+          })
+          console.log(self.list)
           self.other_user = data.user
           self.remain_amount = data.score.remain_amount
           self.score = data.score.remain_amount.split('.')[0]
@@ -173,12 +214,14 @@
                 success: function (res) {
                   that.$post({url: service.orderpay + '/' + that.trade_no}, {
                     success: ({code, data}) => {
-                      that.getGifts()
-                      wx.showToast({
-                        title: '赠送成功！',
-                        icon: 'success',
-                        duration: 1000
-                      })
+                      that.initAnimation(that.item, that.index)
+                      setTimeout(() => {
+                        that.getGifts()
+                        wx.showToast({
+                          title: '赠送成功',
+                          duration: 2000
+                        })
+                      }, 800)
                     },
                     fail: ({code, data}) => {
                     },
@@ -198,11 +241,14 @@
             } else {
               that.$post({url: service.orderpay + '/' + that.trade_no}, {
                 success: ({code, data}) => {
-                  that.getGifts()
-                  wx.showToast({
-                    title: '赠送成功',
-                    duration: 2000
-                  })
+                  that.initAnimation(that.item, that.index)
+                  setTimeout(() => {
+                    that.getGifts()
+                    wx.showToast({
+                      title: '赠送成功',
+                      duration: 2000
+                    })
+                  }, 800)
                 },
                 fail: ({code, data}) => {
                 },
@@ -219,14 +265,9 @@
       goto(url) {
         wx.navigateTo({url: url})
       },
-      conversion(item) {
-//      wx.showToast({
-//        title: item.name,
-//        icon: 'success',
-//        duration: 1000
-//      })
-        console.log(item.price)
-        console.log(this.remain_amount)
+      conversion(item, index) {
+        this.item = item
+        this.index = index
         if (Number(item.price) > Number(this.remain_amount)) {
           this.cash = Number(item.price) - Number(this.remain_amount)
           this.$apply()
@@ -293,5 +334,26 @@
   }
   .weui-cell__ft {
     margin-top: 10%;
+  }
+  .doudun{
+    animation: tada 1s .2s ease both;
+  }
+
+  @keyframes tada {
+    0% {
+      transform: scale(1);
+    }
+    10%, 20% {
+      transform: scale(0.9) rotate(-6deg)
+    }
+    30%, 50%, 70%, 90% {
+      transform: scale(1.2) rotate(6deg)
+    }
+    40%, 60%, 80% {
+      transform: scale(1.2) rotate(-6deg)
+    }
+    100% {
+      transform: scale(1) rotate(0)
+    }
   }
 </style>
