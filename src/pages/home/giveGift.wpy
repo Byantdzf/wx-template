@@ -188,6 +188,13 @@
         complete: () => { this.loaded = false }
       })
     }
+    vibrateLong() {
+      wx.vibrateLong({
+        success: () => {
+          console.log('0000')
+        }
+      })
+    }
     methods = {
       hidePay() {
         this.hide = true
@@ -215,6 +222,7 @@
                   that.$post({url: service.orderpay + '/' + that.trade_no}, {
                     success: ({code, data}) => {
                       that.initAnimation(that.item, that.index)
+                      that.vibrateLong()
                       setTimeout(() => {
                         that.getGifts()
                         wx.showToast({
@@ -244,6 +252,7 @@
                   that.initAnimation(that.item, that.index)
                   setTimeout(() => {
                     that.getGifts()
+                    that.vibrateLong()
                     wx.showToast({
                       title: '赠送成功',
                       duration: 2000

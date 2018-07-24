@@ -116,6 +116,9 @@ export default class baseMixin extends wepy.mixin {
       mask: true
     })
   }
+  $log(title){
+   console.log(title)
+  }
   // 警告框
   $alert(item = '标题', item2) {
     const param = this.isObject(item) ? Object.assign({

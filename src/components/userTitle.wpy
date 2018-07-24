@@ -48,7 +48,7 @@
             <view style="margin-top: 5rpx" class="flo_r">完善个人资料，让更多的人认识你</view>
           </view>
           <view class="message" @tap="goto('/pages/users/myNews')">
-            <image src="../images/icon/message.png" mode="aspectFill" class="flo_r"
+            <image src="../images/icon/message.png" mode="aspectFill" class="flo_r {{user.new_notice_count ? 'doudun' : ''}}"
                    style="width: 48rpx;height: 48rpx;margin:0 -6rpx 0 12rpx; "></image>
             <view class="message_red" wx:if="{{user.new_notice_count}}"></view>
           </view>
@@ -106,4 +106,25 @@
 .weui-search-bar__cancel-btn {
   color: @weuiColorPrimary;
   }
+.doudun{
+  animation: tada 1200ms ease infinite;
+}
+
+@keyframes tada {
+  0% {
+    transform: scale(1);
+  }
+  10%, 20% {
+    transform: scale(0.9) rotate(-12deg)
+  }
+  30%, 50%, 70%, 90% {
+    transform: scale(1.2) rotate(12deg)
+  }
+  40%, 60%, 80% {
+    transform: scale(1.2) rotate(-12deg)
+  }
+  100% {
+    transform: scale(1) rotate(0)
+  }
+}
 </style>

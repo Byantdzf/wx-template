@@ -164,7 +164,9 @@
         success: ({code, data}) => {
           self.loading = false
           self.user = data.user
-          self.answer = data.answer.question_answer
+          if(data.answer != null){
+            self.answer = data.answer.question_answer
+          }
           self.$apply()
         },
         fail: ({code, data}) => {
