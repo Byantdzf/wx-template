@@ -51,8 +51,9 @@
   import http from '../../mixins/http'
   import base from '../../mixins/base'
   import user from '../../mixins/user'
-//  import util from '../../utils/util'
+  //  import util from '../../utils/util'
   import ShareMessage from '../../mixins/ShareMessage'
+
   var util = require('../../utils/util')
 
   export default class chitchat extends wepy.page {
@@ -87,13 +88,13 @@
       page: 1
     }
 
-    computed = {
-    }
+    computed = {}
 
-    onShareAppMessage(res) {
+    onShareAppMessage (res) {
       return this.$parent.onShareAppMessage(this.config.navigationBarTitleText)
     }
-    async onLoad(e) {
+
+    async onLoad (e) {
       let that = this
       that.other_userId = e.id
       that.name = e.name
@@ -105,7 +106,7 @@
         }
       })
       that.Loadingtime = setInterval(function () {
-        that.refresh_v()
+        that.refreshV()
       }, 5000)
       console.log(that.Loadingtime)
       wx.getSystemInfo({
@@ -116,7 +117,8 @@
         }
       })
     }
-    onShow() {
+
+    onShow () {
       let that = this
       that.getData()
       that.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
@@ -127,23 +129,24 @@
       clearInterval(that.Loadingtime)
     }
 
-    onPullDownRefresh() {
+    onPullDownRefresh () {
       this.getData()
     }
 
     pageScrollToBottom () {
-      setTimeout(()=>{
+      setTimeout(() => {
         var query = wx.createSelectorQuery()
         query.select('#j_page').boundingClientRect()
         query.selectViewport().scrollOffset()
-        query.exec(function(res){
+        query.exec(function (res) {
           console.log(res)
-          res[0].top       // #the-id节点的上边界坐标
-          res[1].scrollTop // 显示区域的竖直滚动位置
+//          res[0].top       // #the-id节点的上边界坐标
+//          res[1].scrollTop // 显示区域的竖直滚动位置
         })
-      },1500)
+      }, 1500)
     }
-    getData() {
+
+    getData () {
       let that = this
       let data = {
         min_id: that.min_id
@@ -158,8 +161,7 @@
           that.min_id = data[data.length - 1].id
           that.max_id = data[0].id
           console.log(that.max_id)
-          data.forEach((item, index, arr)=>{
-
+          data.forEach((item, index, arr) => {
             message = {
               id: arr[index].id,
               contents: util.getContents(arr[index].content),
@@ -176,32 +178,33 @@
         }
       })
     }
-  // 显示时间
+
+    // 显示时间
     showTme (startTime, endTime) {
       console.log(startTime)
       console.log(endTime)
-      let dateEnd = new Date(startTime.replace(/-/g, "/"))
-      let dateBegin = new Date(endTime.replace(/-/g, "/"))
+      let dateEnd = new Date(startTime.replace(/-/g, '/'))
+      let dateBegin = new Date(endTime.replace(/-/g, '/'))
       console.log(dateBegin)
       var retValue = {}
-      var date3 = dateEnd.getTime() - dateBegin.getTime()  //时间差的毫秒数
-      //计算出相差天数
+      var date3 = dateEnd.getTime() - dateBegin.getTime()  // 时间差的毫秒数
+      // 计算出相差天数
       var days = Math.floor(date3 / (24 * 3600 * 1000))
       retValue.Days = days
       var years = Math.floor(days / 365)
       retValue.Years = years
       var months = Math.floor(days / 30)
       retValue.Months = months
-      //计算出小时数
-      var leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+      // 计算出小时数
+      var leave1 = date3 % (24 * 3600 * 1000)    // 计算天数后剩余的毫秒数
       var hours = Math.floor(leave1 / (3600 * 1000))
       retValue.Hours = hours
-      //计算相差分钟数
-      var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+      // 计算相差分钟数
+      var leave2 = leave1 % (3600 * 1000)        // 计算小时数后剩余的毫秒数
       var minutes = Math.floor(leave2 / (60 * 1000))
       retValue.Minutes = minutes
-      //计算相差秒数
-      var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+      // 计算相差秒数
+      var leave3 = leave2 % (60 * 1000)      // 计算分钟数后剩余的毫秒数
       var seconds = Math.round(leave3 / 1000)
       retValue.Seconds = seconds
       var strTime = ''
@@ -217,17 +220,16 @@
         strTime = minutes + '分钟前'
       }
       retValue.PubTime = strTime
-      if(minutes < 5){
+      if (minutes < 5) {
         console.log('小于5')
         return false
-      }else{
+      } else {
         console.log('大于5')
         return true
       }
-      console.log(retValue)
-      return retValue
     }
-  // 转换时间
+
+    // 转换时间
     getTime (time) {
 //      var time = '2018年07月19日 10:43:24'
       // 时间统一函数
@@ -250,21 +252,23 @@
           return timeS.slice(0, 2) >= 12 ? '下午' + (timeS.slice(0, 2) == 12 ? 12 : timeS.slice(0, 2) - 12) + timeS.slice(2, 5) : '上午' + timeS.slice(0, 5)
         }
       }
+
 // 时间戳获取
       function getTimeS (argument) {
         var timeS = argument
         timeS = timeS.replace(/[年月]/g, '/').replace(/[日]/, '')
-        return new Date().getTime() - new Date(timeS).getTime() - 1000 //有一秒的误差
+        return new Date().getTime() - new Date(timeS).getTime() - 1000 // 有一秒的误差
       }
+
       var timeText = getTimeText(time)
 //      console.log(time + '应该显示为   ' + timeText)
       return timeText
     }
-    refresh_v () {
+    refreshV () {
       var that = this
       this.$get({url: service.refreshMessage + that.other_userId, data: {max_id: that.max_id}}, {
         success: ({code, data}) => {
-          if (data.length == 0) {return}
+          if (data.length == 0) { return }
           that.max_id = data[0].id
           console.log('刷新成功')
           console.log(data)
@@ -287,6 +291,7 @@
         }
       })
     }
+
     methods = {
       History () {
         this.showload = true
@@ -302,7 +307,7 @@
             console.log(data.data)
             that.min_id = data[data.length - 1].id
             let message = []
-            data.forEach((item, index, arr)=>{
+            data.forEach((item, index, arr) => {
               message = {
                 id: arr[index].id,
                 contents: util.getContents(arr[index].content),
@@ -322,17 +327,17 @@
           }
         })
       },
-      scroll(e) {
+      scroll (e) {
         this.getData()
       },
-      sendMessage(e) {
+      sendMessage (e) {
         this.msg = e.detail.value
         console.log(this.msg)
       },
-      send() {
+      send () {
         var that = this
         let msg = this.msg
-        this.$post({ url: service.chitchat_post + that.other_userId, data: {content: msg, max_id: that.max_id} }, {
+        this.$post({url: service.chitchat_post + that.other_userId, data: {content: msg, max_id: that.max_id}}, {
           success: ({code, data}) => {
             that.max_id = data[0].id
             console.log('发送成功')

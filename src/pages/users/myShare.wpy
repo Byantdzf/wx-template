@@ -24,7 +24,7 @@
         </view>
         <view class="clearfloat"></view>
         <view style="color: #FFFFFF;margin: 36rpx 32rpx;" class="font_24 text-left">
-          
+
         </view>
       </view>
     </view>
@@ -80,14 +80,14 @@
   import http from '../../mixins/http'
   import base from '../../mixins/base'
   import user from '../../mixins/user'
-//  import ShareMessage from '../../mixins/ShareMessage'
+  //  import ShareMessage from '../../mixins/ShareMessage'
   import { service } from '../../config.js'
 
   export default class myShare extends wepy.page {
     mixins = [base, http, user]
     config = {
       navigationBarTitleText: '分享给好友',
-      navigationBarBackgroundColor: "#FEEDEE",
+      navigationBarBackgroundColor: '#FEEDEE',
       enablePullDownRefresh: false
     }
     data = {
@@ -112,49 +112,48 @@
     }
 
     computed = {
-      nickName() {
+      nickName () {
         return (user && user.wechat && user.wechat.nickname) ? user.wechat.nickname : '未授权用户'
       }
     }
 
-    onShow() {
+    onShow () {
       // 初始化页面数据
       this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
-    onShareAppMessage(res) {
+    onShareAppMessage (res) {
       let url = 'pages/tabBar/home/index'
       return {
         title: '分享给好友',
         path: url,
         // 设置转发image，不设默认当前截图
 //        imageUrl: '',
-        success: function(res) {
+        success: function (res) {
           wx.showToast({
             title: '转发成功',
             icon: 'success',
             duration: 1500
           })
-          var shareTickets = res.shareTickets;
+          var shareTickets = res.shareTickets
           if (shareTickets.length == 0) {
             return false
           }
         },
-        fail: function(res) {
+        fail: function (res) {
           // 转发失败
         }
       }
     }
 
-    onLoad() {
+    onLoad () {
 //      this.initPageData()
     }
 
     // 初始化页面数据
-    initPageData() {
-
-      this.$get({url: service.user_share,}, {
+    initPageData () {
+      this.$get({url: service.user_share}, {
         success: ({code, data}) => {
           this.avatar = data.avatar
           this.name = data.name
@@ -171,22 +170,22 @@
     }
 
     methods = {
-      hideAddress() {
+      hideAddress () {
         this.showAddress = true
         this.$apply()
       },
-      listenerCancel() {
+      listenerCancel () {
         this.shareImage = true
         this.$apply()
       },
       // 关闭设置提示（image）
-      hideOpenSet() {
+      hideOpenSet () {
         this.showOpenSet = true
         this.showMap = true
         this.$apply()
       },
       // 授权访问image
-      openSetting_image(e) {
+      openSetting_image (e) {
         let that = this
         this.$apply()
         if (e.detail.authSetting['scope.writePhotosAlbum']) {
@@ -216,7 +215,7 @@
           })
         }
       },
-      saveImage(type) {
+      saveImage (type) {
         var that = this
         console.log(that.invite_pic)
         wepy.downloadFile({
@@ -235,7 +234,7 @@
               },
               fail: () => {
                 wx.getSetting({
-                  success(res) {
+                  success (res) {
                     if (!res.authSetting['scope.writePhotosAlbum']) {
                       that.shareImage = true
                       that.showOpenSet = false
@@ -251,12 +250,12 @@
           }
         })
       },
-      modalChange2() {
+      modalChange2 () {
         this.hide = true
         this.message = {}
         this.$apply()
       },
-      info(item) {
+      info (item) {
         console.log(item)
         if (item.info) {
           this.hide = false
@@ -276,10 +275,10 @@
         }
         this.$apply()
       },
-      goto(url) {
+      goto (url) {
         wx.navigateTo({url: url})
       },
-      conversion(item) {
+      conversion (item) {
         wx.showToast({
           title: item.name,
           icon: 'success',

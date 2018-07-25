@@ -175,8 +175,8 @@
       this.$get({url: service.users + '/' + self.id + '/gifts'}, {
         success: ({code, data}) => {
           self.list = data.gifts
-          self.list.forEach((item)=>{
-             return item.showanimation = false
+          self.list.forEach((item) => {
+            return item.showanimation = false
           })
           console.log(self.list)
           self.other_user = data.user

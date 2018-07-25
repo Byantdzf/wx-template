@@ -22,7 +22,7 @@
   <view class="font_32 bookTitle">礼物记录</view>
   <view class="booklist">
     <block wx:if="{{list.length}}">
-      <view wx:for="{{list}}" class="book" wx:key="*this" @tap="goto('/pages/home/information?id={{item.send_user.id}}')">
+      <view wx:for="{{list}}" class="book" wx:key="*this" @tap="gotofriends({{item.send_user}})">
         <view class="flo_l">
           <image class="book-avatar" mode="aspectFit" src="{{item.send_user.avatar}}" background-size="cover"/>
         </view>
@@ -246,6 +246,16 @@
     }
 
     methods = {
+      gotofriends(item) {
+        console.log(item)
+        let url = ''
+        if (item.type == 'single') {
+          url = '/pages/home/information?id=' + item.id
+        } else {
+          url = '/pages/home/introducer?id=' + item.id
+        }
+        wx.navigateTo({url: url})
+      },
       showInput() {
         this.inputShowed = true
       },

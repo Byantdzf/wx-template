@@ -28,6 +28,9 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'one-var': 0,
+    // "yoda": [0, "never"],
+    "no-unneeded-ternary": 0,
+    "no-undef": 0,
     'space-before-function-paren': 0
   },
   globals: {

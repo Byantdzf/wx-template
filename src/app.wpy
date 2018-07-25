@@ -10,7 +10,8 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/tabBar/home/index',
+//        'pages/tabBar/home/index',
+        'pages/tabBar/home/indexV',
         'pages/tabBar/party/index',
         'pages/tabBar/books/index',
         'pages/tabBar/users/index'
@@ -87,7 +88,7 @@
         backgroundColor: '#fff',
         borderStyle: 'black',
         list: [{
-          pagePath: 'pages/tabBar/home/index',
+          pagePath: 'pages/tabBar/home/indexV',
           selectedIconPath: './images/icon/map_active.png',
           iconPath: './images/icon/map.png',
           text: '首页'
@@ -132,6 +133,7 @@
 
     onShow(options) {
       console.log(options)
+      this.startWebSocket()
       if (options.scene == 1037 || options.scene == 1038) {
         let uid = options.referrerInfo.extraData.uid
 //      console.log(JSON.stringify(uid))
@@ -219,7 +221,31 @@
         })
       }
     }
-
+    startWebSocket () {
+      let that = this
+      wx.request({
+        url: 'https://love.ufutx.com/socket.io/?EIO=3&transport=polling',
+        header: {'Content-Type': 'application/x-www-form-urlencoded'},
+        method: 'get',
+        success: function (res) {
+          let data = res.data
+          var reg = /(\d{2}\:\d{1})|(\d{1}\:\d{2})/ig
+          var str2 = data.replace(reg,'')
+          let sid = JSON.parse(str2).sid
+//          let sid = data.split("sid\":\"")[1].split("\",")[0]
+          wx.connectSocket({
+            url: 'wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
+          })
+          wx.onSocketOpen(function(res){
+            console.log(res)
+            console.log('WebSocket连接已打开！')
+          })
+          wx.onSocketError(function(res){
+            console.log('WebSocket连接打开失败，请检查！')
+          })
+        }
+      })
+    }
     onShareAppMessage(title) {
       return {
         title: title,

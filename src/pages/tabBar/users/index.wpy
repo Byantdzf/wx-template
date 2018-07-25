@@ -260,6 +260,7 @@ page{
     width: @userinfoHeight;
     height: @userinfoHeight;
     border-radius: 50%;
+    box-shadow: 1rpx 1rpx 12rpx #f4f4f4;
   }
   .weui-cell__bd{
     margin-left: 24rpx;

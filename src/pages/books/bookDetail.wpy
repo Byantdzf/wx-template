@@ -52,9 +52,9 @@
             icon: 'success',
             duration: 1500
           })
-          var shareTickets = res.shareTickets;
+          var shareTickets = res.shareTickets
           if (shareTickets.length == 0) {
-            return false;
+            return false
           }
         },
         fail: function(res) {

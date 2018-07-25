@@ -523,7 +523,7 @@
           beliefChange(e) {
             this.beliefIndex = e.detail.value
             this.ensureData()
-          },
+          }
 //          salaryChange(e) {
 //            console.log(e)
 //            console.log(this.salaries)

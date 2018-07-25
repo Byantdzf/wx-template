@@ -10,7 +10,7 @@
                 style="position: absolute;top: 44%;left: 6%;width: 92%;height: 204rpx">
             <view class="flo_l weui-cell__hd">
               <image src="{{mylibs.avatar}}" mode="aspectFit"
-                     style="width: 120rpx;height: 120rpx;border-radius: 50%" class="flo_l"></image>
+                     style="width: 120rpx;height: 120rpx;border-radius: 50%;border:4rpx solid #ffffff;box-shadow: 1rpx 1rpx 12rpx #f4f4f4;" class="flo_l"></image>
             </view>
             <view class="flo_l" style="margin-top: 26rpx">
               <view class="font_28 flo_l white ellipsis_1 bold" style="margin-left: 22rpx;">
