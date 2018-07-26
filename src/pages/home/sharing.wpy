@@ -28,7 +28,8 @@
         </view>
         <view>
           <view class="text-center pay">
-            <view class="btn_red_v font_32"  @tap="binding">接受邀请</view>
+            <view class="btn_red_v font_32"  @tap="goto('/pages/users/register')" wx:if="{{showRegister}}">继续注册</view>
+            <view class="btn_red_v font_32"  @tap="binding" wx:else>接受邀请</view>
           </view>
         </view>
         <!--<image src="../../images/icon/vip_active.png" mode="aspectFill" style="width: 62rpx;height: 62rpx" class="flo_l"></image>-->
@@ -65,6 +66,7 @@
       ],
       openid: '',
       loading: false,
+      showRegister: false,
       inviteData: {}
     }
     computed = {
@@ -105,14 +107,12 @@
               self.inviteData = data.order
               self.openid = data.openid
               self.$apply()
-              setTimeout(() => {
-                wx.hideLoading()
-              }, 200)
             },
             fail: ({code, data}) => {
             },
             complete: () => {
               this.loaded = false
+              wx.hideLoading()
             }
           })
         },
@@ -135,9 +135,6 @@
             other_openid: self.openid
           }
         self.$showLoading('处理中')
-        setTimeout(() => {
-          wx.hideLoading()
-        }, 800)
         this.$post({url: service.inviteBind + '/' + self.sharePay_id, data}, {
           success: ({code, data}) => {
             if (data.is_ok || data.length == 0) {
@@ -148,6 +145,11 @@
               setTimeout(() => {
                 wx.switchTab({url: '/pages/tabBar/home/index'})
               }, 1000)
+            } else if(data.invited && data.invited == 1){
+              console.log('adljkasd')
+              self.$showToast('邀请已被抢注')
+              self.showRegister = true
+              self.$apply()
             } else {
               wx.showModal({
                 title: '提示',
@@ -166,7 +168,10 @@
             self.$apply()
           },
           fail: ({code, data}) => {},
-          complete: () => { this.loaded = false }
+          complete: () => {
+            this.loaded = false
+            wx.hideLoading()
+          }
         })
       }
     }
@@ -205,7 +210,7 @@
       /*margin: 22rpx auto;*/
       position: fixed;
       bottom: 5%;
-      width: 100%;
+      width: 93%;
     }
     .btn_red_v{
       width: 300rpx;

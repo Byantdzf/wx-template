@@ -51,7 +51,7 @@
     </block>
     <block wx:if="{{noMore}}">
       <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
-        <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot"></view>
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line weui-loadmore__tips_in-dot" ></view>
       </view>
     </block>
   </view>
@@ -169,8 +169,7 @@
         }
       }, {
         success: ({code, data}) => {
-          _this.noMore = false
-          _this.loading = true
+//          _this.loading = true
           if (data.data.length == 0 && data.data.last_page == 1) {
             _this.loading = false
             _this.noMore = true
@@ -184,6 +183,7 @@
           }
           data = data.data
           if (this.isArray(data) && data.length === 0) {
+            _this.loading = false
             _this.noMore = true
             _this.list = []
             return
@@ -202,7 +202,7 @@
         fail: ({code, data}) => {
         },
         complete: () => {
-          this.loaded = false
+//          _this.noMore = false
         }
       })
     }
@@ -312,7 +312,7 @@
   @import "../../styles/weui/base/fn.wxss";
   @import "../../styles/custom/fn.less";
   page{
-    background: white;
+    background: #f4f4f4;
   }
   .borrow{
     .page__bd{
@@ -326,7 +326,7 @@
       text-align: center;
     }
     text-align: center;
-    background: #fff;
+    background: #f4f4f4;
     .library-title{
       .h2();
       text-align: left;
@@ -393,6 +393,7 @@
     border-radius: 6rpx;
     margin-left: 4%;
     padding: 22rpx;
+    background: white;
     /*position: relative*/
   }
   .weui-cell__ft {

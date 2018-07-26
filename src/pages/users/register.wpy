@@ -32,8 +32,8 @@
           </view>
           <view class="">
           <view class="weui-label">
-          <view class="btn_red_v1" style="margin-top: 26rpx;">
-          <button class="font_28 btn white text-center" style="" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">从微信获取</button>
+          <view class="btn_red_v1" style="margin-top: 26rpx;width: 240rpx;">
+          <button class="font_28 btn white text-center" style="width: 240rpx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">从微信获取手机号</button>
           </view>
           </view>
           </view>

@@ -94,8 +94,8 @@
           text: '首页'
         }, {
           pagePath: 'pages/tabBar/books/index',
-          selectedIconPath: './images/icon/friends_active.png',
-          iconPath: './images/icon/friends.png',
+          selectedIconPath: './images/icon/book_active.png',
+          iconPath: './images/icon/book.png',
           text: '阅读'
         }, {
           pagePath: 'pages/tabBar/party/index',
@@ -133,7 +133,7 @@
 
     onShow(options) {
       console.log(options)
-      this.startWebSocket()
+//      this.startWebSocket()
       if (options.scene == 1037 || options.scene == 1038) {
         let uid = options.referrerInfo.extraData.uid
 //      console.log(JSON.stringify(uid))
