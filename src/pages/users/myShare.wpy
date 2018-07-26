@@ -9,7 +9,7 @@
     </view>
   </view>
   <view>
-    <view class="text-center" style="position: fixed;width: 100%;bottom: 2%;">
+    <view class="text-center" style="position: fixed;width: 100%;bottom: 12%;">
       <image  mode="aspectFit" src="{{qrcode}}" style="width: 360rpx;height: 360rpx;"></image>
       <view style="margin-top: 16rpx;width: 91%;padding: 0 32rpx;">
         <view class="text-center flo_l">
@@ -153,6 +153,8 @@
 
     // 初始化页面数据
     initPageData () {
+      let that = this
+      that.$showLoading('加载页面中')
       this.$get({url: service.user_share}, {
         success: ({code, data}) => {
           this.avatar = data.avatar
@@ -160,11 +162,11 @@
           this.qrcode = data.qrcode
           this.invite_pic = data.pic
           this.$apply()
+          wx.hideLoading()
         },
         fail: ({code, data}) => {
         },
         complete: () => {
-          this.loaded = false
         }
       })
     }

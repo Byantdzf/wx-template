@@ -30,15 +30,15 @@
             </view>
           </view>
           <view class="clearfloat"></view>
-          <view class="issue text-center">
+          <view class="issue text-left">
             <view class="font_28" wx:for="{{list}}" wx:key="*this">
-              <view class="flo_l" style="margin-top: 14rpx;margin-right: 48rpx;">{{item.questions}}</view>
+              <view class="flo_l" style="margin-top: 14rpx;margin-right: 48rpx; width: 100%;">{{item.questions}}</view>
               <view class="text-center">
                 <input class="wx-input" style="margin: 22rpx auto" @blur="valueChange({{index}})" value="{{item.value}}"
-                       placeholder="请输入"/>
+                       placeholder="请回答问题"/>
               </view>
             </view>
-            <view class="btn_red font_28" style="margin: auto" @tap="addfriend">申请加好友</view>
+            <view class="btn_red font_28 " style="margin: auto" @tap="addfriend">申请加好友</view>
           </view>
         </view>
       </view>
@@ -67,7 +67,8 @@
   export default class addFriend extends wepy.page {
     mixins = [base, http, user, ShareMessage]
     config = {
-      navigationBarTitleText: '申请加为好友'
+      navigationBarTitleText: '申请加为好友',
+      enablePullDownRefresh: false
     }
     data = {
       // 后置显示按钮
@@ -80,7 +81,8 @@
       avatar: '',
       name: '',
       text: '感谢你加我为好友！',
-      loading: false
+      loading: false,
+      animation: false
     }
 
     computed = {
@@ -96,11 +98,10 @@
 //      _this.name = e.name
       _this.id = e.id
       _this.$apply()
-      console.log(e)
+      _this.getMessage()
+      _this.getQuestions()
     }
     onShow() {
-      this.getMessage()
-      this.getQuestions()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
     getMessage() {
@@ -116,6 +117,7 @@
     }
     getQuestions() {
       let self = this
+      self.$showLoading('加载中')
       this.$get({url: service.users + '/' + self.id + '/friend/questions'}, {
         success: ({code, data}) => {
           // let arr = {}
@@ -132,83 +134,19 @@
 //          console.log(self.list)
         },
         fail: ({code, data}) => {},
-        complete: () => { this.loaded = false }
+        complete: () => { wx.hideLoading() }
       })
     }
     onPullDownRefresh() {
-      this.getLibraries()
+//      this.getQuestions()
     }
     onReachBottom() {
-      setTimeout(() => {
-//        if (this.activeIndex == '1') {
-        this.getLibraries()
-//        } else {
-//          this.initPageData()
-//        }
-//        this.$apply()
-      }, 200)
+
     }
-    // 初始化页面数据
-    initPageData() {
-      var self = this
-      self.loading = false
-      // this.$get({url: service.my_libraries}, {
-      //   success: ({code, data}) => {
-      //     this.mylibs = data
-      //     self.config.navigationBarTitleText = data.name
-      //   },
-      //   fail: ({code, data}) => {},
-      //   complete: () => { this.loaded = false }
-      // })
-    }
+
     getLibraries(keyword) {
       let _this = this
       _this.loading = true
-      // let url = service.libraries
-      // if (keyword) {
-      //   url = service.libraries + '?keyword=' + keyword
-      // }
-//       this.$get({
-//         url: url,
-//         data: {
-//           page: this.page
-//         }
-//       }, {
-//         success: ({code, data}) => {
-//           _this.noMore = false
-//           _this.loading = true
-//           if (data.data.length == 0 && data.data.last_page == 1) {
-//             _this.loading = false
-//             _this.noMore = true
-//             _this.libs = []
-//             return
-//           }
-//           if (data.current_page > data.last_page) {
-//             _this.noMore = true
-//             _this.loading = true
-//             return
-//           }
-//           data = data.data
-//           if (this.isArray(data) && data.length === 0) {
-//             _this.noMore = true
-//             _this.libs = []
-//             return
-//           }
-//           if (_this.libs.length === 0 || _this.page === 1) {
-//             _this.libs = data
-//           } else {
-//             data.map(function (item, index) {
-//               _this.libs.push(item)
-//             })
-//           }
-//           _this.noMore = true
-//           _this.page += 1
-//
-// //          _this.libs = data.data
-//         },
-//         fail: ({code, data}) => {},
-//         complete: () => { this.loaded = false }
-//       })
     }
 
     methods = {
@@ -355,13 +293,14 @@
     margin-top: 10%;
   }
   .wx-input{
-    width: 360rpx;
-    height: 35rpx;
+    width: 484rpx;
+    height: 28rpx;
     /*background: red;*/
     padding: 12rpx 22rpx;
     margin-bottom: 12rpx;
     border-radius: 12rpx;
-    border: 1rpx solid #d3d3d3;
+    border: 1rpx solid #dedede;
+    box-shadow: 1rpx 1rpx 12rpx #e8e8e8;
   }
   .weui-cells{
     position: inherit;
@@ -372,5 +311,23 @@
     padding: 22rpx 26rpx;
     /*position: relative;*/
     background: white;
+  }
+  .box_animation{
+    animation: active_v 2000ms 1 linear;
+    animation-fill-mode: forwards;
+    /*animation-delay:1s;*/
+  }
+  @keyframes active_v {
+    0%{
+      width: 0;
+      height: 0;
+      font-size: 12rpx;
+    }
+    100%{
+      width: 240rpx;
+      height: 136;
+      font-size: 28rpx
+    }
+
   }
 </style>

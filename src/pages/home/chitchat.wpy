@@ -34,8 +34,8 @@
     </scroll-view>
     <view class="wa-row" style="height:100rpx;background: white;position: fixed;bottom: 0;">
       <!--<image src="{{changeImageUrl}}" class="text-center icon ion-ios" style="height:32px;line-height:32px" @tap="changeType"></image>-->
-      <view wx:if="{{!isSpeech}}" class="padding_half" style="flex:1; height:60rpx; line-height:60rpx;border-bottom:1px solid gray;">
-        <input value="{{msg}}" @input="sendMessage" @enter="sendMessage"/>
+      <view wx:if="{{!isSpeech}}" class="padding_half" style="flex:1; height:60rpx; line-height:60rpx;">
+        <input value="{{msg}}" @input="sendMessage" focus @enter="sendMessage" @confirm="send" type='text' cursor-spacing="12" style="border-bottom:1px solid gray;margin-top: 12rpx" confirm-hold="true" confirm-type="send"/>
       </view>
       <form bindsubmit="formSubmit" report-submit>
         <button formType="submit" type="" disabled="{{isSpeech||msg==''}}" size='mini' class="send-button"

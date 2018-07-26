@@ -1,16 +1,20 @@
 <template>
   <view class="page__bd "  wx:for="{{list}}" wx:key="*this" >
     <view class="flo_l borrowlist" @tap="info({{item}})">
-      <view class="flo_l" style="width: 100%;">
+      <!--<view class="flo_l" style="">-->
         <!--<view  class="font_32 flo_l ellipsis_1 bold" style="margin-left: 12rpx;">-->
           <!--{{item.type}}-->
         <!--</view>-->
         <view  class="font_26 flo_r ellipsis_1 " style="margin-left: 12rpx;">
           {{item.created_at}}
         </view>
+      <!--</view>-->
+      <view class="font_28 flo_l black_6 ellipsis_1 bold" style="margin-left: 34rpx;">
+        {{item.goods}}
       </view>
-      <view class="font_28 flo_l black_6 ellipsis_1 bold" style="margin-left: 34rpx;">{{item.goods}}</view>
-      <view  class="font_28 flo_r ellipsis_1" style="margin-right: 10%;margin-bottom: -22rpx;">
+      <view class="clearfloat"></view>
+      <view wx:if="{{item.type == 'gift' && item.other_name != null}}" class="flo_l font_28 black_6 ellipsis_1 bold" style="margin-left: 34rpx;width: 68%;">赠送给<span class="orange">{{item.other_name}}</span></view>
+      <view  class="font_28 flo_r ellipsis_1" style="margin-right: 8%;margin-bottom: -22rpx;">
         消费 <span class="font_28 orange  bold">{{item.num * item.price}}</span> 元
       </view>
       <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.info}}"></view>
@@ -67,9 +71,13 @@
           cancel-text="取消"
           bindconfirm="saveImage('save')"
           bindcancel="listenerCancel">
+    <view wx:if="{{other.other_name}}" class="red text-center bold" style="margin-bottom: 12rpx;">该分享已经被{{other.other_name}}注册了！</view>
     <image style="position: relative;left: -3%;top:0%;box-shadow: 1rpx 1rpx 12rpx #d3d3d3;" mode="aspectFit"
            src="{{invite_pic}}"
            class="shaerImage"></image>
+    <view wx:if="{{other.other_openid}}" style="width: 50%;height: 200rpx;position: absolute;right: 0;bottom:-4%;z-index: 9999" class="text-center">
+      <image style="width: 188rpx; height: 188rpx;" mode="aspectFit"src="http://images.ufutx.com/201807/26/2c167f2b853b4efbbe43a363deebb63a.png"></image>
+    </view>
     <!--<view style="position: absolute;left: 40%;bottom: 0;background: #FAFAFC; z-index: 999999;">-->
     <!--<cover-view-->
     <!--style="position: relative;left: 42% ;z-index: 999999; top: 10%;color: orange;background: white;width: 120rpx;height: 68rpx;margin-top: 22rpx;line-height: 68rpx;border-radius: 12rpx;box-shadow: 1rpx 1rpx 12rpx #96d3d0"-->
@@ -119,40 +127,41 @@
       showAddress: true,
       goods: {},
       invite_pic: '',
+      other: {},
       message: {}
     }
 
     computed = {
-      nickName() {
+      nickName () {
         return (user && user.wechat && user.wechat.nickname) ? user.wechat.nickname : '未授权用户'
       }
     }
 
-    onShow() {
+    onShow () {
       // 初始化页面数据
       this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
 
-    onShareAppMessage(res) {
+    onShareAppMessage (res) {
       return this.$parent.onShareAppMessage(this.config.navigationBarTitleText)
     }
 
-    onLoad() {
+    onLoad () {
 
     }
 
-    onPullDownRefresh() {
+    onPullDownRefresh () {
       this.page = 1
       this.initPageData()
     }
 
-    onReachBottom() {
+    onReachBottom () {
       this.initPageData()
     }
 
     // 初始化页面数据
-    initPageData() {
+    initPageData () {
       var _this = this,
         data = {
           page: _this.page
@@ -198,22 +207,22 @@
     }
 
     methods = {
-      hideAddress() {
+      hideAddress () {
         this.showAddress = true
         this.$apply()
       },
-      listenerCancel() {
+      listenerCancel () {
         this.shareImage = true
         this.$apply()
       },
       // 关闭设置提示（image）
-      hideOpenSet() {
+      hideOpenSet () {
         this.showOpenSet = true
         this.showMap = true
         this.$apply()
       },
       // 授权访问image
-      openSetting_image(e) {
+      openSetting_image (e) {
         let that = this
         this.$apply()
         if (e.detail.authSetting['scope.writePhotosAlbum']) {
@@ -243,7 +252,7 @@
           })
         }
       },
-      saveImage(type) {
+      saveImage (type) {
         var that = this
         console.log(that.invite_pic)
         wepy.downloadFile({
@@ -262,7 +271,7 @@
               },
               fail: () => {
                 wx.getSetting({
-                  success(res) {
+                  success (res) {
                     if (!res.authSetting['scope.writePhotosAlbum']) {
                       that.shareImage = true
                       that.showOpenSet = false
@@ -278,12 +287,12 @@
           }
         })
       },
-      modalChange2() {
+      modalChange2 () {
         this.hide = true
         this.message = {}
         this.$apply()
       },
-      info(item) {
+      info (item) {
         console.log(item)
         if (item.info) {
           this.hide = false
@@ -292,6 +301,10 @@
         if (item.type == 'other_rank') {
           this.shareImage = false
           this.invite_pic = item.invite_pic
+          this.other = {
+            other_openid: item.other_openid,
+            other_name: item.other_name
+          }
         }
         if (item.type == 'goods') {
           this.showAddress = false
@@ -303,10 +316,10 @@
         }
         this.$apply()
       },
-      goto(url) {
+      goto (url) {
         wx.navigateTo({url: url})
       },
-      conversion(item) {
+      conversion (item) {
         wx.showToast({
           title: item.name,
           icon: 'success',

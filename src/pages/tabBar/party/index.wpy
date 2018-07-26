@@ -20,9 +20,9 @@
             <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
           </view>
           <view class="weui-cells__title"></view>
-          <partyList :list.sync="list" :hideMessage.sync="hideMessage" wx:if="{{list.length != 0}}"></partyList>
-          <view wx:else>
-            <view class="font_28 black_6" style="margin-top: 36rpx">
+          <partyList :list.sync="list" :hideMessage.sync="hideMessage" ></partyList>
+          <view wx:if="{{hidelist}}" class="text-center">
+            <view class="font_28 black_6 box_animation" style="margin-top: 36rpx">
               暂无活动列表
             </view>
             <view class="clearfloat"></view>
@@ -80,6 +80,7 @@
       inputShowed: false,
       inputVal: '',
       new_notice_count: '',
+      hidelist: false,
       formId: ''
     }
 
@@ -198,6 +199,9 @@
             that.nav_active_browsed = true
           } else {
             that.nav_active = true
+          }
+          if (that.list.length == 0) {that.hidelist = true} else {
+            that.hidelist = false
           }
           that.page += 1
           that.$apply()

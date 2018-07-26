@@ -165,8 +165,8 @@
     <view style="height: 88rpx"></view>
     </view>
     <view class="next text-center">
-      <open-data type="userAvatarUrl"  mode="aspectFit" class="party_image flo_l" style="width: 100rpx;height: 100rpx;box-shadow: 1rpx 1rpx 12rpx #dedede;margin:10rpx 36rpx;"></open-data>
-
+      <image  src="{{avatar}}" class="active_user flo_l" background-size="cover" wx:if="{{active}}"/>
+      <open-data type="userAvatarUrl"  mode="aspectFit" class="active_user flo_l" wx:else></open-data>
       <view  class="btn_red font_26 flo_r" @tap="ensure" style="margin-right:12rpx;width: 180rpx;height: 108rpx;line-height: 108rpx;">保存</view>
     </view>
     </view>
@@ -224,6 +224,7 @@
           Business: [],
           show: false,
           Salaryshow: false,
+          avatar: '',
           work_text: '',
           WorkShow: false,
           DegreeText: '',
@@ -282,6 +283,7 @@
             success: ({code, data}) => {
               let result = data
               that.age = result.age
+              that.avatar = result.avatar
               that.weight = result.weight
               that.stature = result.stature
               that.graduate_school = result.graduate_school
@@ -618,5 +620,12 @@
   }
   .InputFocus{
     border: 1px solid red;
+  }
+  .active_user{
+    width: 100rpx;
+    height: 100rpx;
+    box-shadow: 1rpx 1rpx 12rpx #dedede;
+    margin:10rpx 36rpx;
+    border: 4rpx solid white;
   }
 </style>

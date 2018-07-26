@@ -163,4 +163,20 @@ view{
 .line_35{
   line-height:35rpx;
 }
+.box_animation{
+  margin: auto;
+  animation: active_v 1200ms 1 linear;
+  animation-fill-mode: forwards;
+  /*animation-delay:1s;*/
+}
+@keyframes active_v {
+  0%{
+    font-size: 10rpx;
+    transform:rotate(0deg);
+  }
+  100%{
+    font-size: 32rpx;
+    transform:rotate(360deg);
+  }
 
+}

@@ -40,7 +40,7 @@
             </view>
             <view class="font_24 white text-left flo_l" style="width: 60%;padding: 12rpx;">
               {{item.distance}}
-              <span>{{login_time}}前活跃</span>
+              <span>{{login_time}}</span>
             </view>
             <view class="font_28 white text-left flo_l"  wx:if="{{mylibs.marriage.name}}"  style="width: 60%;margin-left: 24rpx" @tap="gotofriends({{mylibs.marriage}})">
               由{{mylibs.marriage.name}}推荐加入福恋
@@ -48,7 +48,7 @@
             <block wx:if="{{mylibs.self != 1}}">
               <view class="font_32 white flo_r atten_btn">
                 <picker @change="bindPickerChange({{mylibs.id}})" value="{{index}}" range="{{array}}">
-                  ...
+                  <view>...</view>
                 </picker>
               </view>
               <view class="font_32 orange btn_red text-center flo_r atten {{paramet_v? 'atten_w' : ''}}" @tap="attention">
@@ -80,7 +80,7 @@
     </view>
     <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_marriage.belief != null}}">
       <span>信仰</span>
-      <span class="flo_r">{{profile_courtship.belief}}</span>
+      <span class="flo_r">{{profile_marriage.belief}}</span>
     </view>
     <view style="margin: 0 44rpx;" class="wx_Title" wx:if="{{profile_marriage.company != null}}">
       <span>公司名称</span>
@@ -207,6 +207,7 @@
             self.array = ['举报']
           }
           self.profile_marriage = data.profile_marriage
+          console.log(self.profile_marriage)
           let text = '前活跃'
           if (data.login_time) {
             if (data.login_time.day) {

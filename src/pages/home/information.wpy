@@ -48,7 +48,7 @@
             <block wx:if="{{mylibs.self != 1}}">
               <view class="font_32 white flo_r atten_btn">
                 <picker @change="bindPickerChange({{mylibs.id}})" value="{{index}}" range="{{array}}">
-                  ...
+                  <view>...</view>
                 </picker>
               </view>
               <view class="font_32 orange btn_red text-center flo_r atten {{paramet_v? 'atten_w' : ''}}" @tap="attention">

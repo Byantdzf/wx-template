@@ -25,7 +25,7 @@
   </view>
   <view class="weui-panel weui-panel_access">
     <view class="weui-navbar">
-      <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
+      <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick({{item}})">
         <view class="weui-navbar__title" >{{item}}</view>
       </view>
       <view class="weui-navbar__slider" style="width:{{sliderWidth}}px; left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
@@ -280,20 +280,12 @@
         this.page = 1
         this.getLibraries(this.inputVal)
       },
-      tabClick(e) {
+      tabClick(item, e) {
         this.sliderOffset = e.currentTarget.offsetLeft
         this.activeIndex = e.currentTarget.id
         this.page = 1
         console.log(this.activeIndex)
-        if (this.activeIndex == 1) {
-          this.title = '单身会'
-        } else if (this.activeIndex == 2) {
-          this.title = '预备婚恋'
-        } else if (this.activeIndex == 3) {
-          this.title = '个人成长'
-        } else {
-          this.title = '推荐'
-        }
+        this.title = item
         this.$apply()
         this.getLibraries()
       },

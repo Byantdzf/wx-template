@@ -10,8 +10,8 @@
   export default class extends wepy.app {
     config = {
       pages: [
-//        'pages/tabBar/home/index',
-        'pages/tabBar/home/indexV',
+        'pages/tabBar/home/index',
+        'pages/tabBar/home/index_copy',
         'pages/tabBar/party/index',
         'pages/tabBar/books/index',
         'pages/tabBar/users/index'
@@ -88,7 +88,7 @@
         backgroundColor: '#fff',
         borderStyle: 'black',
         list: [{
-          pagePath: 'pages/tabBar/home/indexV',
+          pagePath: 'pages/tabBar/home/index',
           selectedIconPath: './images/icon/map_active.png',
           iconPath: './images/icon/map.png',
           text: '首页'
