@@ -67,14 +67,14 @@ export default class ShareMessage extends wepy.mixin {
                     iv: iv,
                     encryptedData: encryptedData
                   }
-                  that.$post({url: service.infor, data}, {
-                    success: ({code, data}) => {
-                      that.openGid = data.openGId
-                      that.$apply()
-                    },
-                    fail: ({code, data}) => {},
-                    complete: () => { }
-                  })
+                  // that.$post({url: service.infor, data}, {
+                  //   success: ({code, data}) => {
+                  //     that.openGid = data.openGId
+                  //     that.$apply()
+                  //   },
+                  //   fail: ({code, data}) => {},
+                  //   complete: () => { }
+                  // })
                 },
                 fail: (res) => {
                   console.log('wepy.login.fail:', res)
