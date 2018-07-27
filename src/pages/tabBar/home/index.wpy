@@ -40,7 +40,7 @@
                      style="width: 38rpx;height: 38rpx;margin-right: 6rpx;margin-left: 6rpx;margin-top: 8rpx"></image>
         <image src='../../../images/icon/woman_v.png' wx:else class='ten_l flo_l'
                      style="width: 38rpx;height: 38rpx;margin-right: 6rpx;margin-left: 6rpx;margin-top: 8rpx"></image>
-        <view class="font_32 orange bold flo_l">{{friends.name_v}}
+        <view class="font_32 orange bold flo_l ellipsis_1" style="max-width: 158rpx;">{{friends.name_v}}
         </view>
         <view class="font_26 black_6 bold flo_l " style="margin: 6rpx 12rpx;">距离{{friends.distance}}千米</view>
         <!--<view class="font_26 black_6 bold flo_r " style="margin: 6rpx 12rpx;">推荐值：<span class="orange">{{friends.weight}}</span></view>-->
@@ -218,7 +218,7 @@
                     avatarUrl: data.user.avatar
                   }
                   that.getCenterLocation()
-                  that.updataMap()
+                  that.updataMap('updata')
                   wx.setStorageSync('userInfo', userInfo)
                 }
               }
@@ -230,7 +230,7 @@
         })
       }
       this.getCenterLocation()
-      this.updataMap()
+      this.updataMap('updata')
       this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
@@ -379,7 +379,7 @@
       console.log(that.markers)
       that.$apply()
     }
-    updataMap() {
+    updataMap(type) {
       let that = this
       that.myLong = wx.getStorageSync('myLong')
       that.myLat = wx.getStorageSync('myLat')
@@ -414,35 +414,36 @@
                 } else {
                   console.log(`uoyo`)
                   that.markers = wx.getStorageSync('markersNew')
-                  that.showfriend_weight()
                 }
               })
-              console.log(that.markers)
-              let markerId = wx.getStorageSync('markerId')
-              if (markerId) {
-                console.log('有值')
-                that.markers.forEach((item, index, arr) => {
-                  if (arr[index].id == markerId && arr[index].id !== 0) {
-                    that.friends = arr[index]
-                    that.polyline = [{
-                      points: [{
-                        longitude: that.myLong,
-                        latitude: that.myLat
-                      }, {
-                        longitude: arr[index].longitude,
-                        latitude: arr[index].latitude
-                      }],
-                      width: 2,
-                      arrowLine: true,
-                      dottedLine: true,
-                      color: '#FF0000'
-                    }]
+              that.showfriend_weight()
+              if(type !== 'move'){
+                console.log(that.markers)
+                let markerId = wx.getStorageSync('markerId')
+                if (markerId) {
+                  console.log('有值')
+                  that.markers.forEach((item, index, arr) => {
+                    if (arr[index].id == markerId && arr[index].id !== 0) {
+                      that.friends = arr[index]
+                      that.polyline = [{
+                        points: [{
+                          longitude: that.myLong,
+                          latitude: that.myLat
+                        }, {
+                          longitude: arr[index].longitude,
+                          latitude: arr[index].latitude
+                        }],
+                        width: 2,
+                        arrowLine: true,
+                        dottedLine: true,
+                        color: '#FF0000'
+                      }]
 //                    if (that.showModalBall == false) {
                       that.showfriend = true
                       that.doudun = true
                       let num = parseFloat(arr[index].weight) / 22 * 100
                       console.log(num)
-                      if (num < 0 || num == 30) {
+                      if (num < 0 || num == 0) {
                         that.weight = 1
                         that.$apply()
                       } else if (num > 0 && num < 30) {
@@ -459,14 +460,15 @@
                         that.$apply()
                       }
 //                    }
-                    that.doudun = true
-                    that.$apply()
-                    arr[index].height = arr[index].width = 48
-                  }
-                  if (arr[index].id !== markerId && arr[index].id !== 0) {
-                    arr[index].height = arr[index].width = 30
-                  }
-                })
+                      that.doudun = true
+                      that.$apply()
+                      arr[index].height = arr[index].width = 48
+                    }
+                    if (arr[index].id !== markerId && arr[index].id !== 0) {
+                      arr[index].height = arr[index].width = 30
+                    }
+                  })
+                }
               }
               that.$apply()
               that.noMoreList = false
@@ -491,7 +493,7 @@
             wx.setStorageSync('myLong', res.longitude)
             wx.setStorageSync('myLat', res.latitude)
             setTimeout(() => {
-              return that.updataMap()
+              return that.updataMap('updata')
             }, 500)
           }
           wx.setStorageSync('myLong', res.longitude)
@@ -700,7 +702,7 @@
           util.throttle(function () {
             // 添加回调处理函数的函数体
             console.log('测试回调')
-            that.updataMap()
+            that.updataMap('move')
           }, 1500, true)
         }
       },
@@ -732,7 +734,7 @@
               that.myLat = res.latitude
               that.myLong = res.longitude
               that.$apply()
-              that.updataMap()
+              that.updataMap('updata')
             },
             fail: function () {
             },
@@ -805,7 +807,7 @@
             that.doudun = true
             let num = parseFloat(arr[index].weight) / 22 * 100
             console.log(num)
-            if (num < 0) {
+            if (num < 0 || num == 0) {
               that.weight = 1
               that.$apply()
             } else if (num > 0 && num < 30) {

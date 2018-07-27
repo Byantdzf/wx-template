@@ -18,7 +18,7 @@
       <form bindsubmit="formSubmit" report-submit>
         <button formType="submit" class="btn" data-type="click">
           <view class="paylist"  wx:for="{{paylist}}" wx:key="*this">
-            <view wx:if="{{item.name == my_rank_name}}" class="model"></view>
+            <view wx:if="{{item.price < my_rank_price || item.price == my_rank_price}}" class="model"></view>
             <template is="msgItem" data="{{item}}" />
           </view>
         </button>
@@ -29,7 +29,7 @@
       <form bindsubmit="formSubmit" report-submit>
         <button formType="submit" class="btn" data-type="click">
           <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this" @tap="showmodel({{item}})">
-            <view wx:if="{{item.name == my_rank_name}}" class="model"></view>
+            <view wx:if="{{item.price < my_rank_price || item.price == my_rank_price}}" class="model"></view>
             <template is="msgItem" data="{{item}}" />
           </view>
         </button>
@@ -40,7 +40,7 @@
       <form bindsubmit="formSubmit" report-submit>
         <button formType="submit" class="btn" data-type="click">
           <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this" >
-            <view wx:if="{{item.name == my_rank_name}}" class="model"></view>
+            <view wx:if="{{item.price < my_rank_price || item.price == my_rank_price}}" class="model"></view>
             <template is="msgItem" data="{{item}}" />
           </view>
         </button>

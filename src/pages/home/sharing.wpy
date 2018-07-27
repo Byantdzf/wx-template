@@ -146,10 +146,22 @@
                 wx.switchTab({url: '/pages/tabBar/home/index'})
               }, 1000)
             } else if(data.invited && data.invited == 1){
-              console.log('adljkasd')
-              self.$showToast('邀请已被抢注')
-              self.showRegister = true
-              self.$apply()
+//              console.log('adljkasd')
+//              self.$showToast('')
+//              self.showRegister = true
+//              self.$apply()
+              wx.showModal({
+                title: '提示',
+                content: '邀请已被抢注',
+                confirmText: '返回首页',
+                success: function (res) {
+                  if (res.confirm) {
+                    wx.switchTab({url: '/pages/tabBar/home/index'})
+                  } else if (res.cancel) {
+                    console.log('用户点击取消')
+                  }
+                }
+              })
             } else {
               wx.showModal({
                 title: '提示',

@@ -3,7 +3,7 @@
     <view class="page__bd">
       <view class="weui-tab">
         <view class="weui-tab__content" >
-          <view class="weui-search-bar" >
+          <view class="weui-search-bar" style="position: fixed; left: 0; top: 0;width: 100%;z-index: 99999">
             <view class="weui-search-bar__form">
               <view class="weui-search-bar__box">
                 <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
@@ -24,13 +24,14 @@
     </view>
   </view>
   <view class="weui-panel weui-panel_access">
-    <view class="weui-navbar">
+    <view class="weui-navbar" style="position: fixed; left: 0; top: 95rpx;width: 100%;z-index: 99999">
       <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick({{item}})">
         <view class="weui-navbar__title" >{{item}}</view>
       </view>
       <view class="weui-navbar__slider" style="width:{{sliderWidth}}px; left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
       <view  class="library_num {{activeIndex == 1 ? 'library_member' : ''}} {{activeIndex == 2 ? 'library_admin' : ''}}">{{library_num}}</view>
     </view>
+    <view class="weui-cells__title" style="height: 64rpx;"></view>
     <view style="width: 100%;height: 100rpx"></view>
     <view class="weui-panel__bd">
       <view  wx:for="{{members}}" wx:key="*this" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
