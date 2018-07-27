@@ -7,7 +7,13 @@
             {{item.created_at}}
           </view>
         </view>
-        <view class="font_28 flo_l black_6 ellipsis_1 bold" style="margin-left: 34rpx;width: 96%;margin-bottom: -22rpx;">{{item.message}}{{item.amount}}福分</view>
+        <view class="font_28 flo_r black_6 ellipsis_1 bold" style="margin-left: 34rpx;width: 64%;text-align: right;" wx:if="{{item.type == 'used'}}">{{item.other_user_name}}</view>
+        <view class="font_28 flo_r black_6 ellipsis_1 bold" style="margin-left: 34rpx;width: 64%;text-align: right;" wx:if="{{item.type == 'gained'}}">{{item.other_user_name}}</view>
+        <view class="font_28 flo_l black_6 ellipsis_1 bold text-right" style="margin-left: 34rpx;">{{item.message}}</view>
+        <!--<view class="font_28 flo_r black_6 ellipsis_1 bold text-right" >{{item.message}}</view>-->
+        <view class="clearfloat"></view>
+        <view class="font_28 flo_l black_6 bold ellipsis_1" style="margin-left: 34rpx;margin-bottom: -54rpx; width: 48%" wx:if="{{item.type == 'used'}}">消费 <span class="orange">{{item.amount}}</span> 福分</view>
+        <view class="font_28 flo_l black_6 bold ellipsis_1" style="margin-left: 34rpx;margin-bottom: -54rpx; width: 48%" wx:if="{{item.type == 'gained'}}">获得 <span class="orange">{{item.amount}}</span> 福分</view>
         <view  class="font_28 flo_r ellipsis_1" style="margin-left: 12rpx;">
           剩余 <span class="font_36 orange  bold">{{item.value}}</span> 福分
         </view>

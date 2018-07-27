@@ -308,7 +308,6 @@
         if (that.markers[i].weight > j) {
           j = that.markers[i].weight
           index = i
-//          console.log(j)
         }
       }
 //      console.log(that.markers[index])
@@ -415,6 +414,7 @@
                 } else {
                   console.log(`uoyo`)
                   that.markers = wx.getStorageSync('markersNew')
+                  that.showfriend_weight()
                 }
               })
               console.log(that.markers)
