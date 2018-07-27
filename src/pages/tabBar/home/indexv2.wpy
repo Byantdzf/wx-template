@@ -199,6 +199,9 @@
     }
     onLoad() {
       this.getSystem()
+      wx.showShareMenu({
+        withShareTicket: true
+      })
     }
 
     onShow() {

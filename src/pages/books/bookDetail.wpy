@@ -68,6 +68,9 @@
       this.url = decodeURIComponent(e.url)
       this.from_openid = wx.getStorageSync('openid')
       this.$apply()
+      wx.showShareMenu({
+        withShareTicket: true
+      })
     }
 
     onPullDownRefresh() {
