@@ -50,7 +50,7 @@ export default class ShareMessage extends wepy.mixin {
         success: function(res) {
           let shareTickets = res.shareTickets;
           console.log(res)
-          if (shareTickets.length == 0) {
+          if (!shareTickets) {
             return false
           }
           wx.getShareInfo({
@@ -69,13 +69,11 @@ export default class ShareMessage extends wepy.mixin {
                   }
                   that.$post({url: service.infor, data}, {
                     success: ({code, data}) => {
-                      console.log('群')
                       that.openGid = data.openGId
                       that.$apply()
-                      debugger
                     },
                     fail: ({code, data}) => {},
-                    complete: () => { this.loading = false }
+                    complete: () => { }
                   })
                 },
                 fail: (res) => {

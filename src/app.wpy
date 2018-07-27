@@ -11,7 +11,7 @@
     config = {
       pages: [
         'pages/tabBar/home/index',
-        'pages/tabBar/home/index_copy',
+        'pages/tabBar/home/indexv2',
         'pages/tabBar/party/index',
         'pages/tabBar/books/index',
         'pages/tabBar/users/index'
@@ -224,7 +224,51 @@
           }
         })
       }
+      if (options.scene == 1044) {
+        this.openshareTicket(options)
+      }
     }
+
+    openshareTicket(options){
+      wx.getShareInfo({
+        shareTicket: options.shareTicket,
+        success: function (res) {
+          let encryptedData = res.encryptedData
+          let iv = res.iv
+          let code = ''
+          wepy.login({
+            success: (res) => {
+              code = res.code
+              let data = {
+                code: code,
+                iv: iv,
+                encryptedData: encryptedData
+              }
+              console.log(service.infor)
+              console.log(this)
+              wx.request({
+                url: service.infor,
+                header: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                method: 'POST',
+                data: data,
+                success: function (res) {
+                  let data = res.data.data
+                  wx.setStorageSync('openGId', data.openGId)
+                  console.log(data)
+//                  debugger
+                }
+              })
+            },
+            fail: (res) => {
+              console.log('wepy.login.fail:', res)
+            }
+          })
+        }
+      })
+    }
+
     startWebSocket () {
       let that = this
       wx.request({

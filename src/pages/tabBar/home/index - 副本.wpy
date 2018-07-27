@@ -1,8 +1,7 @@
 <template>
   <view class="map">
-    <!--<Message :title.sync="title" ></Message>-->
-    <map id="map" longitude="{{myLong}}" latitude="{{myLat}}" scale="13" markers="{{markers}}" @markertap="markertap"  @tap="hideFriend"
-         @regionchange="regionchange" show-location  wx:if="{{showMap}}" style="width: 100%; height: 100vh;"   polyline="{{polyline}}">
+    <map id="map" longitude="{{myLong}}" latitude="{{myLat}}" scale="13" markers="{{markers}}" @markertap="markertap_v"
+         @regionchange="regionchange" show-location  wx:if="{{showMap}}" style="width: 100%; height:{{height}};"   polyline="{{polyline}}">
       <cover-view class='btn' @tap="showModal_v"
                   style="background: white;width: 580rpx;position: absolute;right: 8%;top: 22rpx;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3">
         <cover-image src='../../../images/icon/share_active.png' class='ten_l flo_l'
@@ -10,89 +9,70 @@
         <cover-view class="font_32 orange bold" >赶紧邀请好友，一起来寻找"Ta"吧！</cover-view>
       </cover-view>
       <cover-view class='btn'
-                  style="background: white;width: 200rpx;position: absolute;right: 0;bottom: 18%;padding: 12rpx;">
+                  style="background: white;width: 200rpx;position: absolute;right: 0;bottom: 10%;padding: 12rpx;">
         <cover-image src='../../../images/icon/position.png' @tap="moveToLocation" class='ten_l flo_l'
                      style="width: 62rpx;height: 62rpx;margin-right: 22rpx;"></cover-image>
         <cover-image src='../../../images/icon/search.png' @tap="goto('/pages/home/search')" class='code flo_l'
                      style="width: 68rpx;height: 68rpx;"></cover-image>
       </cover-view>
-      <cover-view class='btn' overflow-x="scrol"
-                  style="background: white;width: 640rpx; overflow: scroll; position: absolute;right: 5%;bottom: 2%;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3"
-                  wx:if="{{showfriend}}" @tap="gotofriends({{friends}})">
-        <cover-view style="padding-bottom: 12rpx">
-          <cover-image src='{{friends.avatar}}' class='ten_l flo_l'
-                       style="width: 78rpx;height: 78rpx;margin-right: 22rpx;border-radius: 50%"></cover-image>
-          <cover-view class="font_32 orange bold">{{friends.name_v}}
-            <cover-view class="font_26 black_6 bold flo_r">{{friends.distance}}千米</cover-view>
-          </cover-view>
-          <cover-image src='../../../images/icon/man_v.png' wx:if="{{friends.sex  == '1'}}" class='ten_l flo_l'
-                       style="width: 38rpx;height: 38rpx;margin-right: 22rpx;margin-top: 8rpx"></cover-image>
-          <cover-image src='../../../images/icon/woman_v.png' wx:else class='ten_l flo_l'
-                       style="width: 38rpx;height: 38rpx;margin-right: 22rpx;margin-top: 8rpx"></cover-image>
-        </cover-view>
-
-        <cover-view style="padding: 6rpx;">
-          <cover-view style="width: 100%;height: 2rpx;background: #d4d4d4;"></cover-view>
-          <cover-view class="flo_r font_26 orange" style="margin-top: 12rpx;">查看"Ta"</cover-view>
-          <cover-image src='../../../images/icon/love.png' class='ten_l flo_r'
-                       style="width: 38rpx;height: 38rpx;margin-right: 8rpx;margin-top: 6rpx"></cover-image>
-        </cover-view>
-      </cover-view>
-      <cover-view class="commodity_screen" bindtap="hideModalBall" wx:if="{{showModalBall}}"></cover-view>
-      <cover-view class="commodity_attr_box" wx:if="{{showModalBall}}">
-        <cover-view class="weui-cell weui-cell_access text-center" hover-class="weui-cell_active" @tap="gotoV('/pages/tabBar/users/index')">
-          <cover-view class="weui-cell__hd font_32 red" style="margin: auto">
-            <cover-image class="flo_l doudun"  src="../../../images/icon/bell.png"></cover-image>
-            <cover-view class="flo_l" style="margin-top: 6rpx;">你有新的消息！点击查看</cover-view>
-            <cover-image class="flo_r" src="http://images.ufutx.com/201807/24/90e9a518fe3c67bfcf497c1655f5a019.png"
-            style="vertical-align: middle;width:96rpx; height: 96rpx;margin-top: -22rpx;"></cover-image>
-          </cover-view>
-        </cover-view>
-      </cover-view>
-      <!--style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>-->
-      <!--<cover-view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">-->
-        <!--<cover-view class="weui-cells weui-cells_after-title">-->
-          <!--<cover-view class="weui-cell weui-cell_access" hover-class="weui-cell_active"-->
-                      <!--@tap="goto('/pages/home/sharePay')">-->
-            <!--<cover-view class="weui-cell__hd">-->
-              <!--<cover-image src="../../../images/icon/pay_v.png"-->
-                           <!--style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>-->
-            <!--</cover-view>-->
-            <!--<cover-view class="weui-cell__bd font_32">邀请Ta并替Ta支付</cover-view>-->
-            <!--&lt;!&ndash;<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>&ndash;&gt;-->
-          <!--</cover-view>-->
-          <!--<cover-view class="weui-cell weui-cell_access" hover-class="weui-cell_active">-->
-            <!--<cover-view class="weui-cell__hd">-->
-              <!--<cover-image src="../../../images/icon/weixin.png"-->
-                           <!--style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>-->
-            <!--</cover-view>-->
-            <!--<cover-view class="weui-cell__bd">-->
-              <!--<button open-type="share" class="btn font_32" style="position: relative;z-index: 99999">发送给朋友或微信群</button>-->
-            <!--</cover-view>-->
-            <!--&lt;!&ndash;<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>&ndash;&gt;-->
-          <!--</cover-view>-->
-          <!--<cover-view class="weui-cell weui-cell_access" hover-class="weui-cell_active">-->
-            <!--<cover-view class="weui-cell__hd">-->
-              <!--<cover-image src="../../../images/icon/friend_v.png"-->
-                           <!--style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></cover-image>-->
-            <!--</cover-view>-->
-            <!--<cover-view class="weui-cell__bd font_32" @tap="shareFriend">生成卡片到朋友圈分享</cover-view>-->
-            <!--&lt;!&ndash;<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>&ndash;&gt;-->
-          <!--</cover-view>-->
-        <!--</cover-view>-->
-      <!--</cover-view>-->
-      <!--<cover-view class="commodity_screen" @tap="saveImage" wx:if="{{showModal}}"></cover-view>-->
-      <!--<cover-view animation="{{animationImage}}" class="commodity_attr_box text-center" wx:if="{{showModal}}"-->
-                  <!--style="background: none !important;height: 100% !important;">-->
-        <!--<cover-image style="position: relative;left: 0%;top:10%"-->
-                     <!--src="http://local-pictures.img-cn-shenzhen.aliyuncs.com/201806/14/wx53cf66d72649eb5a.o6zAJs2lf_SH4K2plnWTlsSfhR70.L2cteRZyEIJP66cb1b4030bf3cd564f3686c1c01fd39.png"-->
-                     <!--class="shaerImage"></cover-image>-->
-        <!--<cover-view-->
-          <!--style="position: relative;left: 42% ;z-index: 999999; top: 10%;color: orange;background: white;width: 120rpx;height: 68rpx;margin-top: 22rpx;line-height: 68rpx;border-radius: 12rpx;box-shadow: 1rpx 1rpx 12rpx #96d3d0"-->
-          <!--@tap.stop="saveImage('save')">保存-->
-        <!--</cover-view>-->
-      <!--</cover-view>-->
+      <cover-view class="commodity_screen" style="height: {{height}}" bindtap="hideModalBall" wx:if="{{showModalBall}}"></cover-view>
     </map>
+    <view class="commodity_screen" bindtap="hideModalBall" wx:if="{{showModalBall}}"></view>
+    <view class="commodity_attr_box" wx:if="{{showModalBall}}" bindtap="gotoV('/pages/tabBar/users/index')">
+      <view class="weui-cell weui-cell_access text-center" hover-class="weui-cell_active" >
+        <view class="weui-cell__hd font_32 red" style="margin: auto">
+          <image class="flo_l" style="width:48rpx; height: 48rpx;margin-right: 6rpx;"  src="../../../images/icon/bell.png"></image>
+          <view class="flo_l" style="margin-top: 6rpx;">你有新的消息！点击查看</view>
+          <image class="flo_r" src="http://images.ufutx.com/201807/24/90e9a518fe3c67bfcf497c1655f5a019.png"
+                       style="vertical-align: middle;width:96rpx; height: 96rpx;margin-top: -22rpx;"></image>
+        </view>
+      </view>
+    </view>
+    <view class="btn {{doudun ? 'doudun' : ''}}"
+          style="background: white;width: 640rpx; position: absolute;right: 5%;bottom: 1%;padding: 14rpx;border-radius: 12rpx; box-shadow: 1rpx 1rpx 12rpx #d3d3d3; "
+          wx:if="{{showfriend}}" @tap="gotofriends({{friends}})">
+      <view style="padding-bottom: 12rpx; position: relative;">
+        <image src="http://images.ufutx.com/201807/25/50aaf555e5c8f290ad5047fddb177f32.png" wx:if="{{friends.sex  == '1'}}" mode="aspectFit" style="width: 118rpx;height: 118rpx;border-radius: 50%;position: absolute;left: -16rpx;top: -17rpx;" class="flo_l"></image>
+        <image src="http://images.ufutx.com/201807/25/5dac356f94066571d61dcfe654a505ae.png" wx:else mode="aspectFit" style="width: 156rpx;height: 156rpx;border-radius: 50%;position: absolute;left: -20rpx;top: -17rpx;" class="flo_l"></image>
+        <image src='{{friends.avatar}}' class='ten_l flo_l'
+                     style="width: 82rpx;height: 82rpx;margin-right: 22rpx;border-radius: 50%"></image>
+        <image src='../../../images/icon/man_v.png' wx:if="{{friends.sex  == '1'}}" class='ten_l flo_l'
+                     style="width: 38rpx;height: 38rpx;margin-right: 6rpx;margin-left: 6rpx;margin-top: 8rpx"></image>
+        <image src='../../../images/icon/woman_v.png' wx:else class='ten_l flo_l'
+                     style="width: 38rpx;height: 38rpx;margin-right: 6rpx;margin-left: 6rpx;margin-top: 8rpx"></image>
+        <view class="font_32 orange bold flo_l ellipsis_1" style="max-width: 158rpx;">{{friends.name_v}}
+        </view>
+        <view class="font_26 black_6 bold flo_l " style="margin: 6rpx 12rpx;">距离{{friends.distance}}千米</view>
+        <!--<view class="font_26 black_6 bold flo_r " style="margin: 6rpx 12rpx;">推荐值：<span class="orange">{{friends.weight}}</span></view>-->
+        <view class="font_26 black_6 bold flo_r " style="width: 120rpx;">推荐值：
+          <text  class="orange text-right bold font_28" style="margin-left: 22rpx;">{{friends.weight}}</text>
+          <view style="width:20rpx; height:140rpx; border-radius:10rpx; background-color:#ddd; position:relative;" class="flo_r">
+            <view style="width:20rpx; border-radius:10rpx; background-color:skyblue; position:absolute; left:0; bottom:0;" class="{{doudun ? 'weight' + weight : ''}}"></view>
+          </view>
+        </view>
+        <view class="clearfloat"></view>
+        <form bindsubmit="formSubmit" report-submit >
+            <view style="margin-top: -110rpx;" class="flo_l">
+              <view class="font_26 black_6 bold flo_l" style="margin: 12rpx;">照片墙：</view>
+              <block wx:if="{{friends.photos.length != 0}}">
+                <view class="font_26 black_6 bold flo_l" style="margin: 6rpx 12rpx;" wx:for="{{friends.photos}}" wx:key="*this">
+                  <image src='{{item}}' wx:if="{{index < 3}}" mode="aspectFit"   class='ten_l flo_l'
+                         style="width: 88rpx;height: 88rpx;margin-right: 22rpx;margin-top: 8rpx;box-shadow: 1rpx 1rpx 12rpx #d3d3d3"></image>
+                </view>
+              </block>
+              <block wx:else>
+                <button formType="submit" class="btn black_6 font_28" style="margin-top: -6rpx;">
+                  暂无照片
+                </button>
+              </block>
+              <view class="clearfloat"></view>
+            </view>
+        </form>
+      </view>
+    </view>
+    <view wx:if="{{showModalStatus}}">
+      <image src="http://images.ufutx.com/201807/25/ab4c6916343e60d6f672957383b8add3.png" style="width: 100%; height:{{height}};"></image>
+    </view>
     <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
     <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
       <view class="weui-cells weui-cells_after-title">
@@ -103,7 +83,6 @@
                          style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
           </view>
           <view class="weui-cell__bd font_32">邀请Ta并替Ta支付</view>
-          <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
         </view>
         <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__hd">
@@ -113,7 +92,6 @@
           <view class="weui-cell__bd">
             <button open-type="share" class="btn font_32" style="position: relative;z-index: 99999">发送给朋友或微信群</button>
           </view>
-          <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
         </view>
         <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
           <view class="weui-cell__hd">
@@ -121,7 +99,6 @@
                          style="margin-right: 5px;vertical-align: middle;width:32px; height: 32px;"></image>
           </view>
           <view class="weui-cell__bd font_32" @tap="shareFriend">生成卡片到朋友圈分享</view>
-          <!--<view class="weui-cell__ft weui-cell__ft_in-access">{{user.borrows_count}}本</view>-->
         </view>
       </view>
     </view>
@@ -133,12 +110,6 @@
       <image style="position: relative;left: -3%;top:0%;box-shadow: 1rpx 1rpx 12rpx #d3d3d3;" mode="aspectFit"
              src="{{shareimage}}"
                    class="shaerImage"></image>
-      <!--<view style="position: absolute;left: 40%;bottom: 0;background: #FAFAFC; z-index: 999999;">-->
-        <!--<cover-view-->
-          <!--style="position: relative;left: 42% ;z-index: 999999; top: 10%;color: orange;background: white;width: 120rpx;height: 68rpx;margin-top: 22rpx;line-height: 68rpx;border-radius: 12rpx;box-shadow: 1rpx 1rpx 12rpx #96d3d0"-->
-          <!--@tap.stop="saveImage('save')">保存-->
-        <!--</cover-view>-->
-      <!--</view>-->
     </modal>
     <modal  hidden="{{showOpenSet}}"
             no-confirm
@@ -175,10 +146,9 @@
   import ShareMessage from '../../../mixins/ShareMessage'
   import { service } from '../../../config.js'
   import message from '../../../components/message'
-
   const util = require('../../../libs/util.js')
 
-  export default class index_copy extends wepy.page {
+  export default class index extends wepy.page {
     mixins = [base, http, user, ShareMessage]
     config = {
       navigationBarTitleText: '相遇地图',
@@ -198,7 +168,7 @@
       distance_library: {},
       text: '',
       height: '',
-//      doudun: true,
+      doudun: false,
       showModalStatus: false,
       showModal: false,
       showImage: true,
@@ -221,24 +191,24 @@
       updataAvatar: '',
       animationImage: {},
       markersNew: [],
+      weight: 0,
       showModalBall: false
     }
     components = {
       Message: message
     }
-
-    onLoad () {
+    onLoad() {
       this.getSystem()
     }
 
-    onShow () {
+    onShow() {
       let that = this
       this.mapCtx = wx.createMapContext('map')
       let token = wx.getStorageSync('token')
       if (!token) {
         return wepy.login({
           success: (res) => {
-            this.$post({url: service.login, data: {code: res.code}}, {
+            this.$post({ url: service.login, data: {code: res.code} }, {
               success: ({code, data}) => {
                 if (data.token) {
                   wx.setStorageSync('token', data.token)
@@ -248,7 +218,7 @@
                     avatarUrl: data.user.avatar
                   }
                   that.getCenterLocation()
-                  that.updataMap()
+                  that.updataMap('updata')
                   wx.setStorageSync('userInfo', userInfo)
                 }
               }
@@ -260,7 +230,7 @@
         })
       }
       this.getCenterLocation()
-      this.updataMap()
+      this.updataMap('updata')
       this.initPageData()
       this.$parent.getTracker(this.$root.$name, this.config.navigationBarTitleText)
     }
@@ -268,28 +238,26 @@
     onReady () {
 
     }
-
-    getSystem (type) {
+    getSystem(type) {
       let that = this
       wx.getSystemInfo({
         success: function (res) {
 //          if (type) {
 //            that.height = res.windowHeight - 156 + 'px'
 //          } else {
-          that.height = res.windowHeight + 'px'
+          that.height = res.windowHeight - 130 + 'px'
 //          }
           that.$apply()
         }
       })
     }
-
-    initPageData () {
+    initPageData() {
       this.$get({url: service.newnotices}, {
         success: ({code, data}) => {
           this.new_notice_count = data.new_notice_count
           if (this.new_notice_count != 0) {
             this.vibrateLong()
-            this.showfriend = false
+//            this.showfriend = false
             this.showModalBall = true
             this.$apply()
             wx.showTabBarRedDot({
@@ -307,14 +275,13 @@
         }
       })
     }
-
     // for下载头像本地路径
-    downloadAvatar (image, item) {
+    downloadAvatar(image, item) {
       let that = this
       that.markers = []
       wx.downloadFile({
         url: image,
-        success: function (res) {
+        success: function(res) {
           if (res.statusCode === 200) {
             if (!wx.getStorageSync(item.rate_user.id + '_avatar')) {
               wx.setStorageSync(item.rate_user.id + '_avatar', res.tempFilePath)
@@ -324,9 +291,8 @@
         }
       })
     }
-
     // 手机震动
-    vibrateLong () {
+    vibrateLong() {
       wx.vibrateLong({
         success: () => {
           console.log('0000')
@@ -334,6 +300,57 @@
       })
     }
 
+    showfriend_weight () {
+      let that = this
+      let j = that.markers[0].weight,
+        index = 0
+      for (var i = 1; i < that.markers.length; i++) {
+        if (that.markers[i].weight > j) {
+          j = that.markers[i].weight
+          index = i
+        }
+      }
+//      console.log(that.markers[index])
+//      return j;
+      that.friends = that.markers[index]
+      that.polyline = [{
+        points: [{
+          longitude: that.myLong,
+          latitude: that.myLat
+        }, {
+          longitude: that.markers[index].longitude,
+          latitude: that.markers[index].latitude
+        }],
+        width: 2,
+        arrowLine: true,
+        dottedLine: true,
+        color: '#FF0000'
+      }]
+//      if (that.showModalBall == false) {
+        that.showfriend = true
+        that.doudun = true
+        let num = parseFloat(that.markers[index].weight) / 22 * 100
+        console.log(num)
+        if (num < 0) {
+          that.weight = 1
+          that.$apply()
+        } else if (num > 0 && num < 30) {
+          that.weight = 2
+          that.$apply()
+        } else if (num > 30 && num < 60) {
+          that.weight = 3
+          that.$apply()
+        } else if (num > 60 && num < 90) {
+          that.weight = 4
+          that.$apply()
+        } else if (num > 90) {
+          that.weight = 5
+          that.$apply()
+        }
+//      }
+      that.markers[index].height = that.markers[index].width = 48
+      that.$apply()
+    }
     // for渲染标注markers
     renderMark (item, image, size) {
       console.log(item)
@@ -341,7 +358,7 @@
       if (wx.getStorageSync('markersNew')) {
         that.markersNew = wx.getStorageSync('markersNew')
       }
-      that.markersNew.push({
+      that.markersNew.unshift({
         iconPath: image,
         id: item.rate_user.id,
         latitude: item.rate_user.location_latitude,
@@ -352,16 +369,17 @@
         avatar: item.rate_user.avatar,
         width: size,
         distance: item.rate_user.distance,
-        height: size
+        photos: item.rate_user.photos,
+        height: size,
+        weight: parseFloat(item.weight)
       })
       wx.setStorageSync('markersNew', that.markersNew)
       that.markers = that.markersNew
+      that.showfriend_weight()
       console.log(that.markers)
       that.$apply()
     }
-
-    updataMap () {
-//      let token = wx.getStorageSync('token')
+    updataMap(type) {
       let that = this
       that.myLong = wx.getStorageSync('myLong')
       that.myLat = wx.getStorageSync('myLat')
@@ -369,7 +387,7 @@
         return
       }
       that.mapCtx.getRegion({
-        success: function (res) {
+        success: function(res) {
           console.log('缩放')
           that.southwest = res.southwest
           that.northeast = res.northeast
@@ -398,33 +416,59 @@
                   that.markers = wx.getStorageSync('markersNew')
                 }
               })
-              console.log(that.markers)
-              let markerId = wx.getStorageSync('markerId')
-              if (markerId) {
-                console.log('有值')
-                that.markers.forEach((item, index, arr) => {
-                  if (arr[index_copy].id == markerId && arr[index_copy].id !== 0) {
-                    that.friends = arr[index_copy]
-                    that.polyline = [{
-                      points: [{
-                        longitude: that.myLong,
-                        latitude: that.myLat
-                      }, {
-                        longitude: arr[index_copy].longitude,
-                        latitude: arr[index_copy].latitude
-                      }],
-                      width: 2,
-                      arrowLine: true,
-                      dottedLine: true,
-                      color: '#FF0000'
-                    }]
-                    if (that.showModalBall == false) {
+              that.showfriend_weight()
+              if(type !== 'move'){
+                console.log(that.markers)
+                let markerId = wx.getStorageSync('markerId')
+                if (markerId) {
+                  console.log('有值')
+                  that.markers.forEach((item, index, arr) => {
+                    if (arr[index].id == markerId && arr[index].id !== 0) {
+                      that.friends = arr[index]
+                      that.polyline = [{
+                        points: [{
+                          longitude: that.myLong,
+                          latitude: that.myLat
+                        }, {
+                          longitude: arr[index].longitude,
+                          latitude: arr[index].latitude
+                        }],
+                        width: 2,
+                        arrowLine: true,
+                        dottedLine: true,
+                        color: '#FF0000'
+                      }]
+//                    if (that.showModalBall == false) {
                       that.showfriend = true
+                      that.doudun = true
+                      let num = parseFloat(arr[index].weight) / 22 * 100
+                      console.log(num)
+                      if (num < 0 || num == 0) {
+                        that.weight = 1
+                        that.$apply()
+                      } else if (num > 0 && num < 30) {
+                        that.weight = 2
+                        that.$apply()
+                      } else if (num > 30&& num < 60) {
+                        that.weight = 3
+                        that.$apply()
+                      } else if (num > 60 && num < 90) {
+                        that.weight = 4
+                        that.$apply()
+                      } else if (num > 90) {
+                        that.weight = 5
+                        that.$apply()
+                      }
+//                    }
+                      that.doudun = true
+                      that.$apply()
+                      arr[index].height = arr[index].width = 48
                     }
-                    that.$apply()
-                    arr[index_copy].height = arr[index_copy].width = 48
-                  }
-                })
+                    if (arr[index].id !== markerId && arr[index].id !== 0) {
+                      arr[index].height = arr[index].width = 30
+                    }
+                  })
+                }
               }
               that.$apply()
               that.noMoreList = false
@@ -438,19 +482,18 @@
         }
       })
     }
-
-    getCenterLocation () {
+    getCenterLocation() {
       let that = this
       wx.getLocation({
         type: 'gcj02',
-        success: function (res) {
+        success: function(res) {
           that.myLong = res.longitude
           that.myLat = res.latitude
           if (!wx.getStorageSync('myLong')) {
             wx.setStorageSync('myLong', res.longitude)
             wx.setStorageSync('myLat', res.latitude)
             setTimeout(() => {
-              return that.updataMap()
+              return that.updataMap('updata')
             }, 500)
           }
           wx.setStorageSync('myLong', res.longitude)
@@ -464,12 +507,8 @@
         }
       })
     }
-
     methods = {
-      hideFriend () {
-        this.showfriend = false
-      },
-      onShareAppMessage (res) {
+      onShareAppMessage(res) {
         let that = this
         if (that.from_openid == '') {
           that.from_openid = wx.getStorageSync('openid')
@@ -513,7 +552,7 @@
         }
       },
       // 生成卡片分享
-      shareFriend () {
+      shareFriend() {
         this.$showLoading('加载中...')
         this.showMap = false
         this.showImage = false
@@ -534,7 +573,7 @@
         }.bind(this), 200)
         wx.hideLoading()
       },
-      saveImage (type) {
+      saveImage(type) {
         var that = this
 //        if (type) {
         wepy.downloadFile({
@@ -554,7 +593,7 @@
               },
               fail: () => {
                 wx.getSetting({
-                  success (res) {
+                  success(res) {
                     if (!res.authSetting['scope.writePhotosAlbum']) {
                       that.showImage = true
                       that.showOpenSet = false
@@ -570,7 +609,7 @@
           }
         })
       },
-      showModal_v () {
+      showModal_v() {
         // 显示遮罩层
         this.showMap = false
         var animation = wx.createAnimation({
@@ -597,7 +636,7 @@
           }
         })
       },
-      hideModal () {
+      hideModal() {
         // 隐藏遮罩层
         this.showMap = true
         var animation = wx.createAnimation({
@@ -616,7 +655,7 @@
           this.$apply()
         }.bind(this), 200)
       },
-      hideModalBall () {
+      hideModalBall() {
         // 隐藏遮罩层
         this.showMap = true
         var animation = wx.createAnimation({
@@ -634,7 +673,7 @@
           this.$apply()
         }.bind(this), 200)
       },
-      gotofriends (item) {
+      gotofriends(item) {
         console.log(item)
         let url = ''
         if (item.type == 'single') {
@@ -644,45 +683,43 @@
         }
         wx.navigateTo({url: url})
       },
-      goto (url) {
+      goto(url) {
         wx.navigateTo({url: url})
       },
-      gotoV (url) {
+      gotoV(url) {
         wx.switchTab({url: url})
       },
-      moveToLocation () {
+      moveToLocation() {
         this.mapCtx.moveToLocation()
         if (!this.myLat) {
           this.hide = true
           this.$apply()
         }
       },
-      regionchange (e) {
+      regionchange(e) {
         let that = this
-//        console.log(e.type, 'aajsksalj')
-//        if (!this.showLoad) {
         if (e.type == 'begin') {
           util.throttle(function () {
             // 添加回调处理函数的函数体
             console.log('测试回调')
-            that.updataMap()
+            that.updataMap('move')
           }, 1500, true)
         }
       },
       // 关闭图片下载显示
-      listenerCancel () {
+      listenerCancel() {
         this.showImage = true
         this.showMap = true
         this.$apply()
       },
       // 关闭设置提示（image）
-      hideOpenSet () {
+      hideOpenSet() {
         this.showOpenSet = true
         this.showMap = true
         this.$apply()
       },
       // 授权地理位置
-      openSetting_address (e) {
+      openSetting_address(e) {
         let that = this
         this.$apply()
         if (e.detail.authSetting['scope.userLocation']) {
@@ -697,7 +734,7 @@
               that.myLat = res.latitude
               that.myLong = res.longitude
               that.$apply()
-              that.updataMap()
+              that.updataMap('updata')
             },
             fail: function () {
             },
@@ -707,7 +744,7 @@
         }
       },
       // 授权访问image
-      openSetting_image (e) {
+      openSetting_image(e) {
         let that = this
         this.$apply()
         if (e.detail.authSetting['scope.writePhotosAlbum']) {
@@ -737,81 +774,62 @@
           })
         }
       },
-      markertap (e) {
+      markertap_v(e) {
         let that = this
-        console.log(e)
-        console.log(e.markerId)
-        console.log(that.markers)
+        that.doudun = false
+        that.$apply()
+        let markerId = e.markerId
         wx.setStorageSync('markerId', e.markerId)
-
         that.markers.forEach((item, index, arr) => {
-          if (arr[index_copy].id == e.markerId && arr[index_copy].id !== 0) {
+          if (arr[index].id == markerId) {
+            console.log(arr[index])
+            console.log(index)
+            console.log(that.markers)
+            that.$log(arr[index].id)
             that.polyline = [{
               points: [{
                 longitude: that.myLong,
                 latitude: that.myLat
               }, {
-                longitude: arr[index_copy].longitude,
-                latitude: arr[index_copy].latitude
+                longitude: arr[index].longitude,
+                latitude: arr[index].latitude
               }],
               width: 2,
               arrowLine: true,
               dottedLine: true,
               color: '#FF0000'
             }]
-            arr[index_copy].height = arr[index_copy].width = 48
-            that.friends = arr[index_copy]
-            that.markers.push(arr[index_copy])
-            that.markers.splice(index_copy, 1)
+            arr[index].height = arr[index].width = 48
+            that.friends = arr[index]
+            that.markers.push(arr[index])
+            that.markers.splice(index, 1)
             that.showfriend = true
+            that.doudun = true
+            let num = parseFloat(arr[index].weight) / 22 * 100
+            console.log(num)
+            if (num < 0 || num == 0) {
+              that.weight = 1
+              that.$apply()
+            } else if (num > 0 && num < 30) {
+              that.weight = 2
+              that.$apply()
+            } else if (num > 30&& num < 60) {
+              that.weight = 3
+              that.$apply()
+            } else if (num > 60 && num < 90) {
+              that.weight = 4
+              that.$apply()
+            } else if (num > 90) {
+              that.weight = 5
+              that.$apply()
+            }
+            console.log(that.weight)
             that.$apply()
           }
-          if (arr[index_copy].id !== e.markerId && arr[index_copy].id !== 0) {
-            arr[index_copy].height = arr[index_copy].width = 30
+          if (arr[index].id !== e.markerId && arr[index].id !== 0) {
+            arr[index].height = arr[index].width = 30
           }
         })
-//        var animation = wx.createAnimation({
-//          duration: 1000,
-//          timingFunction: 'ease',
-//        })
-//        this.animation = animation
-//        animation.rotate(360).scale(1, 1).step()
-//        this.setData({
-//          animateFriend: animation.export()
-//        })
-//
-//        setTimeout(function () {
-//          animation.translate(180).step()
-//          animation.translate(-180).step()
-//          this.setData({
-//            animateFriend: animation.export()
-//          })
-//        }.bind(this), 1000)
-//        that.markers.forEach((item, index, arr) => {
-//          if (arr[index].id == e.markerId && arr[index].id !== 0) {
-//            that.friends = arr[index]
-//            console.log(arr[index])
-//            that.polyline = [{
-//              points: [{
-//                longitude: that.myLong,
-//                latitude: that.myLat
-//              }, {
-//                longitude: arr[index].longitude,
-//                latitude: arr[index].latitude
-//              }],
-//              color: '#FF0000',
-//              width: 2,
-//              arrowLine: true,
-//              dottedLine: true
-//            }]
-//            arr[index].iconPath = '../../../images/icon/icon-position_red.png'
-//            wx.hideLoading()
-//          }
-//          if (arr[index].id !== e.markerId && arr[index].id !== 0) {
-//            that.renderMark (item, 30)
-//            arr[index].iconPath = '../../../images/icon/icon-position.png'
-//          }
-//        })
       }
     }
   }
@@ -847,23 +865,95 @@
     }
     .doudun{
       /*vertical-align: middle;*/
-      width:48rpx; height: 48rpx;margin-right: 6rpx;
       /*position: relative;*/
-      /*animation: tada 1200ms infinite;*/
+      animation: tada 1000ms 1;
     }
-
+    .weight1{
+      animation: weight 1000ms 1 linear;
+      animation-fill-mode: forwards;
+      animation-delay:1s;
+    }
+    @keyframes weight {
+      0% {
+        height: 0%;
+      }
+    }
+    .weight2{
+      animation: weight2 1000ms 1 linear;
+      animation-fill-mode: forwards;
+      animation-delay:1s;
+    }
+    @keyframes weight2 {
+      0% {
+        height: 0%;
+      }
+      50% {
+        height: 10%;
+      }
+      100% {
+        height: 20%;
+      }
+    }
+    .weight3{
+      animation: weight3 1000ms 1 linear;
+      animation-fill-mode: forwards;
+      animation-delay:1s;
+    }
+    @keyframes weight3 {
+      0% {
+        height: 0%;
+      }
+      50% {
+        height: 20%;
+      }
+      100% {
+        height: 40%;
+      }
+    }
+    .weight4{
+      animation: weight4 1000ms 1 linear;
+      animation-fill-mode: forwards;
+      animation-delay:1s;
+    }
+    @keyframes weight4 {
+      0% {
+        height: 0%;
+      }
+      50% {
+        height: 40%;
+      }
+      100% {
+        height: 80%;
+      }
+    }
+    .weight5{
+      animation: weight5 2000ms 1 linear;
+      animation-fill-mode: forwards;
+      animation-delay:1s;
+    }
+    @keyframes weight5 {
+      0% {
+        height: 0%;
+      }
+      50% {
+        height: 50%;
+      }
+      100% {
+        height: 100%;
+      }
+    }
     @keyframes tada {
       0% {
         transform: scale(1);
       }
       10%, 20% {
-        transform: scale(0.9) rotate(-12deg)
+        transform: scale(0.8) rotate(-6deg)
       }
       30%, 50%, 70%, 90% {
-        transform: scale(1.2) rotate(12deg)
+        transform: scale(1.1) rotate(6deg)
       }
       40%, 60%, 80% {
-        transform: scale(1.2) rotate(-12deg)
+        transform: scale(1.1) rotate(-6deg)
       }
       100% {
         transform: scale(1) rotate(0)

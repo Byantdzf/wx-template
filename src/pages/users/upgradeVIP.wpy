@@ -18,7 +18,7 @@
       <form bindsubmit="formSubmit" report-submit>
         <button formType="submit" class="btn" data-type="click">
           <view class="paylist"  wx:for="{{paylist}}" wx:key="*this">
-            <view wx:if="{{item.price < my_rank_price || item.price == my_rank_price}}" class="model"></view>
+            <view wx:if="{{item.money < my_rank_price || item.price == my_rank_price}}" class="model"></view>
             <template is="msgItem" data="{{item}}" />
           </view>
         </button>
@@ -28,8 +28,8 @@
       <view class="font_32 loveTitle">高级VIP</view>
       <form bindsubmit="formSubmit" report-submit>
         <button formType="submit" class="btn" data-type="click">
-          <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this" @tap="showmodel({{item}})">
-            <view wx:if="{{item.price < my_rank_price || item.price == my_rank_price}}" class="model"></view>
+          <view class="paylist"  wx:for="{{paylist1}}" wx:key="*this">
+            <view wx:if="{{item.money < my_rank_price || item.price == my_rank_price}}" class="model"></view>
             <template is="msgItem" data="{{item}}" />
           </view>
         </button>
@@ -40,7 +40,7 @@
       <form bindsubmit="formSubmit" report-submit>
         <button formType="submit" class="btn" data-type="click">
           <view class="paylist"  wx:for="{{paylist2}}" wx:key="*this" >
-            <view wx:if="{{item.price < my_rank_price || item.price == my_rank_price}}" class="model"></view>
+            <view wx:if="{{item.money < my_rank_price || item.price == my_rank_price}}" class="model"></view>
             <template is="msgItem" data="{{item}}" />
           </view>
         </button>
@@ -141,7 +141,11 @@
     onPullDownRefresh() {
       this.initPageData()
     }
-
+    NumberPrice(list){
+      list.forEach((item, index, arr) => {
+        arr[index].money = parseFloat(arr[index].price)
+      })
+    }
     // 初始化页面数据
     initPageData() {
       // console.log("刷新成功")
@@ -154,12 +158,15 @@
           data.ranks.forEach((item, index, arr) => {
             if (arr[index].type == '普通会员') {
               that.paylist.push(arr[index])
+              that.NumberPrice(that.paylist)
               that.$apply()
             } else if (arr[index].type == '高级会员') {
               that.paylist1.push(arr[index])
+              that.NumberPrice(that.paylist1)
               that.$apply()
             } else if (arr[index].type == '海外VIP') {
               that.paylist2.push(arr[index])
+              that.NumberPrice(that.paylist2)
             }
           })
           if (data.score != 0) {
@@ -167,7 +174,7 @@
             that.score = data.score
           }
           if (data.my_rank_price != 0) {
-            that.my_rank_price = data.my_rank_price
+            that.my_rank_price = parseFloat(data.my_rank_price)
           }
           if (data.my_rank_name != '') {
             that.my_rank_name = data.my_rank_name
