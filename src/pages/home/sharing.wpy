@@ -145,9 +145,9 @@
               setTimeout(() => {
                 wx.switchTab({url: '/pages/tabBar/home/index'})
               }, 1000)
-            } else if(data.invited && data.invited == 1){
+            } else if (data.invited && data.invited == 1) {
 //              console.log('adljkasd')
-//              self.$showToast('')
+//              self.$showToast('')s
 //              self.showRegister = true
 //              self.$apply()
               wx.showModal({

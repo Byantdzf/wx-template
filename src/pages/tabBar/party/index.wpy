@@ -200,7 +200,9 @@
           } else {
             that.nav_active = true
           }
-          if (that.list.length == 0) {that.hidelist = true} else {
+          if (that.list.length == 0) {
+            that.hidelist = true
+          } else {
             that.hidelist = false
           }
           that.page += 1
