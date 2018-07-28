@@ -275,8 +275,9 @@
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         'X-Requested-With': 'XMLHttpRequest'
       }
+      let host = 'https://love.ufutx.com/';
       wx.request({
-        url: 'http://love.ufutx.com/socket.io/?EIO=3&transport=polling',
+        url: host + 'socket.io/?EIO=3&transport=polling',
         header: {'Content-Type': 'application/x-www-form-urlencoded'},
         method: 'get',
         success: function (res) {
@@ -285,34 +286,33 @@
           var str2 = data.replace(reg,'')
           let sid = JSON.parse(str2).sid
 //          let sid = data.split("sid\":\"")[1].split("\",")[0]
-
           wx.request({
-            url: 'http://love.hankin.com/socket.io/?EIO=3&transport=polling&sid=' + sid,
-            header: header,
+            url: host + 'socket.io/?EIO=3&transport=polling&sid=' + sid,
+            header: {'Content-Type': 'application/x-www-form-urlencoded'},
             method: 'get',
-            success: function (res) {
+            success: function (res){
               console.log(res)
-//          let sid = data.split("sid\":\"")[1].split("\",")[0]
             }
           })
-          let data_v = '135' + ':' + '42' + '[' + '"' + 'subscribe' + '"' +',' + '{' + '"' + 'channel' + '"' + ':' + '"' +'private-chat.with.users.62' + '"' +',' + '"' +'auth' + '"' + ':' + '{' + '"' + 'headers' + '"' +':' + '{' + '"' + 'X-CSRF-TOKEN' + '"' + ':' + '"' +'Fov1riW5OUDovHovj3AJSvxvn9DkQYvlhZw59hHJ' + '"' +'}}}]'
+          let data_v = `135:42["subscribe",{"channel":"` + `private-chat.with.users.62` + `","auth":{"headers":{"X-CSRF-TOKEN":"Fov1riW5OUDovHovj3AJSvxvn9DkQYvlhZw59hHJ"}}}]`
           wx.request({
-            url: 'http://love.hankin.com/socket.io/?EIO=3&transport=polling&t=MJV0-Vw&sid=' + sid,
+            url: host + 'socket.io/?EIO=3&transport=polling&t=MJV0-Vw&sid=' + sid,
             header: header,
             data: data_v,
             method: 'post',
-            success: function (res) {
-              console.log(res)
-//          let sid = data.split("sid\":\"")[1].split("\",")[0]
+            success: function (res){
+            console.log(res)
             }
           })
-
           wx.connectSocket({
-            url: 'wss://love.hankin.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
+            url: 'wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
           })
           wx.onSocketOpen(function(res){
             console.log(res)
             console.log('WebSocket连接已打开！')
+          })
+          wx.onSocketMessage(function(res) {
+            console.log('收到服务器内容：' + res.data)
           })
           wx.onSocketError(function(res){
             console.log('WebSocket连接打开失败，请检查！')
