@@ -6,6 +6,7 @@
   var ga = require('./ga.js')
   var GoogleAnalytics = ga.GoogleAnalytics
   var HitBuilders = ga.HitBuilders
+  var yeast = require('yeast');
 
   export default class extends wepy.app {
     config = {
@@ -136,6 +137,7 @@
     }
 
     onShow(options) {
+      console.log(yeast.encode(+new Date()))
       console.log(options)
       this.startWebSocket()
       if (options.scene == 1037 || options.scene == 1038) {
@@ -291,7 +293,7 @@
           let parameterV = `42["subscribe",{"channel":"` + `private-chat.with.users.` + userId + `","auth":{"headers":{"Authorization":` + `"` + Authorization + `"` + `}}}]`
           let dataV = parameterV.length + ':' + parameterV
           wx.request({
-            url: host + 'socket.io/?EIO=3&transport=polling&t=MJV0-Vw&sid=' + sid,
+            url: host + 'socket.io/?EIO=3&transport=polling&t=' + 'MJV0-Vw' + '&sid=' + sid,
             header: header,
             data: dataV,
             method: 'post',
