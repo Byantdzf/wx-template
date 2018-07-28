@@ -216,6 +216,7 @@
                 if (data.token) {
                   wx.setStorageSync('token', data.token)
                   wx.setStorageSync('openid', data.openid)
+                  wx.setStorageSync('user_id', data.user.id)
                   let userInfo = {
                     nickName: data.user.name,
                     avatarUrl: data.user.avatar

@@ -133,6 +133,7 @@ export default class httpMixin extends wepy.mixin {
                       avatarUrl: data.user.avatar
                     }
                     wx.setStorageSync('userInfo', userInfo)
+                    wx.setStorageSync('user_id', data.user.id)
                   }
 
                   // var route = '/' + getCurrentPages()[0].__route__;
