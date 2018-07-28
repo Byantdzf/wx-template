@@ -141,7 +141,7 @@
     onPullDownRefresh() {
       this.initPageData()
     }
-    NumberPrice(list){
+    NumberPrice(list) {
       list.forEach((item, index, arr) => {
         arr[index].money = parseFloat(arr[index].price)
       })

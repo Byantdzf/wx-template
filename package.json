@@ -1,7 +1,7 @@
 {
-  "name": "wepy-ufutx-library",
+  "name": "wepy-ufutx-love",
   "version": "0.1.0",
-  "description": "ufutx library for ark",
+  "description": "ufutx love for ark",
   "main": "dist/app.js",
   "scripts": {
     "dev": "wepy build --watch",
