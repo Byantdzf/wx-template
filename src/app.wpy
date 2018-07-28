@@ -3,6 +3,7 @@
   import 'wepy-async-function'
   import {service} from './config.js'
 
+  var io = require('./socket.io-mp.js') 
   var ga = require('./ga.js')
   var GoogleAnalytics = ga.GoogleAnalytics
   var HitBuilders = ga.HitBuilders
@@ -301,14 +302,27 @@
               console.log(res)
               wx.request({
                 url: host + 'socket.io/?EIO=3&transport=polling&sid=' + sid,
-                header: {'Content-Type': 'application/x-www-form-urlencoded'},
                 method: 'get',
                 success: function (res) {
                   console.log(res)
-                }
+                  var socket = io.connect('wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid)
+                  // var socket = io.connect('ws://library.ufutx.com:3000')
+                  socket.on('connect', function () {
+                      console.log('连上了')
+                      socket.emit('message', 'hello')
+                  })
+
+                  socket.on('message', function (data) {
+
+                      self.data.messages.push(data.message)
+                      self.setData({
+                          messages: self.data.messages
+                      })
+                  })                }
               })
             }
           })
+/*
           wx.connectSocket({
             url: 'wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
           })
@@ -322,6 +336,7 @@
           wx.onSocketError(function (res) {
             console.log('WebSocket连接打开失败，请检查！')
           })
+*/
         }
       })
     }
