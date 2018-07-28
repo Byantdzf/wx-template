@@ -137,7 +137,7 @@
 
     onShow(options) {
       console.log(options)
-//      this.startWebSocket()
+      this.startWebSocket()
       if (options.scene == 1037 || options.scene == 1038) {
         let uid = options.referrerInfo.extraData.uid
 //      console.log(JSON.stringify(uid))
@@ -271,8 +271,12 @@
 
     startWebSocket () {
       let that = this
+      let header = {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        'X-Requested-With': 'XMLHttpRequest'
+      }
       wx.request({
-        url: 'https://love.ufutx.com/socket.io/?EIO=3&transport=polling',
+        url: 'http://love.ufutx.com/socket.io/?EIO=3&transport=polling',
         header: {'Content-Type': 'application/x-www-form-urlencoded'},
         method: 'get',
         success: function (res) {
@@ -281,8 +285,30 @@
           var str2 = data.replace(reg,'')
           let sid = JSON.parse(str2).sid
 //          let sid = data.split("sid\":\"")[1].split("\",")[0]
+
+          wx.request({
+            url: 'http://love.hankin.com/socket.io/?EIO=3&transport=polling&sid=' + sid,
+            header: header,
+            method: 'get',
+            success: function (res) {
+              console.log(res)
+//          let sid = data.split("sid\":\"")[1].split("\",")[0]
+            }
+          })
+          let data_v = '135' + ':' + '42' + '[' + '"' + 'subscribe' + '"' +',' + '{' + '"' + 'channel' + '"' + ':' + '"' +'private-chat.with.users.62' + '"' +',' + '"' +'auth' + '"' + ':' + '{' + '"' + 'headers' + '"' +':' + '{' + '"' + 'X-CSRF-TOKEN' + '"' + ':' + '"' +'Fov1riW5OUDovHovj3AJSvxvn9DkQYvlhZw59hHJ' + '"' +'}}}]'
+          wx.request({
+            url: 'http://love.hankin.com/socket.io/?EIO=3&transport=polling&t=MJV0-Vw&sid=' + sid,
+            header: header,
+            data: data_v,
+            method: 'post',
+            success: function (res) {
+              console.log(res)
+//          let sid = data.split("sid\":\"")[1].split("\",")[0]
+            }
+          })
+
           wx.connectSocket({
-            url: 'wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
+            url: 'wss://love.hankin.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
           })
           wx.onSocketOpen(function(res){
             console.log(res)
@@ -294,6 +320,7 @@
         }
       })
     }
+
     onShareAppMessage(title) {
       return {
         title: title,
