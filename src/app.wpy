@@ -3,11 +3,11 @@
   import 'wepy-async-function'
   import {service} from './config.js'
 
-  var io = require('./socket.io-mp.js') 
+  var io = require('./socket.io-mp.js')
   var ga = require('./ga.js')
   var GoogleAnalytics = ga.GoogleAnalytics
   var HitBuilders = ga.HitBuilders
-  var yeast = require('yeast');
+  var yeast = require('yeast')
 
   export default class extends wepy.app {
     config = {
@@ -279,8 +279,9 @@
         'X-Requested-With': 'XMLHttpRequest'
       }
       let host = 'https://love.ufutx.com/'
+      let yeastTime = yeast.encode(+new Date())
       wx.request({
-        url: host + 'socket.io/?EIO=3&transport=polling',
+        url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime ,
         header: {'Content-Type': 'application/x-www-form-urlencoded'},
         method: 'get',
         success: function (res) {
@@ -293,15 +294,17 @@
           let userId = wx.getStorageSync('user_id')
           let parameterV = `42["subscribe",{"channel":"` + `private-chat.with.users.` + userId + `","auth":{"headers":{"Authorization":` + `"` + Authorization + `"` + `}}}]`
           let dataV = parameterV.length + ':' + parameterV
+          let yeastTime = yeast.encode(+new Date())
           wx.request({
-            url: host + 'socket.io/?EIO=3&transport=polling&t=' + 'MJV0-Vw' + '&sid=' + sid,
+            url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime + '&sid=' + sid,
             header: header,
             data: dataV,
             method: 'post',
             success: function (res) {
+              let yeastTime = yeast.encode(+new Date())
               console.log(res)
               wx.request({
-                url: host + 'socket.io/?EIO=3&transport=polling&sid=' + sid,
+                url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime + '&sid=' + sid,
                 method: 'get',
                 success: function (res) {
                   console.log(res)
