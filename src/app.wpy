@@ -11,7 +11,7 @@
     config = {
       pages: [
         'pages/tabBar/home/index',
-        'pages/tabBar/home/indexv2',
+//        'pages/tabBar/home/indexv2',
         'pages/tabBar/party/index',
         'pages/tabBar/books/index',
         'pages/tabBar/users/index'
@@ -286,24 +286,18 @@
           let sid = JSON.parse(str2).sid
 //          let sid = data.split("sid\":\"")[1].split("\",")[0]
 
-          wx.request({
-            url: 'http://love.ufutx.com/socket.io/?EIO=3&transport=polling&sid=' + sid,
-            header: header,
-            method: 'get',
-            success: function (res) {
-              console.log(res)
-//          let sid = data.split("sid\":\"")[1].split("\",")[0]
-            }
-          })
-          let data_v = '135' + ':' + '42' + '[' + '"' + 'subscribe' + '"' +',' + '{' + '"' + 'channel' + '"' + ':' + '"' +'private-chat.with.users.62' + '"' +',' + '"' +'auth' + '"' + ':' + '{' + '"' + 'headers' + '"' +':' + '{' + '"' + 'X-CSRF-TOKEN' + '"' + ':' + '"' +'Fov1riW5OUDovHovj3AJSvxvn9DkQYvlhZw59hHJ' + '"' +'}}}]'
-          wx.request({
-            url: 'http://love.ufutx.com/socket.io/?EIO=3&transport=polling&t=MJV0-Vw&sid=' + sid,
-            header: header,
-            data: data_v,
-            method: 'post',
-            success: function (res) {
-              console.log(res)
-//          let sid = data.split("sid\":\"")[1].split("\",")[0]
+          let data_v = `135:42["subscribe",{"channel":"` + `private-chat.with.users.62` + `","auth":{"headers":{"X-CSRF-TOKEN":"Fov1riW5OUDovHovj3AJSvxvn9DkQYvlhZw59hHJ"}}}]`
+            success: function (res){
+            console.log(res)
+              wx.request({
+                url: host + 'socket.io/?EIO=3&transport=polling&sid=' + sid,
+                header: {'Content-Type': 'application/x-www-form-urlencoded'},
+                method: 'get',
+                success: function (res){
+                  console.log(res)
+                }
+              })
+>>>>>>> e09411dd78cefcbf72c74d49a4f10d65c0035d33
             }
           })
 
