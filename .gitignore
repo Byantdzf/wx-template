@@ -66,3 +66,4 @@ typings/
 /.idea
 
 .tern-port
+.tern-project
