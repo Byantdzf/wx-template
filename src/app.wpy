@@ -140,7 +140,7 @@
     onShow(options) {
       console.log(yeast.encode(+new Date()))
       console.log(options)
-      this.startWebSocket()
+//      this.startWebSocket()
       if (options.scene == 1037 || options.scene == 1038) {
         let uid = options.referrerInfo.extraData.uid
 //      console.log(JSON.stringify(uid))
