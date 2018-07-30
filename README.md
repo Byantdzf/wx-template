@@ -1,29 +1,19 @@
-﻿# Ufutx Party 
+﻿# Ufutx template
 
 ## Features
 
-* 友福聚会
+* 友福template
 
-1. 聚会可保存为模板，用于发布周期性聚会。
-2. 聚会可设置服待岗位，供报名人选择。
-3. 新报名有通知，即时了解报名情况。
-4. 报名时，备注可能参加，方便管理人员。
-5. 报名时，可填写推荐人，方便跟进。
-....
-
-
-扫码访问小程序:
-
-![友福聚会](https://party.ufutx.com/imgs/mp_party.jpg)
-
+1. template可保存为模板
+2. 该模板仅限开发使用
 
 ## Usage
 
 ### Start
 
 ``` bash
-git clone git@github.com:glore/party.git
-cd library
+git clone git@github.com:Byantdzf/wx-template.git
+cd template
 npm install wepy-cli -g
 npm install
 npm run dev

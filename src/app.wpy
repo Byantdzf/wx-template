@@ -138,7 +138,6 @@
     }
 
     onShow(options) {
-//      console.log(yeast.encode(+new Date()))
       console.log(options)
 //      this.startWebSocket()
       if (options.scene == 1037 || options.scene == 1038) {
