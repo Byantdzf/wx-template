@@ -3,11 +3,11 @@
   import 'wepy-async-function'
   import {service} from './config.js'
 
-  var io = require('./socket.io-mp.js')
+//  var io = require('./socket.io-mp.js')
   var ga = require('./ga.js')
   var GoogleAnalytics = ga.GoogleAnalytics
   var HitBuilders = ga.HitBuilders
-  var yeast = require('yeast')
+//  var yeast = require('yeast')
 
   export default class extends wepy.app {
     config = {
@@ -138,7 +138,7 @@
     }
 
     onShow(options) {
-      console.log(yeast.encode(+new Date()))
+//      console.log(yeast.encode(+new Date()))
       console.log(options)
 //      this.startWebSocket()
       if (options.scene == 1037 || options.scene == 1038) {
@@ -271,92 +271,93 @@
         }
       })
     }
+//
+//    startWebSocket () {
+//      const socket = io('https://love.ufutx.com')
+//      socket.on('connect', function () {
+//        console.log('#1')
+//      })
+//      socket.on('event', function (data) {
+//        console.log(`#2 ${JSON.stringify(data)}`)
+//      })
+//      socket.on('disconnect', function () {
+//        console.log('#3')
+//      })
+//      global.socket = socket
+//    }
 
-    startWebSocket() {
-      const socket = io('https://love.ufutx.com');
-      socket.on('connect', function(){
-        console.log('#1');
-      });
-      socket.on('event', function(data){
-        console.log(`#2 ${JSON.stringify(data)}`);
-      });
-      socket.on('disconnect', function(){
-        console.log('#3');
-      });
-      global.socket = socket;
-    }
-
-    startWebSocket2() {
-      // let that = this
-      let header = {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-      let host = 'https://love.ufutx.com/'
-      let yeastTime = yeast.encode(+new Date())
-      wx.request({
-        url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime ,
-        header: {'Content-Type': 'application/x-www-form-urlencoded'},
-        method: 'get',
-        success: function (res) {
-          let data = res.data
-          var reg = /(\d{2}\:\d{1})|(\d{1}\:\d{2})/ig
-          var str2 = data.replace(reg, '')
-          let sid = JSON.parse(str2).sid
+//    startWebSocket2 () {
+//      // let that = this
+//      let header = {
+//        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+//        'X-Requested-With': 'XMLHttpRequest'
+//      }
+//      let host = 'https://love.ufutx.com/'
+//      let yeastTime = yeast.encode(+new Date())
+//      wx.request({
+//        url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime,
+//        header: {'Content-Type': 'application/x-www-form-urlencoded'},
+//        method: 'get',
+//        success: function (res) {
+//          let data = res.data
+//          var reg = /(\d{2}\:\d{1})|(\d{1}\:\d{2})/ig
+//          var str2 = data.replace(reg, '')
+//          let sid = JSON.parse(str2).sid
 //          let sid = data.split("sid\":\"")[1].split("\",")[0]
-          let Authorization = 'Bearer ' + wx.getStorageSync('token')
-          let userId = wx.getStorageSync('user_id')
-          let parameterV = `42["subscribe",{"channel":"` + `private-chat.with.users.` + userId + `","auth":{"headers":{"Authorization":` + `"` + Authorization + `"` + `}}}]`
-          let dataV = parameterV.length + ':' + parameterV
-          let yeastTime = yeast.encode(+new Date())
-          wx.request({
-            url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime + '&sid=' + sid,
-            header: header,
-            data: dataV,
-            method: 'post',
-            success: function (res) {
-              let yeastTime = yeast.encode(+new Date())
-              console.log(res)
-              wx.request({
-                url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime + '&sid=' + sid,
-                method: 'get',
-                success: function (res) {
-                  console.log(res)
-                  var socket = io.connect('wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid)
-                  // var socket = io.connect('ws://library.ufutx.com:3000')
-                  socket.on('connect', function () {
-                      console.log('连上了')
-                      socket.emit('message', 'hello')
-                  })
-
-                  socket.on('message', function (data) {
-
-                      self.data.messages.push(data.message)
-                      self.setData({
-                          messages: self.data.messages
-                      })
-                  })                }
-              })
-            }
-          })
-/*
-          wx.connectSocket({
-            url: 'wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
-          })
-          wx.onSocketOpen(function (res) {
-            console.log(res)
-            console.log('WebSocket连接已打开！')
-          })
-          wx.onSocketMessage(function (res) {
-            console.log('收到服务器内容：' + res.data)
-          })
-          wx.onSocketError(function (res) {
-            console.log('WebSocket连接打开失败，请检查！')
-          })
-*/
-        }
-      })
-    }
+//          let Authorization = 'Bearer ' + wx.getStorageSync('token')
+//          let userId = wx.getStorageSync('user_id')
+//          let parameterV = `42["subscribe",{"channel":"` + `private-chat.with.users.` + userId + `","auth":{"headers":{"Authorization":` + `"` + Authorization + `"` + `}}}]`
+//          let dataV = parameterV.length + ':' + parameterV
+//          let yeastTime = yeast.encode(+new Date())
+//          wx.request({
+//            url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime + '&sid=' + sid,
+//            header: header,
+//            data: dataV,
+//            method: 'post',
+//            success: function (res) {
+//              let yeastTime = yeast.encode(+new Date())
+//              console.log(res)
+//              wx.request({
+//                url: host + 'socket.io/?EIO=3&transport=polling&t=' + yeastTime + '&sid=' + sid,
+//                method: 'get',
+//                success: function (res) {
+//                  console.log(res)
+//                  var socket = io.connect('wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid)
+//                  // var socket = io.connect('ws://library.ufutx.com:3000')
+//                  socket.on('connect', function () {
+//                    console.log('连上了')
+//                    socket.emit('message', 'hello')
+//                  })
+//
+//                  socket.on('message', function (data) {
+//
+//                    self.data.messages.push(data.message)
+//                    self.setData({
+//                      messages: self.data.messages
+//                    })
+//                  })
+//                }
+//              })
+//            }
+//          })
+//          /*
+//                    wx.connectSocket({
+//                      url: 'wss://love.ufutx.com/socket.io/?EIO=3&transport=websocket&sid=' + sid
+//                    })
+//                    wx.onSocketOpen(function (res) {
+//                      console.log(res)
+//                      console.log('WebSocket连接已打开！')
+//                    })
+//                    wx.onSocketMessage(function (res) {
+//                      console.log('收到服务器内容：' + res.data)
+//                    })
+//                    wx.onSocketError(function (res) {
+//                      console.log('WebSocket连接打开失败，请检查！')
+//                    })
+//          */
+//        }
+//      })
+//    }
 
     onShareAppMessage(title) {
       return {
