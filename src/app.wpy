@@ -273,7 +273,21 @@
     }
 
     startWebSocket() {
-//      let that = this
+      const socket = io('https://love.ufutx.com');
+      socket.on('connect', function(){
+        console.log('#1');
+      });
+      socket.on('event', function(data){
+        console.log(`#2 ${JSON.stringify(data)}`);
+      });
+      socket.on('disconnect', function(){
+        console.log('#3');
+      });
+      global.socket = socket;
+    }
+
+    startWebSocket2() {
+      // let that = this
       let header = {
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         'X-Requested-With': 'XMLHttpRequest'
